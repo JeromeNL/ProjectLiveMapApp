@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
+import FlagIcon from '../../../assets/icons/flag.svg'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
 import FloatingMapAction from './components/FloatingMapAction'
 
@@ -30,9 +31,9 @@ const HomeScreen = () => {
                 maxZoomLevel={20}
             />
             <View style={styles.floatingActionContainer}>
-                <FloatingMapAction />
-                <FloatingMapAction />
-                <FloatingMapAction />
+                <FloatingMapAction icon={<FlagIcon />} />
+                <FloatingMapAction icon={<FlagIcon />} />
+                <FloatingMapAction icon={<FlagIcon />} />
             </View>
         </>
     )

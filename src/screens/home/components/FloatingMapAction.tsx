@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 interface FloatingMapActionProps {
     onPress?: () => void
+    icon: ReactNode
 }
 
 const FloatingMapAction = (props: FloatingMapActionProps) => {
