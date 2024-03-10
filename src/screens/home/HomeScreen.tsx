@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
 import FlagIcon from '../../../assets/icons/flag.svg'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
+import { Colors } from '../../configuration/styles/Colors'
 import FloatingMapAction from './components/FloatingMapAction'
 
 const HomeScreen = () => {
@@ -31,9 +32,12 @@ const HomeScreen = () => {
                 maxZoomLevel={20}
             />
             <View style={styles.floatingActionContainer}>
-                <FloatingMapAction icon={<FlagIcon />} />
-                <FloatingMapAction icon={<FlagIcon />} />
-                <FloatingMapAction icon={<FlagIcon />} />
+                <FloatingMapAction
+                    icon={<FlagIcon stroke={Colors.white} />}
+                    onPress={() => {
+                        console.log('Floating action pressed')
+                    }}
+                />
             </View>
         </>
     )
