@@ -1,21 +1,32 @@
-import React, { useState } from 'react'
-import { Button, Image, View } from 'react-native'
-import { PhoenixAPI } from '../../network/PhoenixAPI'
+import React, { useEffect, useState } from 'react'
+import MapView from 'react-native-maps'
+import { MapConfiguration } from '../../configuration/MapConfiguration'
 
 const HomeScreen = () => {
-    const [imageUrl, setImageUrl] = useState('')
+    const mapRef = React.useRef<MapView>(null)
+    const [region, _] = useState(MapConfiguration.region.initial)
 
-    const updateImage = async () => {
-        const randomImage = await PhoenixAPI.getInstance().MapAPI.getMapMarkers()
-        setImageUrl(randomImage.data.message)
-    }
+    useEffect(() => {
+        if (!mapRef.current) {
+            return
+        }
+        const bounds = MapConfiguration.region.bounds
+        mapRef.current.setMapBoundaries(bounds.northeast, bounds.southwest)
+    }, [])
 
-	return (
-		<View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
-			<Image source={{uri: imageUrl}} width={250} height={200} style={{ resizeMode: 'contain'}}/>
-            <Button onPress={updateImage} title='Update image'/>
-		</View>
-	)
+    return (
+        <MapView
+            ref={mapRef}
+            provider="google"
+            customMapStyle={MapConfiguration.customMapStyle}
+            style={{ flex: 1 }}
+            region={region}
+            showsUserLocation
+            zoomControlEnabled
+            minZoomLevel={15.7}
+            maxZoomLevel={20}
+        />
+    )
 }
 
 export default HomeScreen
