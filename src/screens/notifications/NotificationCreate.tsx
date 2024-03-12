@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react'
 import { Text, TextInput, View, Button, StyleSheet } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
 import axios from "axios"
@@ -12,23 +12,28 @@ const notificationTypes = [
 
 const NotificationCreate = () => {
 
+  const [id, setId] = useState();
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [type, setType] = useState('')
+  const [longitude, setLongitude] = useState('')
+  const [latitude, setLatitude] = useState('')
+  const [iconUrl, setIconString] = useState('')
 
   const clickHandler = () => {
-    console.log(title)
-    console.log(description)
-    console.log(type)
 
     const axiosClient = axios.create({
       baseURL: 'https://jsonplaceholder.typicode.com'
     })
 
     axiosClient.post('/posts', {
-      title: title,
+      facilityId: id,
+      name: title,
       description: description,
-      type: type
+      type: type,
+      longitude: longitude,
+      latitude: latitude,
+      iconUrl: iconUrl
     }).then(function(response) {
       console.log(response)
     }).catch(function(error) {
@@ -57,7 +62,31 @@ const NotificationCreate = () => {
       <View style={styles.inputContainer}>
         <Text>Type of problem</Text>
         <Dropdown style={styles.input}
-          data={notificationTypes} labelField={"label"} valueField={"value"} onChange={item => setTitle(item.value)} />
+          data={notificationTypes} labelField={"label"} valueField={"value"} onChange={item => setType(item.value)} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text>Longitude</Text>
+        <TextInput
+          inputMode='decimal'
+          style={styles.input}
+          onChangeText={(value) => setLongitude(value)} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text>Latitude</Text>
+        <TextInput
+          inputMode='decimal'
+          style={styles.input}
+          onChangeText={(value) => setLatitude(value)} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text>Icon name</Text>
+        <TextInput
+          inputMode='url'
+          style={styles.input}
+          onChangeText={(value) => setIconString(value)} />
       </View>
 
       <View style={styles.inputContainer}>
