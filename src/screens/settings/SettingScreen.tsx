@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Text, View } from 'react-native'
+import { Button, Text, View, StyleSheet } from 'react-native'
+import { CommonActions } from '@react-navigation/native'
 
 const SettingScreen = ({ navigation }: any) => {
     return (
@@ -12,5 +13,12 @@ const SettingScreen = ({ navigation }: any) => {
         </View>
     )
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+})
 
 export default SettingScreen
