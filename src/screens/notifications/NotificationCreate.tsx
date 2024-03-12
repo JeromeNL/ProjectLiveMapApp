@@ -1,21 +1,54 @@
 import React, { useState, useEffect } from 'react'
 import { Text, TextInput, View, Button, StyleSheet } from 'react-native'
-import { Dropdown } from 'react-native-element-dropdown'
 import axios from "axios"
 import Facility from "../../model/Facility"
 
 
-const NotificationCreate = () => {
 
-  const [id, setId] = useState();
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [type, setType] = useState('')
-  const [longitude, setLongitude] = useState('')
-  const [latitude, setLatitude] = useState('')
-  const [iconUrl, setIconString] = useState('')
+const NotificationCreate = (facility: Facility) => {
+
+  const [id, setId] = useState(facility.id);
+  const [name, setTitle] = useState(facility.name)
+  const [description, setDescription] = useState(facility?.description?.toString() ?? "")
+  const [longitude, setLongitude] = useState(facility?.longitude?.toString() ?? "")
+  const [latitude, setLatitude] = useState(facility?.latitude?.toString() ?? "")
+  const [iconUrl, setIconString] = useState("")
+
+  const validate = () => {
+    return {
+      name: validateTitle,
+      description: validateDescription,
+      longitude: validateLongitude,
+      latitude: validateLatitude,
+      iconUrl: validateIconUrl,
+    }
+  }
+
+  const validateTitle = () => {
+    return name && name.length > 0
+  }
+
+  const validateDescription = () => {
+    return description && description.length > 0
+  }
+
+  const validateLongitude = () => {
+    return longitude && longitude.length > 0
+  }
+
+  const validateLatitude = () => {
+    return latitude && latitude.length > 0
+  }
+
+  const validateIconUrl = () => {
+    return iconUrl && iconUrl.length > 0
+  }
 
   const clickHandler = () => {
+
+    if (!validate) {
+      return;
+    }
 
     const axiosClient = axios.create({
       baseURL: 'https://jsonplaceholder.typicode.com'
@@ -23,9 +56,8 @@ const NotificationCreate = () => {
 
     axiosClient.post('/posts', {
       facilityId: id,
-      name: title,
+      name: name,
       description: description,
-      type: type,
       longitude: longitude,
       latitude: latitude,
       iconUrl: iconUrl

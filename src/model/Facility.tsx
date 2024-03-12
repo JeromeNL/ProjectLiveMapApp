@@ -5,6 +5,7 @@ type Facility = {
   description: string,
   longitude: number,
   latitude: number,
+  iconUrl: string
 }
 
 export default Facility;
