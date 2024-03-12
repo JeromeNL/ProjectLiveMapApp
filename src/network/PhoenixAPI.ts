@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Platform } from 'react-native'
 import { FacilityAPI } from './libs/FacilityAPI'
 import { MapAPI } from './libs/MapAPI'
+import { AuthAPI } from './libs/AuthAPI'
 
 export class PhoenixAPI {
     public MapAPI!: MapAPI
