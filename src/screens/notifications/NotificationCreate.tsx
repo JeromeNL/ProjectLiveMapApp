@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react"
 import { Text, TextInput, View, Button, StyleSheet } from 'react-native'
-import { Dropdown } from 'react-native-element-dropdown';
+import { Dropdown } from 'react-native-element-dropdown'
 import axios from "axios"
+import Facility from "../../model/Facility"
 
 const notificationTypes = [
   { label: 'Trash', value: 'Trash' },
   { label: 'Broken', value: 'Broken' },
   { label: 'Closed', value: 'Closed' },
 ]
-
 
 const NotificationCreate = () => {
 
@@ -21,39 +21,48 @@ const NotificationCreate = () => {
     console.log(description)
     console.log(type)
 
-    axios.post(
-      'https://www.google.com/api/create_notification', {
+    const axiosClient = axios.create({
+      baseURL: 'https://jsonplaceholder.typicode.com'
+    })
+
+    axiosClient.post('/posts', {
       title: title,
       description: description,
       type: type
-    }
-    ).then(function(response) {
+    }).then(function(response) {
       console.log(response)
     }).catch(function(error) {
       console.log(error)
-    });
+    })
   }
 
   return (
     <View style={styles.container}>
-      <Text>Create notifications</Text>
-      <Text>Title</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(value) => setTitle(value)} />
+      <View style={styles.inputContainer}>
+        <Text>Title</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => setTitle(value)} />
+      </View>
 
-      <Text>Description</Text>
-      <TextInput
-        multiline={true}
-        numberOfLines={3}
-        style={styles.input}
-        onChangeText={(value) => setDescription(value)} />
+      <View style={styles.inputContainer}>
+        <Text>Description</Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={3}
+          style={styles.input}
+          onChangeText={(value) => setDescription(value)} />
+      </View>
 
-      <Button title='Send change request' onPress={clickHandler} />
+      <View style={styles.inputContainer}>
+        <Text>Type of problem</Text>
+        <Dropdown style={styles.input}
+          data={notificationTypes} labelField={"label"} valueField={"value"} onChange={item => setTitle(item.value)} />
+      </View>
 
-      <Dropdown
-        data={notificationTypes} labelField={"label"} valueField={"value"} onChange={item => setTitle(item.value)} />
-
+      <View style={styles.inputContainer}>
+        <Button title='Send change request' onPress={clickHandler} />
+      </View>
     </View>
   )
 }
@@ -61,6 +70,9 @@ const NotificationCreate = () => {
 const styles = StyleSheet.create({
   container: {
     margin: 10,
+  },
+  inputContainer: {
+    marginTop: 3
   },
   input: {
     borderWidth: 1,
