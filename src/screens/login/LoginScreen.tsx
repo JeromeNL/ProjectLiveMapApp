@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 
 interface LoginScreenProps {
@@ -10,22 +10,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ setAuthenticated }) => {
     const [username, setUsername] = useState('')
 
     const handleLogin = async () => {
-        PhoenixAPI
-        try {
-            const response = await fetch(
-                `http://localhost:5136/users/${username}`
-            )
-            const data = await response.json()
-
-            if (data.exists) {
-                setAuthenticated(true)
-            } else {
-                // Show an error message when the username does not exist
-            }
-        } catch (error) {
-            // Handle API call error
-            console.error('Error fetching data:', error)
-        }
+        const response = await PhoenixAPI.getInstance().AuthAPI.login(username)
+        console.log(response.data.name)
     }
 
     return (
