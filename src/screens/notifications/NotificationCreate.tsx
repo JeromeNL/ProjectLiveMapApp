@@ -4,11 +4,6 @@ import { Dropdown } from 'react-native-element-dropdown'
 import axios from "axios"
 import Facility from "../../model/Facility"
 
-const notificationTypes = [
-  { label: 'Trash', value: 'Trash' },
-  { label: 'Broken', value: 'Broken' },
-  { label: 'Closed', value: 'Closed' },
-]
 
 const NotificationCreate = () => {
 
@@ -57,12 +52,6 @@ const NotificationCreate = () => {
           numberOfLines={3}
           style={styles.input}
           onChangeText={(value) => setDescription(value)} />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text>Type of problem</Text>
-        <Dropdown style={styles.input}
-          data={notificationTypes} labelField={"label"} valueField={"value"} onChange={item => setType(item.value)} />
       </View>
 
       <View style={styles.inputContainer}>
