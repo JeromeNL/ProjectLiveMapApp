@@ -6,6 +6,7 @@ const SettingScreen = ({ navigation }: any) => {
     <View>
       <Text>SettingScreen</Text>
       <Button title="Go to Notification" onPress={() => navigation.push('Notification')} />
+      <Button title="Create Notification" onPress={() => navigation.push('NotificationCreate')} />
     </View>
   )
 }
