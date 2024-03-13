@@ -22,7 +22,6 @@ const HomeScreen = () => {
             style={{ flex: 1 }}
             region={region}
             showsUserLocation
-            zoomControlEnabled
             minZoomLevel={15.7}
             maxZoomLevel={20}
         />
