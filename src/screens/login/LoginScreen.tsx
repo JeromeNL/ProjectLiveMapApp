@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 
 interface LoginScreenProps {
@@ -10,8 +10,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ setAuthenticated }) => {
     const [username, setUsername] = useState('')
 
     const handleLogin = async () => {
-        const response = await PhoenixAPI.getInstance().AuthAPI.login(username)
-        console.log(response.data.name)
+        try {
+            const response =
+                await PhoenixAPI.getInstance().AuthAPI.login(username)
+            console.log(response.data)
+            setAuthenticated(true)
+        } catch (error) {
+            Alert.alert('Login Failed', 'Incorrect username. Please try again.')
+        }
     }
 
     return (
