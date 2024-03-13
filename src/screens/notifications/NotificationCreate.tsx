@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, TextInput, View, Button, StyleSheet } from 'react-native'
-import axios from "axios"
 import Facility from "../../model/Facility"
-
-
+import { PhoenixAPI } from '../../network/PhoenixAPI'
 
 const NotificationCreate = (facility: Facility) => {
 
@@ -44,90 +42,94 @@ const NotificationCreate = (facility: Facility) => {
     return iconUrl && iconUrl.length > 0
   }
 
-  const clickHandler = () => {
+  const clickHandler = async () => {
 
     if (!validate) {
       return;
     }
 
-    const axiosClient = axios.create({
-      baseURL: 'https://jsonplaceholder.typicode.com'
+    const response = await PhoenixAPI.getInstance().FacilityAPI.sendUpdateRequest({
+          facilityId: facility.id ?? -2,
+          name: name,
+          description: description,
+          type: "Deze waarde moet uit de api, toch?",
+          longitude: longitude,
+          latitude: latitude,
+          iconUrl: iconUrl
     })
-
-    axiosClient.post('/posts', {
-      facilityId: id,
-      name: name,
-      description: description,
-      longitude: longitude,
-      latitude: latitude,
-      iconUrl: iconUrl
-    }).then(function(response) {
-      console.log(response)
-    }).catch(function(error) {
-      console.log(error)
-    })
+      .then(function(response) {
+        console.log("response:")
+        console.log(response)
+      }).catch(function(error) {
+        console.log("error:")
+        console.log(error)
+      })
   }
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Text>Title</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => setTitle(value)} />
-      </View>
+    return (
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <Text>Title</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => setTitle(value)} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text>Description</Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={3}
-          style={styles.input}
-          onChangeText={(value) => setDescription(value)} />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text>Description</Text>
+          <TextInput
+            multiline={true}
+            numberOfLines={3}
+            style={styles.input}
+            onChangeText={(value) => setDescription(value)} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text>Longitude</Text>
-        <TextInput
-          inputMode='decimal'
-          style={styles.input}
-          onChangeText={(value) => setLongitude(value)} />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text>Longitude</Text>
+          <TextInput
+            inputMode='decimal'
+            style={styles.input}
+            onChangeText={(value) => setLongitude(value)} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text>Latitude</Text>
-        <TextInput
-          inputMode='decimal'
-          style={styles.input}
-          onChangeText={(value) => setLatitude(value)} />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text>Latitude</Text>
+          <TextInput
+            inputMode='decimal'
+            style={styles.input}
+            onChangeText={(value) => setLatitude(value)} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text>Icon name</Text>
-        <TextInput
-          inputMode='url'
-          style={styles.input}
-          onChangeText={(value) => setIconString(value)} />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text>Icon name</Text>
+          <TextInput
+            inputMode='url'
+            style={styles.input}
+            onChangeText={(value) => setIconString(value)} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Button title='Send change request' onPress={clickHandler} />
+        <View style={styles.inputContainer}>
+          <Button title='Send change request' onPress={clickHandler} />
+        </View>
       </View>
-    </View>
-  )
-}
-
-const styles = StyleSheet.create({
-  container: {
-    margin: 10,
-  },
-  inputContainer: {
-    marginTop: 3
-  },
-  input: {
-    borderWidth: 1,
-    padding: 3,
+    )
   }
-})
 
-export default NotificationCreate
+  const styles = StyleSheet.create({
+    container: {
+      margin: 10,
+    },
+    inputContainer: {
+      marginTop: 3
+    },
+    input: {
+      borderWidth: 1,
+      padding: 3,
+    },
+    validationError: {
+      color: '#F00'
+
+    }
+  })
+
+  export default NotificationCreate
