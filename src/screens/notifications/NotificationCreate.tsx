@@ -5,8 +5,9 @@ import { PhoenixAPI } from '../../network/PhoenixAPI'
 
 const NotificationCreate = (facility: Facility) => {
 
-  const [id, setId] = useState(facility.id);
+  const [id, setId] = useState(facility.facilityId);
   const [name, setTitle] = useState(facility.name)
+  const [type, setType] = useState(facility.type)
   const [description, setDescription] = useState(facility?.description?.toString() ?? "")
   const [longitude, setLongitude] = useState(facility?.longitude?.toString() ?? "")
   const [latitude, setLatitude] = useState(facility?.latitude?.toString() ?? "")
@@ -14,16 +15,21 @@ const NotificationCreate = (facility: Facility) => {
 
   const validate = () => {
     return {
-      name: validateTitle,
-      description: validateDescription,
-      longitude: validateLongitude,
-      latitude: validateLatitude,
-      iconUrl: validateIconUrl,
+      name: validateTitle(),
+      description: validateDescription(),
+      validateType: validateType(),
+      longitude: validateLongitude(),
+      latitude: validateLatitude(),
+      iconUrl: validateIconUrl(),
     }
   }
 
   const validateTitle = () => {
     return name && name.length > 0
+  }
+
+  const validateType = () => {
+    return type && type.length > 0
   }
 
   const validateDescription = () => {
@@ -52,7 +58,7 @@ const NotificationCreate = (facility: Facility) => {
       facilityId: id,
       name: name,
       description: description,
-      type: "Deze waarde moet uit de api, toch?",
+      type: type,
       longitude: +longitude,
       latitude: +latitude,
       iconUrl: iconUrl
@@ -81,6 +87,14 @@ const NotificationCreate = (facility: Facility) => {
             style={styles.input}
             onChangeText={(value) => setTitle(value)} />
         </View>
+
+        <View style={styles.inputContainer}>
+          <Text>Type</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => setType(value)} />
+        </View>
+        
 
 
         <View style={styles.inputContainer}>
