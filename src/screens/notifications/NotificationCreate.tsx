@@ -49,13 +49,13 @@ const NotificationCreate = (facility: Facility) => {
     }
 
     const response = await PhoenixAPI.getInstance().FacilityAPI.sendUpdateRequest({
-          facilityId: facility.id ?? -2,
-          name: name,
-          description: description,
-          type: "Deze waarde moet uit de api, toch?",
-          longitude: longitude,
-          latitude: latitude,
-          iconUrl: iconUrl
+      facilityId: id,
+      name: name,
+      description: description,
+      type: "Deze waarde moet uit de api, toch?",
+      longitude: longitude,
+      latitude: latitude,
+      iconUrl: iconUrl
     })
       .then(function(response) {
         console.log("response:")
@@ -66,70 +66,79 @@ const NotificationCreate = (facility: Facility) => {
       })
   }
 
-    return (
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Text>Title</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={(value) => setTitle(value)} />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text>Description</Text>
-          <TextInput
-            multiline={true}
-            numberOfLines={3}
-            style={styles.input}
-            onChangeText={(value) => setDescription(value)} />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text>Longitude</Text>
-          <TextInput
-            inputMode='decimal'
-            style={styles.input}
-            onChangeText={(value) => setLongitude(value)} />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text>Latitude</Text>
-          <TextInput
-            inputMode='decimal'
-            style={styles.input}
-            onChangeText={(value) => setLatitude(value)} />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text>Icon name</Text>
-          <TextInput
-            inputMode='url'
-            style={styles.input}
-            onChangeText={(value) => setIconString(value)} />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Button title='Send change request' onPress={clickHandler} />
-        </View>
+  return (
+    <View style={styles.container}>
+      <View style={styles.inputContainer}>
+        <Text>ID of facility</Text>
+        <TextInput
+          inputMode='numeric'
+          style={styles.input}
+          onChangeText={(value) => setId(+value)} />
       </View>
-    )
+
+      <View style={styles.inputContainer}>
+        <Text>New title</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(value) => setTitle(value)} />
+      </View>
+
+
+      <View style={styles.inputContainer}>
+        <Text>New description</Text>
+        <TextInput
+          multiline={true}
+          numberOfLines={3}
+          style={styles.input}
+          onChangeText={(value) => setDescription(value)} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text>New longitude</Text>
+        <TextInput
+          inputMode='decimal'
+          style={styles.input}
+          onChangeText={(value) => setLongitude(value)} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text>New latitude</Text>
+        <TextInput
+          inputMode='decimal'
+          style={styles.input}
+          onChangeText={(value) => setLatitude(value)} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Text>New icon name</Text>
+        <TextInput
+          inputMode='url'
+          style={styles.input}
+          onChangeText={(value) => setIconString(value)} />
+      </View>
+
+      <View style={styles.inputContainer}>
+        <Button title='Send change request' onPress={clickHandler} />
+      </View>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 10,
+  },
+  inputContainer: {
+    marginTop: 3
+  },
+  input: {
+    borderWidth: 1,
+    padding: 3,
+  },
+  validationError: {
+    color: '#F00'
+
   }
+})
 
-  const styles = StyleSheet.create({
-    container: {
-      margin: 10,
-    },
-    inputContainer: {
-      marginTop: 3
-    },
-    input: {
-      borderWidth: 1,
-      padding: 3,
-    },
-    validationError: {
-      color: '#F00'
-
-    }
-  })
-
-  export default NotificationCreate
+export default NotificationCreate
