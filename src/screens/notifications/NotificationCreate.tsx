@@ -13,46 +13,8 @@ const NotificationCreate = (facility: Facility) => {
   const [latitude, setLatitude] = useState(facility?.latitude?.toString() ?? "")
   const [iconUrl, setIconString] = useState("")
 
-  const validate = () => {
-    return {
-      name: validateTitle(),
-      description: validateDescription(),
-      validateType: validateType(),
-      longitude: validateLongitude(),
-      latitude: validateLatitude(),
-      iconUrl: validateIconUrl(),
-    }
-  }
-
-  const validateTitle = () => {
-    return name && name.length > 0
-  }
-
-  const validateType = () => {
-    return type && type.length > 0
-  }
-
-  const validateDescription = () => {
-    return description && description.length > 0
-  }
-
-  const validateLongitude = () => {
-    return longitude && longitude.length > 0
-  }
-
-  const validateLatitude = () => {
-    return latitude && latitude.length > 0
-  }
-
-  const validateIconUrl = () => {
-    return iconUrl && iconUrl.length > 0
-  }
 
   const clickHandler = async () => {
-
-    if (!validate) {
-      return;
-    }
 
     const response = await PhoenixAPI.getInstance().FacilityAPI.sendUpdateRequest({
       facilityId: id,
@@ -95,8 +57,6 @@ const NotificationCreate = (facility: Facility) => {
             onChangeText={(value) => setType(value)} />
         </View>
         
-
-
         <View style={styles.inputContainer}>
           <Text>New description</Text>
           <TextInput
