@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, TextInput, View, Button, StyleSheet, ScrollView } from 'react-native'
+import { Text, TextInput, View, Button, StyleSheet, ScrollView, Alert } from 'react-native'
 import Facility from "../../model/Facility"
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 
@@ -53,17 +53,14 @@ const NotificationCreate = (facility: Facility) => {
       name: name,
       description: description,
       type: "Deze waarde moet uit de api, toch?",
-      longitude: longitude,
-      latitude: latitude,
+      longitude: +longitude,
+      latitude: +latitude,
       iconUrl: iconUrl
+    }).then(function(response) {
+      Alert.alert('Message send!', 'Thank you for reporting this change')
+    }).catch(function(error) {
+      Alert.alert('A network error occured', 'Please check your network connection')
     })
-      .then(function(response) {
-        console.log("response:")
-        console.log(response)
-      }).catch(function(error) {
-        console.log("error:")
-        console.log(error)
-      })
   }
 
   return (
