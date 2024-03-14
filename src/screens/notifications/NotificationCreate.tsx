@@ -62,10 +62,10 @@ const NotificationCreate = (facility: Facility) => {
       longitude: +longitude,
       latitude: +latitude,
       iconUrl: iconUrl
-    }).then(function(response) {
+    }).then(function() {
       Alert.alert('Message send!', 'Thank you for reporting this change')
-    }).catch(function(error) {
-      Alert.alert('A network error occured', 'Please check your network connection')
+    }).catch(function() {
+      Alert.alert('An error occured', 'Please check your input and the network connection')
     })
   }
 
