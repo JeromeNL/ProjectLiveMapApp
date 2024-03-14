@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, TextInput, View, Button, StyleSheet } from 'react-native'
+import { Text, TextInput, View, Button, StyleSheet, ScrollView } from 'react-native'
 import Facility from "../../model/Facility"
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 
@@ -68,58 +68,62 @@ const NotificationCreate = (facility: Facility) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Text>ID of facility</Text>
-        <TextInput
-          inputMode='numeric'
-          style={styles.input}
-          onChangeText={(value) => setId(+value)} />
-      </View>
+      <ScrollView>
 
-      <View style={styles.inputContainer}>
-        <Text>New title</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(value) => setTitle(value)} />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text>ID of facility</Text>
+          <TextInput
+            inputMode='numeric'
+            style={styles.input}
+            onChangeText={(value) => setId(+value)} />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text>New title</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => setTitle(value)} />
+        </View>
 
 
-      <View style={styles.inputContainer}>
-        <Text>New description</Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={3}
-          style={styles.input}
-          onChangeText={(value) => setDescription(value)} />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text>New description</Text>
+          <TextInput
+            multiline={true}
+            numberOfLines={3}
+            style={styles.input}
+            onChangeText={(value) => setDescription(value)} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text>New longitude</Text>
-        <TextInput
-          inputMode='decimal'
-          style={styles.input}
-          onChangeText={(value) => setLongitude(value)} />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text>New longitude</Text>
+          <TextInput
+            inputMode='decimal'
+            style={styles.input}
+            onChangeText={(value) => setLongitude(value)} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text>New latitude</Text>
-        <TextInput
-          inputMode='decimal'
-          style={styles.input}
-          onChangeText={(value) => setLatitude(value)} />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text>New latitude</Text>
+          <TextInput
+            inputMode='decimal'
+            style={styles.input}
+            onChangeText={(value) => setLatitude(value)} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text>New icon name</Text>
-        <TextInput
-          inputMode='url'
-          style={styles.input}
-          onChangeText={(value) => setIconString(value)} />
-      </View>
+        <View style={styles.inputContainer}>
+          <Text>New icon name</Text>
+          <TextInput
+            inputMode='url'
+            style={styles.input}
+            onChangeText={(value) => setIconString(value)} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Button title='Send change request' onPress={clickHandler} />
-      </View>
+        <View style={styles.inputContainer}>
+          <Button title='Send change request' onPress={clickHandler} />
+        </View>
+      </ScrollView>
+
     </View>
   )
 }
