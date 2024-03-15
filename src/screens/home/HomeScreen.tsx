@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from 'react-native'
 import MapView from 'react-native-maps'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
+import Facility from '../../model/Facility'
 
 const HomeScreen = ({ navigation }: any) => {
     const mapRef = React.useRef<MapView>(null)
@@ -14,6 +15,16 @@ const HomeScreen = ({ navigation }: any) => {
         const bounds = MapConfiguration.region.bounds
         mapRef.current.setMapBoundaries(bounds.northeast, bounds.southwest)
     }, [])
+
+    const mockFacility: Facility = {
+        facilityId: 1,
+        name: 'Test Facility',
+        type: 'Test Type',
+        description: 'Test Description',
+        longitude: 0,
+        latitude: 0,
+        iconUrl: 'Test Icon URL'
+    }
 
     return (
         <>
@@ -30,7 +41,11 @@ const HomeScreen = ({ navigation }: any) => {
             />
             <Button
                 title="Create Notification"
-                onPress={() => navigation.push('NotificationCreate')}
+                onPress={() =>
+                    navigation.push('UpsertFacility', {
+                        facility: mockFacility
+                    })
+                }
             />
         </>
     )

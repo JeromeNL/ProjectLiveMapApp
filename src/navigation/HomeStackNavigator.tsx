@@ -1,11 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import Facility from '../model/Facility'
 import HomeScreen from '../screens/home/HomeScreen'
-import NotificationCreate from '../screens/home/NotificationCreate'
+import UpsertFacilityScreen from '../screens/home/UpsertFacilityScreen'
 
 type HomeStackParams = {
-    HomeScreen: undefined
-    NotificationCreate: Facility
+    Home: undefined
+    UpsertFacility: Facility
 }
 
 const Stack = createStackNavigator<HomeStackParams>()
@@ -13,10 +13,10 @@ const Stack = createStackNavigator<HomeStackParams>()
 export const HomeStackNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen
-                name="NotificationCreate"
-                component={NotificationCreate}
+                name="UpsertFacility"
+                component={UpsertFacilityScreen}
             />
         </Stack.Navigator>
     )
