@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import { Button } from 'react-native'
 import MapView from 'react-native-maps'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
-import { Button } from 'react-native'
-import { useNavigation } from '@react-navigation/native';
 
-const HomeScreen = () => {
-    const navigation = useNavigation()
+const HomeScreen = ({ navigation }: any) => {
     const mapRef = React.useRef<MapView>(null)
     const [region, _] = useState(MapConfiguration.region.initial)
 
@@ -30,8 +28,10 @@ const HomeScreen = () => {
                 minZoomLevel={15.7}
                 maxZoomLevel={20}
             />
-            // @ts-ignore
-            <Button title="Create Notification" onPress={() => navigation.navigate('SettingsStack')} />
+            <Button
+                title="Create Notification"
+                onPress={() => navigation.push('NotificationCreate')}
+            />
         </>
     )
 }
