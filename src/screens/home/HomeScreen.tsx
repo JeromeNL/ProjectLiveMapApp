@@ -21,8 +21,8 @@ const HomeScreen = ({ navigation }: any) => {
         name: 'Test Facility',
         type: 'Test Type',
         description: 'Test Description',
-        longitude: 0,
-        latitude: 0,
+        longitude: 6.123,
+        latitude: 5.163,
         iconUrl: 'Test Icon URL'
     }
 

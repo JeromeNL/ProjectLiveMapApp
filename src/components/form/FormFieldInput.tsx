@@ -32,7 +32,7 @@ const FormFieldInput = <T extends FieldValues>({
                         onBlur={onBlur}
                         onChangeText={onChange}
                         placeholder={placeholder}
-                        value={value}
+                        value={value + ''}
                         editable={!disabled}
                     />
                 )}
