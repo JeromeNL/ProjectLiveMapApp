@@ -7,7 +7,7 @@ export class FacilityAPI extends GenericAPI {
     }
 
     async createFacility(facility: Facility) {
-        return this.axiosInstance.post(`/facility/requestchange`, facility)
+        return this.axiosInstance.post(`/facility`, facility)
     }
 }
 
