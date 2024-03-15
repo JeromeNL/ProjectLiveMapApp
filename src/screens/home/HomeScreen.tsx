@@ -40,7 +40,11 @@ const HomeScreen = ({ navigation }: any) => {
                 maxZoomLevel={20}
             />
             <Button
-                title="Create Notification"
+                title="Create Facility"
+                onPress={() => navigation.push('UpsertFacility')}
+            />
+            <Button
+                title="Update Facility"
                 onPress={() =>
                     navigation.push('UpsertFacility', {
                         facility: mockFacility

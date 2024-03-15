@@ -1,135 +1,84 @@
-import React, { useState } from 'react'
-import {
-    Alert,
-    Button,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    View
-} from 'react-native'
-import Facility from '../../model/Facility'
+import { yupResolver } from '@hookform/resolvers/yup'
+import React from 'react'
+import { useForm } from 'react-hook-form'
+import { Alert, Button, ScrollView, StyleSheet, Text, View } from 'react-native'
+import FormFieldInput from '../../components/form/FormFieldInput'
+import Facility, { facilitySchema } from '../../model/Facility'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 
 const UpsertFacilityScreen = ({ route }: any) => {
-    const facility: Facility = route.params.facility
-    console.log(facility)
+    const facilityParam: Facility | undefined = route.params?.facility
+    const isCreating = facilityParam === undefined
 
-    const [id, setId] = useState(facility.facilityId)
-    const [name, setTitle] = useState(facility.name)
-    const [type, setType] = useState(facility.type)
-    const [description, setDescription] = useState(
-        facility?.description?.toString() ?? ''
-    )
-    const [longitude, setLongitude] = useState(
-        facility?.longitude?.toString() ?? ''
-    )
-    const [latitude, setLatitude] = useState(
-        facility?.latitude?.toString() ?? ''
-    )
-    const [iconUrl, setIconString] = useState('')
+    const {
+        control,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<Facility>({
+        defaultValues: facilityParam,
+        resolver: yupResolver(facilitySchema)
+    })
 
-    const clickHandler = async () => {
-        const response = await PhoenixAPI.getInstance()
-            .FacilityAPI.sendUpdateRequest({
-                facilityId: id,
-                name: name,
-                description: description,
-                type: type,
-                longitude: +longitude,
-                latitude: +latitude,
-                iconUrl: iconUrl
-            })
-            .then(function () {
-                Alert.alert(
-                    'Message send!',
-                    'Thank you for reporting this change'
-                )
-            })
-            .catch(function () {
-                Alert.alert(
-                    'An error occured',
-                    'Please check your input and the network connection'
-                )
-            })
+    const clickHandler = async (data: Facility) => {
+        await PhoenixAPI.getInstance().FacilityAPI.sendUpdateRequest(data)
+
+        Alert.alert('Message sent!', 'Thank you for reporting this change')
     }
 
     return (
         <View style={styles.container}>
             <ScrollView>
-                <View style={styles.inputContainer}>
-                    <Text>ID of facility</Text>
-                    <TextInput
-                        inputMode="numeric"
-                        style={styles.input}
-                        onChangeText={(value) => setId(+value)}
-                        value={id.toString()}
-                    />
-                </View>
+                {!isCreating && (
+                    <View style={styles.inputContainer}>
+                        <Text>
+                            ID of facility:{' '}
+                            {facilityParam?.facilityId?.toString()}
+                        </Text>
+                    </View>
+                )}
 
-                <View style={styles.inputContainer}>
-                    <Text>New title</Text>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(value) => setTitle(value)}
-                        value={name}
-                    />
-                </View>
+                <FormFieldInput
+                    label="Naam"
+                    property="name"
+                    control={control}
+                    errors={errors}
+                />
 
-                <View style={styles.inputContainer}>
-                    <Text>Type</Text>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(value) => setType(value)}
-                        value={type}
-                    />
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <Text>New description</Text>
-                    <TextInput
-                        multiline={true}
-                        numberOfLines={3}
-                        style={styles.input}
-                        onChangeText={(value) => setDescription(value)}
-                        value={description}
-                    />
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <Text>New longitude</Text>
-                    <TextInput
-                        inputMode="decimal"
-                        style={styles.input}
-                        onChangeText={(value) => setLongitude(value)}
-                        value={longitude}
-                    />
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <Text>New latitude</Text>
-                    <TextInput
-                        inputMode="decimal"
-                        style={styles.input}
-                        onChangeText={(value) => setLatitude(value)}
-                        value={latitude}
-                    />
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <Text>New icon name</Text>
-                    <TextInput
-                        inputMode="url"
-                        style={styles.input}
-                        onChangeText={(value) => setIconString(value)}
-                        value={iconUrl}
-                    />
-                </View>
+                <FormFieldInput
+                    label="Beschrijving"
+                    property="description"
+                    control={control}
+                    errors={errors}
+                />
+                <FormFieldInput
+                    label="Type"
+                    property="type"
+                    control={control}
+                    errors={errors}
+                />
+                <FormFieldInput
+                    label="Longtitude"
+                    property="longitude"
+                    control={control}
+                    errors={errors}
+                />
+                <FormFieldInput
+                    label="Latitude"
+                    property="latitude"
+                    control={control}
+                    errors={errors}
+                />
+                <FormFieldInput
+                    label="Icon URL"
+                    property="iconUrl"
+                    control={control}
+                    errors={errors}
+                />
 
                 <View style={styles.inputContainer}>
                     <Button
                         title="Send change request"
-                        onPress={clickHandler}
+                        onPress={handleSubmit(clickHandler)}
                     />
                 </View>
             </ScrollView>
@@ -142,11 +91,11 @@ const styles = StyleSheet.create({
         margin: 10
     },
     inputContainer: {
-        marginTop: 3
+        marginTop: 10
     },
     input: {
         borderWidth: 1,
-        padding: 3
+        padding: 5
     },
     validationError: {
         color: '#F00'
