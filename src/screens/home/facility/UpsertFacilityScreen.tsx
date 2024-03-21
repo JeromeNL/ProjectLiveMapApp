@@ -2,22 +2,29 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Alert, Button, ScrollView, StyleSheet, Text, View } from 'react-native'
-import FormFieldInput from '../../components/form/FormFieldInput'
-import Facility, { facilitySchema } from '../../model/Facility'
-import { PhoenixAPI } from '../../network/PhoenixAPI'
+import FormFieldInput from '../../../components/form/FormFieldInput'
+import Facility, { facilitySchema } from '../../../model/Facility'
+import { PhoenixAPI } from '../../../network/PhoenixAPI'
+import { IconPicker } from './components/IconPicker'
 
 const UpsertFacilityScreen = ({ route }: any) => {
     const facilityParam: Partial<Facility> | undefined = route.params?.facility
-    const isCreating = facilityParam === undefined
+    const isCreating = facilityParam?.facilityId === undefined
 
     const {
         control,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
+        setValue
     } = useForm<Facility>({
         defaultValues: facilityParam,
         resolver: yupResolver(facilitySchema)
     })
+
+    const updateIconProperty = (value: string) => {
+        const propertyName: keyof Facility = 'iconUrl'
+        setValue(propertyName, value)
+    }
 
     const clickHandler = async (data: Facility) => {
         if (isCreating) {
@@ -40,6 +47,7 @@ const UpsertFacilityScreen = ({ route }: any) => {
                         </Text>
                     </View>
                 )}
+                <IconPicker onSelect={(item) => updateIconProperty(item)} />
 
                 <FormFieldInput
                     label="Naam"
@@ -76,12 +84,6 @@ const UpsertFacilityScreen = ({ route }: any) => {
                         errors={errors}
                     />
                 )}
-                <FormFieldInput
-                    label="Icon URL"
-                    property="iconUrl"
-                    control={control}
-                    errors={errors}
-                />
 
                 <View style={styles.inputContainer}>
                     <Button
