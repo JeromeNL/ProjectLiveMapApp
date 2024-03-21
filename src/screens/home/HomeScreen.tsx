@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Button } from 'react-native'
 import MapView from 'react-native-maps'
 import FlagIcon from '../../../assets/icons/flag.svg'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
+import Facility from '../../model/Facility'
+import { PhoenixAPI } from '../../network/PhoenixAPI'
 import { Colors } from '../../configuration/styles/Colors'
 import FloatingMapAction from './components/FloatingMapAction'
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: any) => {
     const mapRef = React.useRef<MapView>(null)
     const [region, _] = useState(MapConfiguration.region.initial)
+
+    const [facilities, setFacilities] = useState<Facility[]>([])
+
+    useEffect(() => {
+        PhoenixAPI.getInstance()
+            .FacilityAPI.getFacilities()
+            .then((res) => {
+                setFacilities(res.data)
+            })
+    }, [])
 
     useEffect(() => {
         if (!mapRef.current) {
@@ -27,7 +39,6 @@ const HomeScreen = () => {
                 style={{ flex: 1 }}
                 region={region}
                 showsUserLocation
-                zoomControlEnabled
                 minZoomLevel={15.7}
                 maxZoomLevel={20}
             />
@@ -39,6 +50,18 @@ const HomeScreen = () => {
                     }}
                 />
             </View>
+            <Button
+                title="Create Facility"
+                onPress={() => navigation.push('UpsertFacility')}
+            />
+            <Button
+                title="Update Facility"
+                onPress={() =>
+                    navigation.push('UpsertFacility', {
+                        facility: facilities[0]
+                    })
+                }
+            />
         </>
     )
 }
