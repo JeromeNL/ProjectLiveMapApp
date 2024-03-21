@@ -26,6 +26,9 @@ export const IconPicker: React.FC<IconPickerProps> = ({
     const [selectedIcon, setSelectedIcon] = useState(
         IconManager.iconToKebabCase(availableIcons[0])
     )
+    const SelectedIconComponent = selectedIcon
+        ? IconManager.getIcon(selectedIcon)
+        : null
 
     return (
         <View>
@@ -33,8 +36,9 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                 onPress={() => setIsVisible(true)}
                 style={styles.button}
             >
-                {selectedIcon &&
-                    React.createElement(IconManager.getIcon(selectedIcon))}
+                {SelectedIconComponent && (
+                    <SelectedIconComponent color={Colors.primary} />
+                )}
             </TouchableOpacity>
 
             <Modal
@@ -65,7 +69,9 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                                     }}
                                     style={styles.gridItem}
                                 >
-                                    {React.createElement(item)}
+                                    {React.createElement(item, {
+                                        color: Colors.primary
+                                    })}
                                 </TouchableOpacity>
                             )}
                         />
@@ -107,3 +113,4 @@ const styles = StyleSheet.create({
         borderRadius: 5
     }
 })
+
