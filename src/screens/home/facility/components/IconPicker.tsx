@@ -1,3 +1,9 @@
+import {
+    IconChefHat,
+    IconHorseToy,
+    IconSmoking,
+    IconTrash
+} from '@tabler/icons-react-native'
 import React, { useMemo, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
@@ -13,9 +19,13 @@ export const IconPicker: React.FC<IconPickerProps> = ({
     onSelect
 }: IconPickerProps) => {
     const [isVisible, setIsVisible] = useState(false)
-    const availableIcons = useMemo(() => IconManager.getAvailableIcons(), [])
-    const [selectedIcon, setSelectedIcon] = useState(availableIcons[0].key)
-    const selectedIconComponent = IconManager.getIcon(selectedIcon)
+    const availableIcons = useMemo(
+        () => [IconTrash, IconChefHat, IconHorseToy, IconSmoking],
+        []
+    )
+    const [selectedIcon, setSelectedIcon] = useState(
+        IconManager.iconToKebabCase(availableIcons[0])
+    )
 
     return (
         <View>
@@ -23,7 +33,8 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                 onPress={() => setIsVisible(true)}
                 style={styles.button}
             >
-                {React.createElement(selectedIconComponent)}
+                {selectedIcon &&
+                    React.createElement(IconManager.getIcon(selectedIcon))}
             </TouchableOpacity>
 
             <Modal
@@ -43,13 +54,18 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                             renderItem={({ item }) => (
                                 <TouchableOpacity
                                     onPress={() => {
-                                        setSelectedIcon(item.key)
-                                        onSelect(item.key)
+                                        const key =
+                                            IconManager.iconToKebabCase(item)
+                                        if (key === null) {
+                                            return
+                                        }
+                                        setSelectedIcon(key)
+                                        onSelect(key)
                                         setIsVisible(false)
                                     }}
                                     style={styles.gridItem}
                                 >
-                                    {<item.component />}
+                                    {React.createElement(item)}
                                 </TouchableOpacity>
                             )}
                         />

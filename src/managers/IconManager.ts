@@ -1,49 +1,25 @@
-import {
-    Icon,
-    IconChefHat,
-    IconHorseToy,
-    IconQuestionMark,
-    IconSmoking,
-    IconTrash
-} from '@tabler/icons-react-native'
-
-export enum PhoenixIcon {
-    ChefHat = 'chef-hat',
-    Trash = 'trash',
-    HorseToy = 'horse-toy',
-    Smoking = 'smoking'
-}
+import * as TablerIcon from '@tabler/icons-react-native'
+import * as changeCase from 'change-case'
 
 class IconManager {
-    static getIcon(key: PhoenixIcon): Icon
-    static getIcon(key: string): Icon
-    static getIcon(key: PhoenixIcon | string): Icon {
-        switch (key) {
-            case PhoenixIcon.ChefHat:
-                return IconChefHat
-            case PhoenixIcon.Trash:
-                return IconTrash
-            case PhoenixIcon.HorseToy:
-                return IconHorseToy
-            case PhoenixIcon.Smoking:
-                return IconSmoking
-            default:
-                return IconQuestionMark
+    static getIcon(key: string): TablerIcon.Icon {
+        // Assume kebab case
+        if (key[0] !== key[0].toUpperCase()) {
+            key = `Icon${changeCase.pascalCase(key)}`
         }
+        const icon = TablerIcon[key as keyof typeof TablerIcon]
+        if (icon) {
+            return icon as TablerIcon.Icon
+        }
+        return TablerIcon.IconQuestionMark
     }
 
-    static getAvailableIcons(): { key: string; component: Icon }[] {
-        const icons: { key: string; component: Icon }[] = []
-        for (const key in PhoenixIcon) {
-            if (Object.prototype.hasOwnProperty.call(PhoenixIcon, key)) {
-                const enumKey = PhoenixIcon[key as keyof typeof PhoenixIcon]
-                icons.push({
-                    key: enumKey,
-                    component: IconManager.getIcon(enumKey)
-                })
-            }
+    static iconToKebabCase(icon: TablerIcon.Icon): string | null {
+        const iconName = icon.displayName?.replace('Icon', '')
+        if (!iconName) {
+            return null
         }
-        return icons
+        return changeCase.kebabCase(iconName)
     }
 }
 

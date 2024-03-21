@@ -15,6 +15,7 @@
     "@react-navigation/stack": "^6.3.23",
     "@tabler/icons-react-native": "^3.1.0",
     "axios": "^1.6.7",
+    "change-case": "^5.4.3",
     "expo": "~50.0.5",
     "expo-location": "~16.5.5",
     "expo-status-bar": "~1.11.1",
