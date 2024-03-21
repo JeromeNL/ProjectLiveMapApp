@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-native'
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
 import Facility from '../../model/Facility'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
@@ -38,7 +38,21 @@ const HomeScreen = ({ navigation }: any) => {
                 showsUserLocation
                 minZoomLevel={15.7}
                 maxZoomLevel={20}
-            />
+            >
+                {facilities.map((facility) => (
+                    <Marker
+                        // @ts-ignore
+                        key={facility.id}
+                        coordinate={{
+                            latitude: facility.latitude,
+                            longitude: facility.longitude
+                        }}
+                        title={facility.name}
+                        description={facility.description}
+                    />
+                ))}
+            </MapView>
+
             <Button
                 title="Create Facility"
                 onPress={() => navigation.push('UpsertFacility')}
