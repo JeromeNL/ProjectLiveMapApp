@@ -7,7 +7,7 @@ import Facility, { facilitySchema } from '../../model/Facility'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 
 const UpsertFacilityScreen = ({ route }: any) => {
-    const facilityParam: Facility | undefined = route.params?.facility
+    const facilityParam: Partial<Facility> | undefined = route.params?.facility
     const isCreating = facilityParam === undefined
 
     const {
@@ -60,18 +60,22 @@ const UpsertFacilityScreen = ({ route }: any) => {
                     control={control}
                     errors={errors}
                 />
-                <FormFieldInput
-                    label="Longtitude"
-                    property="longitude"
-                    control={control}
-                    errors={errors}
-                />
-                <FormFieldInput
-                    label="Latitude"
-                    property="latitude"
-                    control={control}
-                    errors={errors}
-                />
+                {!facilityParam?.longitude && (
+                    <FormFieldInput
+                        label="Longtitude"
+                        property="longitude"
+                        control={control}
+                        errors={errors}
+                    />
+                )}
+                {!facilityParam?.latitude && (
+                    <FormFieldInput
+                        label="Latitude"
+                        property="latitude"
+                        control={control}
+                        errors={errors}
+                    />
+                )}
                 <FormFieldInput
                     label="Icon URL"
                     property="iconUrl"

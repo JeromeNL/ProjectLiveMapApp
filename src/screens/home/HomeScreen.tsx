@@ -1,25 +1,40 @@
+import { IconPlus } from '@tabler/icons-react-native'
+import { LocationObject } from 'expo-location'
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Button } from 'react-native'
+import { Button, StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
-import FlagIcon from '../../../assets/icons/flag.svg'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
-import Facility from '../../model/Facility'
-import { PhoenixAPI } from '../../network/PhoenixAPI'
 import { Colors } from '../../configuration/styles/Colors'
+import { LocationManager } from '../../managers/LocationManager'
+import Facility from '../../model/Facility'
 import FloatingMapAction from './components/FloatingMapAction'
 
 const HomeScreen = ({ navigation }: any) => {
+    const [locationState, setLocationState] = useState<LocationObject | null>(
+        null
+    )
     const mapRef = React.useRef<MapView>(null)
     const [region, _] = useState(MapConfiguration.region.initial)
 
     const [facilities, setFacilities] = useState<Facility[]>([])
 
     useEffect(() => {
-        PhoenixAPI.getInstance()
-            .FacilityAPI.getFacilities()
-            .then((res) => {
-                setFacilities(res.data)
-            })
+        // This endpoint doesn't exist
+        // PhoenixAPI.getInstance()
+        //     .FacilityAPI.getFacilities()
+        //     .then((res) => {
+        //         setFacilities(res.data)
+        //     })
+
+        async function handle() {
+            const location = await LocationManager.getCurrentLocation()
+            if (!location) {
+                return
+            }
+            setLocationState(location)
+        }
+
+        handle()
     }, [])
 
     useEffect(() => {
@@ -42,18 +57,27 @@ const HomeScreen = ({ navigation }: any) => {
                 minZoomLevel={15.7}
                 maxZoomLevel={20}
             />
-            <View style={styles.floatingActionContainer}>
-                <FloatingMapAction
-                    icon={<FlagIcon stroke={Colors.white} />}
-                    onPress={() => {
-                        console.log('Floating action pressed')
-                    }}
-                />
-            </View>
-            <Button
-                title="Create Facility"
-                onPress={() => navigation.push('UpsertFacility')}
-            />
+            {locationState && (
+                <View style={styles.floatingActionContainer}>
+                    <FloatingMapAction
+                        icon={<IconPlus color={Colors.white} />}
+                        onPress={async () => {
+                            const currentLocation =
+                                await LocationManager.getCurrentLocation()
+                            if (!currentLocation) {
+                                return
+                            }
+                            const partialFacility: Partial<Facility> = {
+                                latitude: currentLocation.coords.latitude,
+                                longitude: currentLocation.coords.longitude
+                            }
+                            navigation.push('UpsertFacility', {
+                                facility: partialFacility
+                            })
+                        }}
+                    />
+                </View>
+            )}
             <Button
                 title="Update Facility"
                 onPress={() =>
