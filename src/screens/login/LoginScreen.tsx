@@ -13,19 +13,21 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ setAuthenticated }) => {
         try {
             const response =
                 await PhoenixAPI.getInstance().AuthAPI.login(username)
-            console.log(response.data)
             setAuthenticated(true)
         } catch (error) {
-            Alert.alert('Login Failed', 'Incorrect username. Please try again.')
+            Alert.alert(
+                'Login Mislukt',
+                'Ongeldige gebruikersnaam. Probeer het opnieuw.'
+            )
         }
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Login Screen</Text>
+            <Text style={styles.title}>Login Scherm</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Username"
+                placeholder="Gebruikersnaam"
                 value={username}
                 onChangeText={setUsername}
             />

@@ -7,6 +7,7 @@ import { AuthAPI } from './libs/AuthAPI'
 export class PhoenixAPI {
     public MapAPI!: MapAPI
     public FacilityAPI!: FacilityAPI
+    public AuthAPI!: AuthAPI
 
     private static instance: PhoenixAPI
 
@@ -28,6 +29,7 @@ export class PhoenixAPI {
             baseURL: `http://${localhost}:5136`
         })
         this.MapAPI = new MapAPI(axiosClient)
+        this.AuthAPI = new AuthAPI(axiosClient)
         this.FacilityAPI = new FacilityAPI(axiosClient)
     }
 }
