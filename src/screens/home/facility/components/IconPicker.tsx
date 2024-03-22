@@ -85,7 +85,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
 const styles = StyleSheet.create({
     button: {
         padding: 10,
-        backgroundColor: '#ddd',
+        backgroundColor: Colors.lightGray,
         alignItems: 'center'
     },
     modalOverlay: {
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         width: '90%',
-        backgroundColor: 'white',
+        backgroundColor: Colors.white,
         padding: 20,
         borderRadius: 4
     },
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: 100,
-        backgroundColor: '#ececec',
+        backgroundColor: Colors.lightGray,
         borderRadius: 5
     }
 })
