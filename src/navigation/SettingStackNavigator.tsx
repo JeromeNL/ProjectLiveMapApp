@@ -10,7 +10,7 @@ export const SettingStackNavigator = ({ route }: any) => {
 
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Settings">
+            <Stack.Screen name="Instellingen">
                 {(props) => (
                     <SettingScreen
                         {...props}

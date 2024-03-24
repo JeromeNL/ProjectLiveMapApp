@@ -1,19 +1,17 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 
-interface LoginScreenProps {
-    setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-const LoginScreen: React.FC<LoginScreenProps> = ({ setAuthenticated }) => {
+const LoginScreen: React.FC = () => {
     const [username, setUsername] = useState('')
+    const dispatch = useDispatch()
 
     const handleLogin = async () => {
         try {
             const response =
                 await PhoenixAPI.getInstance().AuthAPI.login(username)
-            setAuthenticated(true)
+            dispatch({ type: 'LOGIN' })
         } catch (error) {
             Alert.alert(
                 'Login Mislukt',

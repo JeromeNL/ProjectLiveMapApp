@@ -4,17 +4,16 @@ import LoginScreen from '../screens/login/LoginScreen'
 
 const Stack = createStackNavigator()
 
-export const LoginStackNavigator = ({ setAuthenticated }: any) => {
+const LoginStackNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Login" options={{ headerShown: false }}>
-                {(props) => (
-                    <LoginScreen
-                        {...props}
-                        setAuthenticated={setAuthenticated}
-                    />
-                )}
-            </Stack.Screen>
+            <Stack.Screen
+                name="Login"
+                options={{ headerShown: false }}
+                component={LoginScreen}
+            />
         </Stack.Navigator>
     )
 }
+
+export default LoginStackNavigator
