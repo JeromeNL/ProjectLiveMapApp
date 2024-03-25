@@ -1,11 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack'
-import Facility from '../model/Facility'
+import ProposedFacility from '../model/ProposedFacility'
 import HomeScreen from '../screens/home/HomeScreen'
 import UpsertFacilityScreen from '../screens/home/facility/UpsertFacilityScreen'
 
 type HomeStackParams = {
     Home: undefined
-    UpsertFacility: Facility
+    UpsertFacility: ProposedFacility
 }
 
 const Stack = createStackNavigator<HomeStackParams>()
