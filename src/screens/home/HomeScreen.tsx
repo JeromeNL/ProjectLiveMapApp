@@ -60,7 +60,7 @@ const HomeScreen = ({ navigation }: any) => {
                 maxZoomLevel={20}
             >
                 {facilities.map((facility) => (
-                    <MapMarker key={facility.id} facility={facility} />
+                    <MapMarker key={facility.id} facility={facility} mapRef={mapRef}/>
                 ))}
             </MapView>
             {locationState && (
