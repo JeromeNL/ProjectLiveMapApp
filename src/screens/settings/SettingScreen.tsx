@@ -1,8 +1,7 @@
 import React from 'react'
-import { Button, Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Button, StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { authSlice } from '../../redux/reducers/authReducer'
-import { Colors } from '../../configuration/styles/Colors'
 
 const SettingScreen = ({ navigation }: any) => {
     const dispatch = useDispatch()
@@ -20,9 +19,7 @@ const SettingScreen = ({ navigation }: any) => {
                 />
             </View>
             <View style={styles.bottomContainer}>
-                <TouchableOpacity onPress={handleLogout}>
-                    <Text style={styles.logoutText}>Log uit</Text>
-                </TouchableOpacity>
+                <Button title="Log uit" onPress={handleLogout} />
             </View>
         </View>
     )
@@ -42,11 +39,6 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         marginBottom: 20
-    },
-    logoutText: {
-        textDecorationLine: 'underline',
-        color: Colors.blue,
-        fontSize: 16
     }
 })
 
