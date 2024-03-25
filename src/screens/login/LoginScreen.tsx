@@ -10,11 +10,11 @@ const LoginScreen: React.FC = () => {
     const dispatch = useDispatch()
 
     const handleLogin = async () => {
-        try {
-            const response =
-                await PhoenixAPI.getInstance().AuthAPI.login(username)
+        const response = await PhoenixAPI.getInstance().AuthAPI.login(username)
+
+        if (response.status == 200) {
             dispatch(login(username))
-        } catch (error) {
+        } else {
             Alert.alert(
                 'Login Mislukt',
                 'Ongeldige gebruikersnaam. Probeer het opnieuw.'
