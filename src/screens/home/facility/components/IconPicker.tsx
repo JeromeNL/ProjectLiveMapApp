@@ -1,8 +1,9 @@
 import {
     IconChefHat,
-    IconHorseToy,
+    IconSandbox,
     IconSmoking,
-    IconTrash
+    IconTrash,
+    IconX
 } from '@tabler/icons-react-native'
 import React, { useMemo, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -20,7 +21,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
 }: IconPickerProps) => {
     const [isVisible, setIsVisible] = useState(false)
     const availableIcons = useMemo(
-        () => [IconTrash, IconChefHat, IconHorseToy, IconSmoking],
+        () => [IconTrash, IconChefHat, IconSandbox, IconSmoking],
         []
     )
     const [selectedIcon, setSelectedIcon] = useState(
@@ -50,6 +51,12 @@ export const IconPicker: React.FC<IconPickerProps> = ({
             >
                 <View style={styles.modalOverlay}>
                     <View style={styles.modalContent}>
+                        <TouchableOpacity
+                            style={styles.closeButton}
+                            onPress={() => setIsVisible(false)}
+                        >
+                            <IconX color={Colors.gray} />
+                        </TouchableOpacity>
                         <FlatGrid
                             itemDimension={50}
                             maxItemsPerRow={3}
@@ -111,6 +118,11 @@ const styles = StyleSheet.create({
         height: 100,
         backgroundColor: Colors.lightGray,
         borderRadius: 5
+    },
+    closeButton: {
+        position: 'absolute',
+        top: 5,
+        right: 5
     }
 })
 

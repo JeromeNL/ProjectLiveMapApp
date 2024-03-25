@@ -8,10 +8,10 @@ class IconManager {
             key = `Icon${changeCase.pascalCase(key)}`
         }
         const icon = TablerIcon[key as keyof typeof TablerIcon]
-        if (icon) {
-            return icon as TablerIcon.Icon
+        if (!icon) {
+            return TablerIcon.IconQuestionMark
         }
-        return TablerIcon.IconQuestionMark
+        return icon as TablerIcon.Icon
     }
 
     static iconToKebabCase(icon: TablerIcon.Icon): string | null {
@@ -24,3 +24,4 @@ class IconManager {
 }
 
 export default IconManager
+
