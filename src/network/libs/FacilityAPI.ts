@@ -2,15 +2,8 @@ import Facility from '../../model/Facility'
 import { GenericAPI } from './abstract/GenericAPI'
 
 export class FacilityAPI extends GenericAPI {
-    async updateFacility(facility: Facility) {
-        return await this.axiosInstance.post(
-            `/facility/requestchange`,
-            facility
-        )
-    }
-
-    async createFacility(facility: Facility) {
-        return await this.axiosInstance.post(`/facility`, facility)
+    async upsertFacility(facility: Facility) {
+        return await this.axiosInstance.post(`/facilities/upsert`, facility)
     }
 
     async getFacilities() {

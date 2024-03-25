@@ -20,11 +20,7 @@ const UpsertFacilityScreen = ({ route }: any) => {
     })
 
     const clickHandler = async (data: Facility) => {
-        if (isCreating) {
-            await PhoenixAPI.getInstance().FacilityAPI.createFacility(data)
-        } else {
-            await PhoenixAPI.getInstance().FacilityAPI.updateFacility(data)
-        }
+        await PhoenixAPI.getInstance().FacilityAPI.upsertFacility(data)
 
         Alert.alert('Message sent!', 'Thank you for reporting this change')
     }
