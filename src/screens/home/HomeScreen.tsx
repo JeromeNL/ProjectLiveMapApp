@@ -7,6 +7,7 @@ import { MapConfiguration } from '../../configuration/MapConfiguration'
 import { Colors } from '../../configuration/styles/Colors'
 import { LocationManager } from '../../managers/LocationManager'
 import Facility from '../../model/Facility'
+import { PhoenixAPI } from '../../network/PhoenixAPI'
 import FloatingMapAction from './components/FloatingMapAction'
 
 const HomeScreen = ({ navigation }: any) => {
