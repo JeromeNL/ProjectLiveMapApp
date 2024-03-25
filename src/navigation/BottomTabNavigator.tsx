@@ -1,6 +1,6 @@
 import {
-    IconHome2,
-    IconAdjustmentsCog
+    IconHome,
+    IconUser
 } from '@tabler/icons-react-native'
 
 import React from 'react'
@@ -19,7 +19,7 @@ export const BottomTabNavigator = () => {
                 component={HomeStackNavigator} 
                 options={{
                     title: 'Home',
-                    tabBarIcon: ({color}) => <IconHome2 color={color}/>
+                    tabBarIcon: ({color}) => <IconHome color={color}/>
                 }}
             />
             <BottomTab.Screen
@@ -27,7 +27,7 @@ export const BottomTabNavigator = () => {
                 component={SettingStackNavigator}
                 options={{
                     title: 'Settings',
-                    tabBarIcon: ({color}) => <IconAdjustmentsCog color={color}/>
+                    tabBarIcon: ({color}) => <IconUser color={color}/>
                 }}
             />
         </BottomTab.Navigator>
