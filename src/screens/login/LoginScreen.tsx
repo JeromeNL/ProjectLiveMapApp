@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
-import { login } from '../../redux/reducers/authReducer'
+import { authSlice } from '../../redux/reducers/authReducer'
 
-const LoginScreen: React.FC = () => {
+function LoginScreen() {
     const [username, setUsername] = useState('')
     const dispatch = useDispatch()
 
@@ -13,7 +13,7 @@ const LoginScreen: React.FC = () => {
         const response = await PhoenixAPI.getInstance().AuthAPI.login(username)
 
         if (response.status == 200) {
-            dispatch(login(username))
+            dispatch(authSlice.actions.login(username))
         } else {
             Alert.alert(
                 'Login Mislukt',

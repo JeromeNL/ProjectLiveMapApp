@@ -1,14 +1,14 @@
 import React from 'react'
 import { Button, Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { logout } from '../../redux/reducers/authReducer'
+import { authSlice } from '../../redux/reducers/authReducer'
 import { Colors } from '../../configuration/styles/Colors'
 
 const SettingScreen = ({ navigation }: any) => {
     const dispatch = useDispatch()
 
     const handleLogout = () => {
-        dispatch(logout())
+        dispatch(authSlice.actions.logout())
     }
 
     return (
