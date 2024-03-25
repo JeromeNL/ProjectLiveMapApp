@@ -1,13 +1,7 @@
 import { number, object, string } from 'yup'
 
-type Facility = {
+interface ProposedFacility extends BaseFacility {
     facilityId?: number
-    name: string
-    description: string
-    type: string
-    longitude: number
-    latitude: number
-    iconUrl?: string
 }
 
 export const facilitySchema = object({
@@ -17,8 +11,8 @@ export const facilitySchema = object({
     type: string().required(),
     longitude: number().required(),
     latitude: number().required(),
-    iconUrl: string()
+    iconName: string().required()
 })
 
-export default Facility
+export default ProposedFacility
 
