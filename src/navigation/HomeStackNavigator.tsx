@@ -13,10 +13,19 @@ const Stack = createStackNavigator<HomeStackParams>()
 export const HomeStackNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ title: 'Kaart' }}
+            />
             <Stack.Screen
                 name="UpsertFacility"
                 component={UpsertFacilityScreen}
+                options={({ route }) => ({
+                    title:
+                        'Faciliteit ' +
+                        (route.params.facilityId ? 'aanpassen' : 'toevoegen')
+                })}
             />
         </Stack.Navigator>
     )
