@@ -2,32 +2,22 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Alert, Button, ScrollView, StyleSheet, Text, View } from 'react-native'
-import FormFieldInput from '../../../components/form/FormFieldInput'
-import ProposedFacility, {
-    facilitySchema
-} from '../../../model/ProposedFacility'
-import { PhoenixAPI } from '../../../network/PhoenixAPI'
-import { IconPicker } from './components/IconPicker'
+import FormFieldInput from '../../components/form/FormFieldInput'
+import ProposedFacility, { facilitySchema } from '../../model/ProposedFacility'
+import { PhoenixAPI } from '../../network/PhoenixAPI'
 
 const UpsertFacilityScreen = ({ route }: any) => {
-    const facilityParam: Partial<ProposedFacility> | undefined =
-        route.params?.facility
-    const isCreating = facilityParam?.facilityId === undefined
+    const facilityParam: ProposedFacility | undefined = route.params?.facility
+    const isCreating = facilityParam === undefined
 
     const {
         control,
         handleSubmit,
-        formState: { errors },
-        setValue
+        formState: { errors }
     } = useForm<ProposedFacility>({
         defaultValues: facilityParam,
         resolver: yupResolver(facilitySchema)
     })
-
-    const updateIconProperty = (value: string) => {
-        const propertyName: keyof ProposedFacility = 'iconUrl'
-        setValue(propertyName, value)
-    }
 
     const clickHandler = async (data: ProposedFacility) => {
         await PhoenixAPI.getInstance().FacilityAPI.upsertFacility(data)
@@ -46,7 +36,6 @@ const UpsertFacilityScreen = ({ route }: any) => {
                         </Text>
                     </View>
                 )}
-                <IconPicker onSelect={(item) => updateIconProperty(item)} />
 
                 <FormFieldInput
                     label="Naam"
@@ -67,22 +56,18 @@ const UpsertFacilityScreen = ({ route }: any) => {
                     control={control}
                     errors={errors}
                 />
-                {!facilityParam?.longitude && (
-                    <FormFieldInput
-                        label="Longtitude"
-                        property="longitude"
-                        control={control}
-                        errors={errors}
-                    />
-                )}
-                {!facilityParam?.latitude && (
-                    <FormFieldInput
-                        label="Latitude"
-                        property="latitude"
-                        control={control}
-                        errors={errors}
-                    />
-                )}
+                <FormFieldInput
+                    label="Longtitude"
+                    property="longitude"
+                    control={control}
+                    errors={errors}
+                />
+                <FormFieldInput
+                    label="Latitude"
+                    property="latitude"
+                    control={control}
+                    errors={errors}
+                />
 
                 <View style={styles.inputContainer}>
                     <Button

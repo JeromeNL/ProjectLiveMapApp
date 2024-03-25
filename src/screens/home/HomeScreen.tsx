@@ -2,13 +2,15 @@ import { IconPlus } from '@tabler/icons-react-native'
 import { LocationObject } from 'expo-location'
 import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, View } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import MapView from 'react-native-maps'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
 import { Colors } from '../../configuration/styles/Colors'
 import { LocationManager } from '../../managers/LocationManager'
-import Facility from '../../model/Facility'
+import { Facility } from '../../model/Facility'
+import ProposedFacility from '../../model/ProposedFacility'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 import FloatingMapAction from './components/FloatingMapAction'
+import MapMarker from './components/MapMarker'
 
 const HomeScreen = ({ navigation }: any) => {
     const [locationState, setLocationState] = useState<LocationObject | null>(
@@ -58,16 +60,7 @@ const HomeScreen = ({ navigation }: any) => {
                 maxZoomLevel={20}
             >
                 {facilities.map((facility) => (
-                    <Marker
-                        // @ts-ignore
-                        key={facility.id}
-                        coordinate={{
-                            latitude: facility.latitude,
-                            longitude: facility.longitude
-                        }}
-                        title={facility.name}
-                        description={facility.description}
-                    />
+                    <MapMarker key={facility.id} facility={facility} />
                 ))}
             </MapView>
             {locationState && (
@@ -80,7 +73,7 @@ const HomeScreen = ({ navigation }: any) => {
                             if (!currentLocation) {
                                 return
                             }
-                            const partialFacility: Partial<Facility> = {
+                            const partialFacility: Partial<ProposedFacility> = {
                                 latitude: currentLocation.coords.latitude,
                                 longitude: currentLocation.coords.longitude
                             }
