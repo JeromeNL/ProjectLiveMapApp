@@ -1,8 +1,8 @@
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import React from 'react'
 import { Provider, useSelector } from 'react-redux'
-import store, { RootState } from './src/redux/store/store'
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { BottomTabNavigator } from './src/navigation/BottomTabNavigator'
+import store, { RootState } from './src/redux/store'
 import LoginScreen from './src/screens/login/LoginScreen'
 
 export default function App() {
