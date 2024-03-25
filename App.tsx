@@ -3,7 +3,7 @@ import { Provider, useSelector } from 'react-redux'
 import store, { RootState } from './src/redux/store/store'
 import { NavigationContainer } from '@react-navigation/native'
 import { BottomTabNavigator } from './src/navigation/BottomTabNavigator'
-import LoginStackNavigator from './src/navigation/LoginStackNavigator'
+import LoginScreen from './src/screens/login/LoginScreen'
 
 export default function App() {
     return (
@@ -16,9 +16,9 @@ export default function App() {
 }
 
 const RootNavigator = () => {
-    const authenticated = useSelector(
+    const isAuthenticated = useSelector(
         (state: RootState) => state.auth.isAuthenticated
     )
 
-    return authenticated ? <BottomTabNavigator /> : <LoginStackNavigator />
+    return isAuthenticated ? <BottomTabNavigator /> : <LoginScreen />
 }

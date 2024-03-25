@@ -1,22 +1,31 @@
-const initialState = {
-    isAuthenticated: false
+// authreducer.ts
+import { createSlice } from '@reduxjs/toolkit'
+
+interface AuthState {
+    isAuthenticated: boolean
+    username: string
 }
 
-const authReducer = (state = initialState, action: any) => {
-    switch (action.type) {
-        case 'LOGIN':
-            return {
-                ...state,
-                isAuthenticated: true
-            }
-        case 'LOGOUT':
-            return {
-                ...state,
-                isAuthenticated: false
-            }
-        default:
-            return state
+const initialState: AuthState = {
+    isAuthenticated: false,
+    username: ''
+}
+
+const authSlice = createSlice({
+    name: 'auth',
+    initialState,
+    reducers: {
+        login(state, action) {
+            state.isAuthenticated = true
+            state.username = action.payload
+        },
+        logout(state) {
+            state.isAuthenticated = false
+            state.username = ''
+        }
     }
-}
+})
 
-export default authReducer
+export const { login, logout } = authSlice.actions
+
+export default authSlice.reducer

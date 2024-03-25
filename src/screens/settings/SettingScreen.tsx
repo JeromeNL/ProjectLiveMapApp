@@ -1,12 +1,14 @@
 import React from 'react'
 import { Button, Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { useDispatch } from 'react-redux'
+import { logout } from '../../redux/reducers/authReducer'
+import { Colors } from '../../configuration/styles/Colors'
 
 const SettingScreen = ({ navigation }: any) => {
     const dispatch = useDispatch()
 
     const handleLogout = () => {
-        dispatch({ type: 'LOGOUT' })
+        dispatch(logout())
     }
 
     return (
@@ -39,11 +41,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     bottomContainer: {
-        marginBottom: 20 // Adjust bottom margin as needed
+        marginBottom: 20
     },
     logoutText: {
         textDecorationLine: 'underline',
-        color: 'blue',
+        color: Colors.blue,
         fontSize: 16
     }
 })

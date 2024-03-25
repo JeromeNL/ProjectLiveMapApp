@@ -6,18 +6,9 @@ import SettingScreen from '../screens/settings/SettingScreen'
 const Stack = createStackNavigator()
 
 export const SettingStackNavigator = ({ route }: any) => {
-    const { setAuthenticated } = route.params || {}
-
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Instellingen">
-                {(props) => (
-                    <SettingScreen
-                        {...props}
-                        setAuthenticated={setAuthenticated}
-                    />
-                )}
-            </Stack.Screen>
+            <Stack.Screen name="Instellingen" component={SettingScreen} />
             <Stack.Screen
                 name="Notification"
                 component={NotificationScreen}

@@ -1,7 +1,9 @@
+// loginscreen.tsx
 import React, { useState } from 'react'
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
+import { login } from '../../redux/reducers/authReducer'
 
 const LoginScreen: React.FC = () => {
     const [username, setUsername] = useState('')
@@ -11,7 +13,7 @@ const LoginScreen: React.FC = () => {
         try {
             const response =
                 await PhoenixAPI.getInstance().AuthAPI.login(username)
-            dispatch({ type: 'LOGIN' })
+            dispatch(login(username))
         } catch (error) {
             Alert.alert(
                 'Login Mislukt',
