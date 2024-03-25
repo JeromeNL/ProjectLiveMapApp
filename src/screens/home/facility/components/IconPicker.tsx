@@ -93,7 +93,10 @@ const styles = StyleSheet.create({
     button: {
         padding: 10,
         backgroundColor: Colors.lightGray,
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 5,
+        borderColor: Colors.gray,
+        borderWidth: 1
     },
     modalOverlay: {
         flex: 1,
