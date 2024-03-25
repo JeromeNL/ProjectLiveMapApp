@@ -15,7 +15,7 @@ const SettingScreen = ({ navigation }: any) => {
         <View style={styles.container}>
             <View style={styles.centeredContainer}>
                 <Button
-                    title="Ga naar Meldingen"
+                    title="Notificaties"
                     onPress={() => navigation.push('Notification')}
                 />
             </View>

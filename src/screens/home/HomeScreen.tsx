@@ -79,7 +79,7 @@ const HomeScreen = ({ navigation }: any) => {
                 </View>
             )}
             <Button
-                title="Update Facility"
+                title="Update eerste faciliteit"
                 onPress={() =>
                     navigation.push('UpsertFacility', {
                         facility: facilities[0]

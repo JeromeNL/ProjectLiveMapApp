@@ -87,7 +87,7 @@ const UpsertFacilityScreen = ({ route }: any) => {
 
                 <View style={styles.inputContainer}>
                     <Button
-                        title="Send change request"
+                        title="Verstuur"
                         onPress={handleSubmit(clickHandler)}
                     />
                 </View>
