@@ -1,7 +1,13 @@
+import {
+    IconHome2,
+    IconAdjustmentsCog
+} from '@tabler/icons-react-native'
+
+import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { HomeStackNavigator } from './HomeStackNavigator'
 import { SettingStackNavigator } from './SettingStackNavigator'
-import Ionicons from '@expo/vector-icons/build/Ionicons'
+
 
 const BottomTab = createBottomTabNavigator()
 
@@ -13,7 +19,7 @@ export const BottomTabNavigator = () => {
                 component={HomeStackNavigator} 
                 options={{
                     title: 'Home',
-                    tabBarIcon: ({color}) => <Ionicons name="home" size={32} color={color} />
+                    tabBarIcon: ({color}) => <IconHome2 color={color}/>
                 }}
             />
             <BottomTab.Screen
@@ -21,7 +27,7 @@ export const BottomTabNavigator = () => {
                 component={SettingStackNavigator}
                 options={{
                     title: 'Settings',
-                    tabBarIcon: ({color}) => <Ionicons name="cog" size={32} color={color} />
+                    tabBarIcon: ({color}) => <IconAdjustmentsCog color={color}/>
                 }}
             />
         </BottomTab.Navigator>
