@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Button } from 'react-native';
 import Facility from '../../../model/Facility';
-import IconManager from '../../../managers/IconManager';
 
-const FacilityDetailView = ({ route }: any) => {
+const FacilityDetailView = ({ route,  navigation }: any) => {
     const facility: Partial<Facility> = route.params?.facility
 
     return (
@@ -11,7 +10,10 @@ const FacilityDetailView = ({ route }: any) => {
             <Text>Naam: {facility.name}</Text>
             <Text>Beschrijving: {facility.description}</Text>
             <Text>Type: {facility.type}</Text>
-            {facility.iconUrl && <Image source={{ uri: facility.iconUrl }} style={{ width: 100, height: 100 }} />}
+            <Button
+                title="Edit Facility"
+                onPress={() => navigation.navigate('UpsertFacility', { facility })} // Use `navigation` instead of `nav` if it's a prop
+            />
         </View>
     );
 };
