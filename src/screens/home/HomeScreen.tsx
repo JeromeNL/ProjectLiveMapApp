@@ -18,6 +18,16 @@ const HomeScreen = ({ navigation }: any) => {
 
     const [facilities, setFacilities] = useState<Facility[]>([])
 
+    const mockFacility = {
+        facilityId: 1,
+        name: 'Gym',
+        description: 'A place to improve your health and strength',
+        type: 'Gym',
+        longitude: 0,
+        latitude: 0,
+        iconUrl: 'https://example.com/image.png',
+    };
+
     useEffect(() => {
         // This endpoint doesn't exist
         // PhoenixAPI.getInstance()
@@ -83,6 +93,14 @@ const HomeScreen = ({ navigation }: any) => {
                 onPress={() =>
                     navigation.push('UpsertFacility', {
                         facility: facilities[0]
+                    })
+                }
+            />
+            <Button
+                title="View First facility"
+                onPress={() =>
+                    navigation.push('FacilityDetail', {
+                        facility: mockFacility
                     })
                 }
             />
