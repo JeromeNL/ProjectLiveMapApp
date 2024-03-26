@@ -3,6 +3,7 @@ import ProposedFacility from '../model/ProposedFacility'
 import HomeScreen from '../screens/home/HomeScreen'
 import UpsertFacilityScreen from '../screens/home/facility/UpsertFacilityScreen'
 import FacilityDetailView from '../screens/home/facility/FacilityDetail'
+import { Facility } from '../model/Facility'
 
 type HomeStackParams = {
     FacilityDetail: Facility,
