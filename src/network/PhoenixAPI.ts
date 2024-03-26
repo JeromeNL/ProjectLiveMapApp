@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { Platform } from 'react-native'
 import { FacilityAPI } from './libs/FacilityAPI'
+import { AuthAPI } from './libs/AuthAPI'
 
 export class PhoenixAPI {
     public FacilityAPI!: FacilityAPI
+    public AuthAPI!: AuthAPI
 
     private static instance: PhoenixAPI
 
@@ -24,6 +26,7 @@ export class PhoenixAPI {
             // TODO: Replace with the actual API URL
             baseURL: `http://${localhost}:5136`
         })
+        this.AuthAPI = new AuthAPI(axiosClient)
         this.FacilityAPI = new FacilityAPI(axiosClient)
     }
 }
