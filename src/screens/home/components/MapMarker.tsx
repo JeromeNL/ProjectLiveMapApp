@@ -5,8 +5,8 @@ import IconManager from '../../../managers/IconManager'
 import { Facility } from '../../../model/Facility'
 
 interface MapMarkerProps {
-    facility: Facility
     navigation: any,
+    facility: Facility,
     mapRef: React.RefObject<MapView>,
 }
 
