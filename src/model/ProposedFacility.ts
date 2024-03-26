@@ -6,7 +6,7 @@ interface ProposedFacility extends BaseFacility {
 
 export const facilitySchema = object({
     facilityId: number(),
-    name: string().required().max(10),
+    name: string().required().max(20),
     description: string().required().max(100),
     type: string().required(),
     longitude: number().required(),

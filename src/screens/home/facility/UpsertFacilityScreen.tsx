@@ -25,7 +25,7 @@ const UpsertFacilityScreen = ({ route }: any) => {
     })
 
     const updateIconProperty = (value: string) => {
-        const propertyName: keyof ProposedFacility = 'iconUrl'
+        const propertyName: keyof ProposedFacility = 'iconName'
         setValue(propertyName, value)
     }
 
