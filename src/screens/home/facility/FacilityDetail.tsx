@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, Button } from 'react-native';
-import Facility from '../../../model/Facility';
+import { Facility } from '../../../model/Facility';
 
 const FacilityDetailView = ({ route,  navigation }: any) => {
     const facility: Partial<Facility> = route.params?.facility
@@ -11,7 +11,7 @@ const FacilityDetailView = ({ route,  navigation }: any) => {
             <Text>Beschrijving: {facility.description}</Text>
             <Text>Type: {facility.type}</Text>
             <Button
-                title="Edit Facility"
+                title="Faciliteitsgegevens wijzigen"
                 onPress={() => navigation.navigate('UpsertFacility', { facility })} // Use `navigation` instead of `nav` if it's a prop
             />
         </View>
