@@ -20,19 +20,15 @@ const FacilityDetailBottomSheet = ({ navigation }: any) => {
             <View
                 style={{
                     flex: 1,
-                    alignItems: 'center',
-                    justifyContent: 'center'
                 }}
             >
-                <Text style={{ margin: 5, fontWeight: 'bold' }}>Naam</Text>
-                <Text style={{ margin: 5 }}>{facility.name}</Text>
-                <Text style={{ margin: 5, fontWeight: 'bold' }}>Type</Text>
-                <Text style={{ margin: 5 }}>{facility.type}</Text>
-                <Text style={{ margin: 5, fontWeight: 'bold' }}>
+                <Text style={{ marginHorizontal: 20, fontWeight: 'bold', fontSize: 18 }}>{facility.name}</Text>
+                <Text style={{ marginHorizontal: 20}}>{facility.type}</Text>
+                <Text style={{ marginLeft: 20, fontWeight: 'bold' , marginTop: 10 }}>
                     Beschrijving
                 </Text>
-                <Text style={{ margin: 5 }}>{facility.description}</Text>
-                <View style={{ margin: 10 }}>
+                <Text style={{ marginHorizontal: 20 }}>{facility.description}</Text>
+                <View style={{ marginHorizontal: 20, marginVertical: 15 }}>
                     <Button
                         title="Faciliteitsgegevens wijzigen"
                         onPress={() =>
