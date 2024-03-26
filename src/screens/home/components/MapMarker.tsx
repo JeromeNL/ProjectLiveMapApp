@@ -1,15 +1,16 @@
 import React from 'react'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Callout, Marker } from 'react-native-maps'
 import { Colors } from '../../../configuration/styles/Colors'
 import IconManager from '../../../managers/IconManager'
 import { Facility } from '../../../model/Facility'
 
 interface MapMarkerProps {
     facility: Facility
-    mapRef: React.RefObject<MapView>
+    navigation: any,
+    mapRef: React.RefObject<MapView>,
 }
 
-const MapMarker = ({ facility, mapRef }: MapMarkerProps) => {
+const MapMarker = ({ facility, mapRef, navigation }: MapMarkerProps) => {
     const Icon = IconManager.getIcon(facility.iconName)
     const id = facility.id.toString() + '-marker'
     return (
@@ -38,6 +39,14 @@ const MapMarker = ({ facility, mapRef }: MapMarkerProps) => {
             }}
         >
             <Icon color={Colors.black} />
+            <Callout
+                onPress={() =>
+                    navigation.push('FacilityDetail', {
+                        facility: facility
+                    })
+                }
+            >
+            </Callout>
         </Marker>
     )
 }
