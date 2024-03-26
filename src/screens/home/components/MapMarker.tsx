@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
-import MapView, { Marker, MapMarker as RNMapMarker } from 'react-native-maps'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import MapView, { Callout, Marker } from 'react-native-maps'
+import { useDispatch } from 'react-redux'
 import { Colors } from '../../../configuration/styles/Colors'
 import IconManager from '../../../managers/IconManager'
 import { Facility } from '../../../model/Facility'
 import { bottomSheetSlice } from '../../../redux/reducers/bottomSheetReducer'
-import { RootState } from '../../../redux/store'
 
 interface MapMarkerProps {
     facility: Facility
@@ -13,19 +12,11 @@ interface MapMarkerProps {
 }
 
 const MapMarker = ({ facility, mapRef }: MapMarkerProps) => {
-    const isBottomSheetOpen = useSelector((state: RootState) => state.bottomSheet.isOpen)
-    const markerRef = React.useRef<RNMapMarker | null>(null)
     const dispatch = useDispatch()
     const Icon = IconManager.getIcon(facility.iconName)
     const id = facility.id.toString() + '-marker'
-    useEffect(() => {
-        if(!isBottomSheetOpen) {
-            markerRef.current?.hideCallout()
-        }
-    }, [isBottomSheetOpen])
     return (
         <Marker
-            ref={markerRef}
             coordinate={{
                 latitude: facility.latitude,
                 longitude: facility.longitude
@@ -51,6 +42,7 @@ const MapMarker = ({ facility, mapRef }: MapMarkerProps) => {
             }}
         >
             <Icon color={Colors.black} />
+            <Callout tooltip={true} />
         </Marker>
     )
 }
