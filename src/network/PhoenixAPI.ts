@@ -21,10 +21,15 @@ export class PhoenixAPI {
     }
 
     initializeAPIs() {
-        const localhost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost'
+
+        let hostName = process.env.API_URL
+
+        if (!hostName) {
+             hostName = Platform.OS === 'android' ? '10.0.2.2' : 'localhost'
+        }
+
         const axiosClient = axios.create({
-            // TODO: Replace with the actual API URL
-            baseURL: `http://${localhost}:5136`
+            baseURL: `http://${hostName}:5136`
         })
         this.AuthAPI = new AuthAPI(axiosClient)
         this.FacilityAPI = new FacilityAPI(axiosClient)
