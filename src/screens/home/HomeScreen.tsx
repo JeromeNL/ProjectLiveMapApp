@@ -6,8 +6,11 @@ import MapView from 'react-native-maps'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
 import { Colors } from '../../configuration/styles/Colors'
 import { LocationManager } from '../../managers/LocationManager'
-import Facility from '../../model/Facility'
+import { Facility } from '../../model/Facility'
+import ProposedFacility from '../../model/ProposedFacility'
+import { PhoenixAPI } from '../../network/PhoenixAPI'
 import FloatingMapAction from './components/FloatingMapAction'
+import MapMarker from './components/MapMarker'
 
 const HomeScreen = ({ navigation }: any) => {
     const [locationState, setLocationState] = useState<LocationObject | null>(
@@ -29,12 +32,11 @@ const HomeScreen = ({ navigation }: any) => {
     };
 
     useEffect(() => {
-        // This endpoint doesn't exist
-        // PhoenixAPI.getInstance()
-        //     .FacilityAPI.getFacilities()
-        //     .then((res) => {
-        //         setFacilities(res.data)
-        //     })
+        PhoenixAPI.getInstance()
+            .FacilityAPI.getFacilities()
+            .then((res) => {
+                setFacilities(res.data)
+            })
 
         async function handle() {
             const location = await LocationManager.getCurrentLocation()
@@ -66,7 +68,11 @@ const HomeScreen = ({ navigation }: any) => {
                 showsUserLocation
                 minZoomLevel={15.7}
                 maxZoomLevel={20}
-            />
+            >
+                {facilities.map((facility) => (
+                    <MapMarker key={facility.id} facility={facility} mapRef={mapRef}/>
+                ))}
+            </MapView>
             {locationState && (
                 <View style={styles.floatingActionContainer}>
                     <FloatingMapAction
@@ -77,7 +83,7 @@ const HomeScreen = ({ navigation }: any) => {
                             if (!currentLocation) {
                                 return
                             }
-                            const partialFacility: Partial<Facility> = {
+                            const partialFacility: Partial<ProposedFacility> = {
                                 latitude: currentLocation.coords.latitude,
                                 longitude: currentLocation.coords.longitude
                             }
@@ -89,7 +95,7 @@ const HomeScreen = ({ navigation }: any) => {
                 </View>
             )}
             <Button
-                title="Update Facility"
+                title="Update eerste faciliteit"
                 onPress={() =>
                     navigation.push('UpsertFacility', {
                         facility: facilities[0]
