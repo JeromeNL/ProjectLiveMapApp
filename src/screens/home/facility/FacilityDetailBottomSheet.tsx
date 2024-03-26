@@ -9,14 +9,14 @@ const FacilityDetailBottomSheet = ({ navigation }: any) => {
         (state: RootState) => state.bottomSheet.facility
     )
     const bottomSheetRef = React.useRef<BottomSheet>(null)
-    if (!facility) return null
 
     useEffect(() => {
         bottomSheetRef.current?.expand()
-    }, [])
+    }, [facility])
 
     return (
-        <BottomSheet ref={bottomSheetRef}>
+        <BottomSheet index={-1} ref={bottomSheetRef} snapPoints={['80%', '40%']} enablePanDownToClose>
+            {facility && (
             <View
                 style={{
                     flex: 1,
@@ -41,6 +41,7 @@ const FacilityDetailBottomSheet = ({ navigation }: any) => {
                     />
                 </View>
             </View>
+            )}
         </BottomSheet>
     )
 }
