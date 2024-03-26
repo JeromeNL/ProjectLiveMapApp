@@ -1,7 +1,7 @@
 import { IconPlus } from '@tabler/icons-react-native'
 import { LocationObject } from 'expo-location'
 import React, { useEffect, useState } from 'react'
-import { Button, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
 import { Colors } from '../../configuration/styles/Colors'
@@ -11,6 +11,7 @@ import ProposedFacility from '../../model/ProposedFacility'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 import FloatingMapAction from './components/FloatingMapAction'
 import MapMarker from './components/MapMarker'
+import FacilityDetailBottomSheet from './facility/FacilityDetailBottomSheet'
 
 const HomeScreen = ({ navigation }: any) => {
     const [locationState, setLocationState] = useState<LocationObject | null>(
@@ -60,7 +61,11 @@ const HomeScreen = ({ navigation }: any) => {
                 maxZoomLevel={20}
             >
                 {facilities.map((facility) => (
-                    <MapMarker key={facility.id} facility={facility} mapRef={mapRef} navigation={navigation}/>
+                    <MapMarker
+                        key={facility.id}
+                        facility={facility}
+                        mapRef={mapRef}
+                    />
                 ))}
             </MapView>
             {locationState && (
@@ -84,6 +89,7 @@ const HomeScreen = ({ navigation }: any) => {
                     />
                 </View>
             )}
+            <FacilityDetailBottomSheet />
         </>
     )
 }

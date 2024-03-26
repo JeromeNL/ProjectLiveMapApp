@@ -1,16 +1,18 @@
 import React from 'react'
 import MapView, { Callout, Marker } from 'react-native-maps'
+import { useDispatch } from 'react-redux'
 import { Colors } from '../../../configuration/styles/Colors'
 import IconManager from '../../../managers/IconManager'
 import { Facility } from '../../../model/Facility'
+import { bottomSheetSlice } from '../../../redux/reducers/bottomSheetReducer'
 
 interface MapMarkerProps {
-    navigation: any,
-    facility: Facility,
-    mapRef: React.RefObject<MapView>,
+    facility: Facility
+    mapRef: React.RefObject<MapView>
 }
 
-const MapMarker = ({ facility, mapRef, navigation }: MapMarkerProps) => {
+const MapMarker = ({ facility, mapRef }: MapMarkerProps) => {
+    const dispatch = useDispatch()
     const Icon = IconManager.getIcon(facility.iconName)
     const id = facility.id.toString() + '-marker'
     return (
@@ -41,12 +43,9 @@ const MapMarker = ({ facility, mapRef, navigation }: MapMarkerProps) => {
             <Icon color={Colors.black} />
             <Callout
                 onPress={() =>
-                    navigation.push('FacilityDetail', {
-                        facility: facility
-                    })
+                    dispatch(bottomSheetSlice.actions.openBottomSheet(facility))
                 }
-            >
-            </Callout>
+            ></Callout>
         </Marker>
     )
 }
