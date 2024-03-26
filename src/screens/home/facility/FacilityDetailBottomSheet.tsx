@@ -2,10 +2,14 @@ import BottomSheet from '@gorhom/bottom-sheet'
 import React, { useEffect } from 'react'
 import { Button, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../redux/store'
 import { bottomSheetSlice } from '../../../redux/reducers/bottomSheetReducer'
+import { RootState } from '../../../redux/store'
 
-const FacilityDetailBottomSheet = ({ navigation }: any) => {
+interface FacilityDetailBottomSheetProps {
+    navigation: any
+}
+
+const FacilityDetailBottomSheet = ({ navigation }: FacilityDetailBottomSheetProps) => {
     const facility = useSelector(
         (state: RootState) => state.bottomSheet.facility
     )

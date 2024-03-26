@@ -89,7 +89,7 @@ const HomeScreen = ({ navigation }: any) => {
                     />
                 </View>
             )}
-            <FacilityDetailBottomSheet />
+            <FacilityDetailBottomSheet navigation={navigation}/>
         </>
     )
 }
