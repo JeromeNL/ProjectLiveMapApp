@@ -94,22 +94,6 @@ const HomeScreen = ({ navigation }: any) => {
                     />
                 </View>
             )}
-            <Button
-                title="Update eerste faciliteit"
-                onPress={() =>
-                    navigation.push('UpsertFacility', {
-                        facility: facilities[0]
-                    })
-                }
-            />
-            <Button
-                title="View First facility"
-                onPress={() =>
-                    navigation.push('FacilityDetail', {
-                        facility: mockFacility
-                    })
-                }
-            />
         </>
     )
 }
