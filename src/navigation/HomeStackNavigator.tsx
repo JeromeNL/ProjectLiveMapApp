@@ -5,7 +5,9 @@ import UpsertFacilityScreen from '../screens/home/facility/UpsertFacilityScreen'
 
 type HomeStackParams = {
     Home: undefined
-    UpsertFacility: ProposedFacility
+    UpsertFacility: {
+        facility: Partial<ProposedFacility>
+    }
 }
 
 const Stack = createStackNavigator<HomeStackParams>()
@@ -24,7 +26,7 @@ export const HomeStackNavigator = () => {
                 options={({ route }) => ({
                     title:
                         'Faciliteit ' +
-                        (route.params.facilityId ? 'aanpassen' : 'toevoegen')
+                        (route.params?.facility?.facilityId ? 'aanpassen' : 'toevoegen')
                 })}
             />
         </Stack.Navigator>

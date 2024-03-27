@@ -2,6 +2,7 @@ import BottomSheet from '@gorhom/bottom-sheet'
 import React, { useEffect } from 'react'
 import { Button, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+import ProposedFacility from '../../../model/ProposedFacility'
 import { bottomSheetSlice } from '../../../redux/reducers/bottomSheetReducer'
 import { RootState } from '../../../redux/store'
 
@@ -24,7 +25,7 @@ const FacilityDetailBottomSheet = ({ navigation }: FacilityDetailBottomSheetProp
     }, [facility])
 
     return (
-        <BottomSheet index={-1} ref={bottomSheetRef} snapPoints={['80%', '40%']} enablePanDownToClose
+        <BottomSheet index={-1} ref={bottomSheetRef} snapPoints={['80%', '30%']} enablePanDownToClose
             onClose={
                 () => {
                     dispatch(bottomSheetSlice.actions.closeBottomSheet());
@@ -45,9 +46,13 @@ const FacilityDetailBottomSheet = ({ navigation }: FacilityDetailBottomSheetProp
                     <View style={{ marginHorizontal: 20, marginVertical: 15 }}>
                         <Button
                             title="Faciliteitsgegevens wijzigen"
-                            onPress={() =>
-                                navigation.navigate('UpsertFacility', { facility })
-                            }
+                            onPress={() => {
+                                const proposedFacility: ProposedFacility = {
+                                    ...facility,
+                                    facilityId: facility.id,
+                                }
+                                navigation.navigate('UpsertFacility', { facility: proposedFacility })
+                            }}
                         />
                     </View>
                 </View>

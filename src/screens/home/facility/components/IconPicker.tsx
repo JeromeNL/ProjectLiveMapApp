@@ -14,10 +14,12 @@ import IconManager from '../../../../managers/IconManager'
 
 interface IconPickerProps {
     onSelect: (key: string) => void
+    defaultValue?: string
 }
 
 export const IconPicker: React.FC<IconPickerProps> = ({
-    onSelect
+    onSelect,
+    defaultValue
 }: IconPickerProps) => {
     const [isVisible, setIsVisible] = useState(false)
     const availableIcons = useMemo(
@@ -25,7 +27,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
         []
     )
     const [selectedIcon, setSelectedIcon] = useState(
-        IconManager.iconToKebabCase(availableIcons[0])
+        defaultValue ?? IconManager.iconToKebabCase(availableIcons[0])
     )
     const SelectedIconComponent = selectedIcon
         ? IconManager.getIcon(selectedIcon)
@@ -38,7 +40,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                 style={styles.button}
             >
                 {SelectedIconComponent && (
-                    <SelectedIconComponent color={Colors.primary} />
+                    <SelectedIconComponent color={Colors.black} />
                 )}
             </TouchableOpacity>
 
@@ -77,7 +79,7 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                                     style={styles.gridItem}
                                 >
                                     {React.createElement(item, {
-                                        color: Colors.primary
+                                        color: Colors.black
                                     })}
                                 </TouchableOpacity>
                             )}

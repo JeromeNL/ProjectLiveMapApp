@@ -9,8 +9,8 @@ import ProposedFacility, {
 import { PhoenixAPI } from '../../../network/PhoenixAPI'
 import { IconPicker } from './components/IconPicker'
 
-const UpsertFacilityScreen = ({ route }: any) => {
-    const facilityParam: Partial<ProposedFacility> | undefined =
+const UpsertFacilityScreen = ({ route, navigation }: any) => {
+    let facilityParam: Partial<ProposedFacility> | undefined =
         route.params?.facility
     const isCreating = facilityParam?.facilityId === undefined
 
@@ -32,7 +32,9 @@ const UpsertFacilityScreen = ({ route }: any) => {
     const clickHandler = async (data: ProposedFacility) => {
         await PhoenixAPI.getInstance().FacilityAPI.upsertFacility(data)
 
-        Alert.alert('Message sent!', 'Thank you for reporting this change')
+        Alert.alert('Verstuurd!', 'Bedankt voor de melding', [
+            { text: 'OK', onPress: () => navigation.goBack() }
+        ])
     }
 
     return (
@@ -40,13 +42,13 @@ const UpsertFacilityScreen = ({ route }: any) => {
             <ScrollView>
                 {!isCreating && (
                     <View style={styles.inputContainer}>
-                        <Text>
-                            ID of facility:{' '}
-                            {facilityParam?.facilityId?.toString()}
-                        </Text>
+                        <Text>ID: {facilityParam?.facilityId?.toString()}</Text>
                     </View>
                 )}
-                <IconPicker onSelect={(item) => updateIconProperty(item)} />
+                <IconPicker
+                    onSelect={(item) => updateIconProperty(item)}
+                    defaultValue={facilityParam?.iconName}
+                />
 
                 <FormFieldInput
                     label="Naam"
@@ -67,22 +69,6 @@ const UpsertFacilityScreen = ({ route }: any) => {
                     control={control}
                     errors={errors}
                 />
-                {!facilityParam?.longitude && (
-                    <FormFieldInput
-                        label="Longtitude"
-                        property="longitude"
-                        control={control}
-                        errors={errors}
-                    />
-                )}
-                {!facilityParam?.latitude && (
-                    <FormFieldInput
-                        label="Latitude"
-                        property="latitude"
-                        control={control}
-                        errors={errors}
-                    />
-                )}
 
                 <View style={styles.inputContainer}>
                     <Button
