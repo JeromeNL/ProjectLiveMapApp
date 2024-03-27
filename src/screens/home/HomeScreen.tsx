@@ -2,7 +2,7 @@ import { IconPlus } from '@tabler/icons-react-native'
 import { LocationObject } from 'expo-location'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import MapView from 'react-native-maps'
+import MapView, { UrlTile } from 'react-native-maps'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
 import { Colors } from '../../configuration/styles/Colors'
 import { LocationManager } from '../../managers/LocationManager'
@@ -53,13 +53,15 @@ const HomeScreen = ({ navigation }: any) => {
             <MapView
                 ref={mapRef}
                 provider="google"
-                customMapStyle={MapConfiguration.customMapStyle}
+                mapType='none'
                 style={{ flex: 1 }}
                 region={region}
                 showsUserLocation
                 minZoomLevel={15.7}
                 maxZoomLevel={20}
             >
+                <UrlTile
+                    urlTemplate={MapConfiguration.tile.urlTemplate}/>
                 {facilities.map((facility) => (
                     <MapMarker
                         key={facility.id}
