@@ -5,7 +5,7 @@ import {
     IconTrash,
     IconX
 } from '@tabler/icons-react-native'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 import { FlatGrid } from 'react-native-super-grid'
@@ -32,6 +32,13 @@ export const IconPicker: React.FC<IconPickerProps> = ({
     const SelectedIconComponent = selectedIcon
         ? IconManager.getIcon(selectedIcon)
         : null
+
+    useEffect(() => {
+        if (selectedIcon === null) {
+            return
+        }
+        onSelect(selectedIcon)
+    }, [selectedIcon])
 
     return (
         <View>
@@ -73,7 +80,6 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                                             return
                                         }
                                         setSelectedIcon(key)
-                                        onSelect(key)
                                         setIsVisible(false)
                                     }}
                                     style={styles.gridItem}
