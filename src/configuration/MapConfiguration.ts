@@ -17,57 +17,8 @@ export const MapConfiguration = {
             }
         }
     },
-    // https://mapstyle.withgoogle.com/
-    customMapStyle: [
-        {
-            elementType: 'labels',
-            stylers: [
-                {
-                    visibility: 'off'
-                }
-            ]
-        },
-        {
-            featureType: 'administrative',
-            elementType: 'geometry',
-            stylers: [
-                {
-                    visibility: 'off'
-                }
-            ]
-        },
-        {
-            featureType: 'administrative.neighborhood',
-            stylers: [
-                {
-                    visibility: 'off'
-                }
-            ]
-        },
-        {
-            featureType: 'poi',
-            stylers: [
-                {
-                    visibility: 'off'
-                }
-            ]
-        },
-        {
-            featureType: 'road',
-            elementType: 'labels.icon',
-            stylers: [
-                {
-                    visibility: 'off'
-                }
-            ]
-        },
-        {
-            featureType: 'transit',
-            stylers: [
-                {
-                    visibility: 'off'
-                }
-            ]
-        }
-    ]
+    tile: {
+        urlTemplate: `https://api.mapbox.com/styles/v1/thieme/clu785gfh00y201qshhlscngq/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.EXPO_PUBLIC_TILE_TOKEN}`
+    }
 }
+
