@@ -1,10 +1,10 @@
 import React from 'react'
 import MapView, { Callout, Marker } from 'react-native-maps'
 import { useDispatch } from 'react-redux'
-import { Colors } from '../../../configuration/styles/Colors'
 import IconManager from '../../../managers/IconManager'
 import { Facility } from '../../../model/Facility'
 import { bottomSheetSlice } from '../../../redux/reducers/bottomSheetReducer'
+import { PinIcon } from './PinIcon'
 
 interface MapMarkerProps {
     facility: Facility
@@ -40,8 +40,9 @@ const MapMarker = ({ facility, mapRef }: MapMarkerProps) => {
                     500
                 )
             }}
+            anchor={{ x: 0.5, y: 1 }}
         >
-            <Icon color={Colors.black} />
+            <PinIcon hex={'#FFAB33'} Icon={Icon} />
             <Callout tooltip={true} />
         </Marker>
     )
