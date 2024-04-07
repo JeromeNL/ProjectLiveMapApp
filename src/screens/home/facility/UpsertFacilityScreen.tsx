@@ -1,8 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Alert, Button, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Button, ScrollView, StyleSheet, Text, View } from 'react-native'
 import FormFieldInput from '../../../components/form/FormFieldInput'
+import { ToastManager } from '../../../managers/ToastManager'
 import ProposedFacility, {
     facilitySchema
 } from '../../../model/ProposedFacility'
@@ -32,9 +33,8 @@ const UpsertFacilityScreen = ({ route, navigation }: any) => {
     const clickHandler = async (data: ProposedFacility) => {
         await PhoenixAPI.getInstance().FacilityAPI.upsertFacility(data)
 
-        Alert.alert('Verstuurd!', 'Bedankt voor de melding', [
-            { text: 'OK', onPress: () => navigation.goBack() }
-        ])
+        ToastManager.showSuccess('Verstuurd!', 'Bedankt voor de melding')
+        navigation.goBack()
     }
 
     return (
