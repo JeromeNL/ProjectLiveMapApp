@@ -1,7 +1,8 @@
 // loginscreen.tsx
 import React, { useState } from 'react'
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useDispatch } from 'react-redux'
+import { ToastManager } from '../../managers/ToastManager'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 import { authSlice } from '../../redux/reducers/authReducer'
 
@@ -14,7 +15,7 @@ function LoginScreen() {
             await PhoenixAPI.getInstance().AuthAPI.login(username)
             dispatch(authSlice.actions.login(username))
         } catch (error) {
-            Alert.alert(
+            ToastManager.showError(
                 'Login Mislukt',
                 'Ongeldige gebruikersnaam. Probeer het opnieuw.'
             )
