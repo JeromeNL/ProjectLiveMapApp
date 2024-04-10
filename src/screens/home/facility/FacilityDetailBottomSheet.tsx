@@ -25,7 +25,7 @@ const FacilityDetailBottomSheet = ({ navigation }: FacilityDetailBottomSheetProp
     }, [facility])
 
     return (
-        <BottomSheet index={-1} ref={bottomSheetRef} snapPoints={['80%', '30%']} enablePanDownToClose
+        <BottomSheet index={-1} ref={bottomSheetRef} snapPoints={['80%', '35%']} enablePanDownToClose
             onClose={
                 () => {
                     dispatch(bottomSheetSlice.actions.closeBottomSheet());
@@ -43,7 +43,7 @@ const FacilityDetailBottomSheet = ({ navigation }: FacilityDetailBottomSheetProp
                         Beschrijving
                     </Text>
                     <Text style={{ marginHorizontal: 20 }}>{facility.description}</Text>
-                    <View style={{ marginHorizontal: 20, marginVertical: 15 }}>
+                    <View style={{ marginHorizontal: 20, marginTop: 15, marginBottom: 2 }}>
                         <Button
                             title="Faciliteitsgegevens wijzigen"
                             onPress={() => {
@@ -52,6 +52,18 @@ const FacilityDetailBottomSheet = ({ navigation }: FacilityDetailBottomSheetProp
                                     facilityId: facility.id,
                                 }
                                 navigation.navigate('UpsertFacility', { facility: proposedFacility })
+                            }}
+                        />
+                    </View>
+                    <View style={{ marginHorizontal: 20, marginTop: 3, marginBottom: 2 }}>
+                        <Button
+                            title="Storing melden"
+                            onPress={() => {
+                                const proposedFacility: ProposedFacility = {
+                                    ...facility,
+                                    facilityId: facility.id,
+                                }
+                                navigation.navigate('ReportFault', { facility: proposedFacility })
                             }}
                         />
                     </View>
