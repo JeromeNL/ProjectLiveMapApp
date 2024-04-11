@@ -1,6 +1,6 @@
 import { number, object, string } from 'yup'
 
-export interface FacilityFault {
+export interface ServiceReport {
     title: string,
     facilityId: number,
     description: string,
@@ -8,7 +8,7 @@ export interface FacilityFault {
 }
 
 
-export const facilityFaultSchema = object({
+export const serviceReportSchema = object({
     title: string().required().max(300),
     facilityId: number().required(),
     description: string().required().max(300),

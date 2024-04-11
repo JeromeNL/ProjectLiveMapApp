@@ -1,13 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { FacilityFault, facilityFaultSchema } from '../../../model/FacilityFault'
+import { ServiceReport, serviceReportSchema } from '../../../model/ServiceReport'
 import FormFieldInput from '../../../components/form/FormFieldInput'
 import ProposedFacility from '../../../model/ProposedFacility'
 import { Text, View, StyleSheet, Button, Alert } from 'react-native'
 
 
-const ReportFaultScreen = ({ route, navigation }: any) => {
+const ServiceReportScreen = ({ route, navigation }: any) => {
     let facilityParam: Partial<ProposedFacility> | undefined =
         route.params?.facility
     
@@ -16,12 +16,12 @@ const ReportFaultScreen = ({ route, navigation }: any) => {
         handleSubmit,
         formState: { errors },
         setValue
-    } = useForm<FacilityFault>({
-        resolver: yupResolver(facilityFaultSchema)
+    } = useForm<ServiceReport>({
+        resolver: yupResolver(serviceReportSchema)
     })
 
 
-    const clickHandler = async (data: FacilityFault) => {
+    const clickHandler = async (data: ServiceReport) => {
         // await PhoenixAPI.getInstance().FacilityAPI.upsertFacility(data)
 
         Alert.alert('Verstuurd!', 'Bedankt voor de melding', [
@@ -78,5 +78,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ReportFaultScreen
+export default ServiceReportScreen
 

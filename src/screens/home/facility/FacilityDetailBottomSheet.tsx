@@ -63,7 +63,7 @@ const FacilityDetailBottomSheet = ({ navigation }: FacilityDetailBottomSheetProp
                                     ...facility,
                                     facilityId: facility.id,
                                 }
-                                navigation.navigate('ReportFault', { facility: proposedFacility })
+                                navigation.navigate('ServiceReport', { facility: proposedFacility })
                             }}
                         />
                     </View>
