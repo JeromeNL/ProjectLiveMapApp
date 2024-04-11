@@ -5,6 +5,7 @@ import { ServiceReport, serviceReportSchema } from '../../../model/ServiceReport
 import FormFieldInput from '../../../components/form/FormFieldInput'
 import ProposedFacility from '../../../model/ProposedFacility'
 import { Text, View, StyleSheet, Button, Alert } from 'react-native'
+import { PhoenixAPI } from '../../../network/PhoenixAPI'
 
 
 const ServiceReportScreen = ({ route, navigation }: any) => {
@@ -22,11 +23,15 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
 
 
     const clickHandler = async (data: ServiceReport) => {
-        // await PhoenixAPI.getInstance().FacilityAPI.upsertFacility(data)
-
-        Alert.alert('Verstuurd!', 'Bedankt voor de melding', [
-            { text: 'OK', onPress: () => navigation.goBack() }
-        ])
+        try {
+            await PhoenixAPI.getInstance().FacilityAPI.postServiceReport(data)
+            Alert.alert('Verstuurd!', 'Bedankt voor de melding', [
+                { text: 'OK', onPress: () => navigation.goBack() }
+            ])
+        } catch (e) {
+            Alert.alert('Netwerkfout', 'Melding is niet verstuurd. Probeer het later nog eens.')
+            console.error(e)
+        }
     }
     
     if (facilityParam?.facilityId) {
@@ -48,6 +53,13 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
             <FormFieldInput
                 label="Beschrijf wat er fout is"
                 property="description"
+                control={control}
+                errors={errors}
+            />
+            
+            <FormFieldInput
+                label="Wat voor type melding is het?"
+                property="category"
                 control={control}
                 errors={errors}
             />
