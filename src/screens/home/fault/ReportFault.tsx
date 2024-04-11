@@ -1,79 +1,63 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { Alert, Button, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { FacilityFault, facilityFaultSchema } from '../../../model/FacilityFault'
 import FormFieldInput from '../../../components/form/FormFieldInput'
-import ProposedFacility, {
-    facilitySchema
-} from '../../../model/ProposedFacility'
-import { PhoenixAPI } from '../../../network/PhoenixAPI'
-
+import ProposedFacility from '../../../model/ProposedFacility'
+import { Text, View, StyleSheet, Button, Alert } from 'react-native'
 
 
 const ReportFaultScreen = ({ route, navigation }: any) => {
     let facilityParam: Partial<ProposedFacility> | undefined =
         route.params?.facility
-    const isCreating = facilityParam?.facilityId === undefined
-
+    
     const {
         control,
         handleSubmit,
         formState: { errors },
         setValue
-    } = useForm<ProposedFacility>({
-        defaultValues: facilityParam,
-        resolver: yupResolver(facilitySchema)
+    } = useForm<FacilityFault>({
+        resolver: yupResolver(facilityFaultSchema)
     })
 
-    const updateIconProperty = (value: string) => {
-        const propertyName: keyof ProposedFacility = 'iconName'
-        setValue(propertyName, value)
-    }
 
-    const clickHandler = async (data: ProposedFacility) => {
-        await PhoenixAPI.getInstance().FacilityAPI.upsertFacility(data)
+    const clickHandler = async (data: FacilityFault) => {
+        // await PhoenixAPI.getInstance().FacilityAPI.upsertFacility(data)
 
         Alert.alert('Verstuurd!', 'Bedankt voor de melding', [
             { text: 'OK', onPress: () => navigation.goBack() }
         ])
     }
+    
+    if (facilityParam?.facilityId) {
+        setValue("facilityId", facilityParam.facilityId, {
+            shouldValidate: false
+        })
+    }
 
     return (
         <View style={styles.container}>
-            <ScrollView>
-                {!isCreating && (
-                    <View style={styles.inputContainer}>
-                        <Text>Mijn mooie ID: {facilityParam?.facilityId?.toString()}</Text>
-                    </View>
-                )}
+
+            <FormFieldInput
+                label="Titel"
+                property="title"
+                control={control}
+                errors={errors}
+            />
             
-                <FormFieldInput
-                    label="Naam"
-                    property="name"
-                    control={control}
-                    errors={errors}
-                />
+            <FormFieldInput
+                label="Beschrijf wat er fout is"
+                property="description"
+                control={control}
+                errors={errors}
+            />
 
-                <FormFieldInput
-                    label="Beschrijving"
-                    property="description"
-                    control={control}
-                    errors={errors}
+            <View style={styles.inputContainer}>
+                <Button
+                    title="Verstuur"
+                    onPress={handleSubmit(clickHandler)}
                 />
-                <FormFieldInput
-                    label="Type"
-                    property="type"
-                    control={control}
-                    errors={errors}
-                />
-
-                <View style={styles.inputContainer}>
-                    <Button
-                        title="Verstuur"
-                        onPress={handleSubmit(clickHandler)}
-                    />
-                </View>
-            </ScrollView>
+            </View>
         </View>
     )
 }
