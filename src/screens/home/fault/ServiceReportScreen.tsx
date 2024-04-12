@@ -6,6 +6,7 @@ import FormFieldInput from '../../../components/form/FormFieldInput'
 import ProposedFacility from '../../../model/ProposedFacility'
 import { Text, View, StyleSheet, Button, Alert } from 'react-native'
 import { PhoenixAPI } from '../../../network/PhoenixAPI'
+import { ToastManager } from '../../../managers/ToastManager'
 
 
 const ServiceReportScreen = ({ route, navigation }: any) => {
@@ -25,11 +26,10 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
     const clickHandler = async (data: ServiceReport) => {
         try {
             await PhoenixAPI.getInstance().FacilityAPI.postServiceReport(data)
-            Alert.alert('Verstuurd!', 'Bedankt voor de melding', [
-                { text: 'OK', onPress: () => navigation.goBack() }
-            ])
+            ToastManager.showInfo('Verstuurd!', 'Bedankt voor de melding')
+            navigation.goBack()
         } catch (e) {
-            Alert.alert('Netwerkfout', 'Melding is niet verstuurd. Probeer het later nog eens.')
+            ToastManager.showError('Netwerkfout', 'Melding is niet verstuurd. Probeer het later nog eens.')
             console.error(e)
         }
     }
