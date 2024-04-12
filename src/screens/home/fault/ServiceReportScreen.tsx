@@ -26,7 +26,7 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
     const clickHandler = async (data: ServiceReport) => {
         try {
             await PhoenixAPI.getInstance().FacilityAPI.postServiceReport(data)
-            ToastManager.showInfo('Verstuurd!', 'Bedankt voor de melding')
+            ToastManager.showSuccess('Verstuurd!', 'Bedankt voor de melding')
             navigation.goBack()
         } catch (e) {
             ToastManager.showError('Netwerkfout', 'Melding is niet verstuurd. Probeer het later nog eens.')
