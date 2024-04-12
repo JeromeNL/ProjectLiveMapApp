@@ -85,9 +85,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 5
     },
-    validationError: {
-        color: '#F00'
-    }
 })
 
 export default ServiceReportScreen

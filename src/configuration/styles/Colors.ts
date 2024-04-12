@@ -7,5 +7,9 @@ export const Colors = {
     gray: '#C4C4C4',
     lightGray: '#F2F2F2',
     darkGray: '#4F4F4F',
-    blue: '#0000FF'
+    blue: '#0000FF',
+    error: '#d32f2f',
+    warning: '#ffa726',
+    info: '#29b6f6',
+    success: '#66bb6a',
 }
