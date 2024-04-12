@@ -1,6 +1,7 @@
 import React from 'react'
 import { Control, Controller, FieldValues } from 'react-hook-form'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { Colors } from '../../configuration/styles/Colors'
 
 export interface FormFieldInputProps<T extends FieldValues> {
     label: string
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
         padding: 3
     },
     validationError: {
-        color: '#F00'
+        color: Colors.error
     }
 })
 
