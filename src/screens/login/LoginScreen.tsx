@@ -20,7 +20,6 @@ function LoginScreen() {
                 username: responseData.username,
             }))
         } catch (error) {
-            console.log("nope")
             ToastManager.showError(
                 'Login Mislukt',
                 'Ongeldige gebruikersnaam. Probeer het opnieuw.'
