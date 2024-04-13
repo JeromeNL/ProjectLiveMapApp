@@ -5,8 +5,9 @@ export interface ServiceReport {
     title: string,
     facilityId: number,
     description: string,
-    category: ServiceCategory,
-    categoryId: number, 
+    serviceReportCategory: ServiceCategory,
+    serviceReportCategoryId: number, 
+    userId: number, 
 }
 
 
@@ -14,9 +15,10 @@ export const serviceReportSchema = object({
     title: string().required().max(300),
     facilityId: number().required(),
     description: string().required().max(300),
-    category: object<ServiceCategory>().shape({
+    serviceReportCategory: object<ServiceCategory>().shape({
         id: number().required(),
         name: string().max(30).required()
     }),
-    categoryId: number().required()
+    serviceReportCategoryId: number().required(),
+    userId: number().required(),
 })

@@ -14,7 +14,7 @@ export class FacilityAPI extends GenericAPI {
     }
     
     postServiceReport(serviceReport: ServiceReport) {
-        return this.axiosInstance.post<ServiceReport>(`/service_reports`, serviceReport)
+        return this.axiosInstance.post<ServiceReport>(`/facilities/service-reports`, serviceReport)
     }
     
     getServiceCategories() {
