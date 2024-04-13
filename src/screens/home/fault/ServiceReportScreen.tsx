@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ServiceReport, serviceReportSchema } from '../../../model/ServiceReport'
 import FormFieldInput from '../../../components/form/FormFieldInput'
@@ -7,6 +7,7 @@ import ProposedFacility from '../../../model/ProposedFacility'
 import { Text, View, StyleSheet, Button, Alert } from 'react-native'
 import { PhoenixAPI } from '../../../network/PhoenixAPI'
 import { ToastManager } from '../../../managers/ToastManager'
+import { ServiceCategory } from '../../../model/ServiceCategory'
 
 
 const ServiceReportScreen = ({ route, navigation }: any) => {
@@ -22,6 +23,22 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
         resolver: yupResolver(serviceReportSchema)
     })
 
+    const [categories, setCategories] = useState<ServiceCategory[]>([])
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await PhoenixAPI.getInstance().FacilityAPI.getServiceCategories()
+                const categories = response.data
+
+                setCategories(categories)
+            } catch (e) {
+                ToastManager.showError('Netwerkfout', 'Netwerk fout! Kan geen storing melding aanmaken.')
+            }
+        }
+
+        fetchCategories()
+    }, [])
 
     const clickHandler = async (data: ServiceReport) => {
         try {
@@ -33,9 +50,9 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
             console.error(e)
         }
     }
-    
+
     if (facilityParam?.facilityId) {
-        setValue("facilityId", facilityParam.facilityId, {
+        setValue('facilityId', facilityParam.facilityId, {
             shouldValidate: false
         })
     }
@@ -64,12 +81,10 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
                 errors={errors}
             />
 
-            <View style={styles.inputContainer}>
                 <Button
                     title="Verstuur"
                     onPress={handleSubmit(clickHandler)}
                 />
-            </View>
         </View>
     )
 }
@@ -84,7 +99,7 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
         padding: 5
-    },
+    }
 })
 
 export default ServiceReportScreen
