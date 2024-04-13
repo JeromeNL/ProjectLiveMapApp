@@ -1,7 +1,8 @@
 import BottomSheet from '@gorhom/bottom-sheet'
 import React, { useEffect } from 'react'
-import { Button, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+import IsFacilityOpenText from '../../../components/IsFacilityOpenText'
 import OpeningHoursView from '../../../components/OpeningHoursView'
 import ProposedFacility from '../../../model/ProposedFacility'
 import { bottomSheetSlice } from '../../../redux/reducers/bottomSheetReducer'
@@ -38,38 +39,33 @@ const FacilityDetailBottomSheet = ({
             }}
         >
             {facility && (
-                <View
-                    style={{
-                        flex: 1
-                    }}
-                >
+                <View style={styles.container}>
+                    <View style={styles.titleContainer}>
+                        <Text
+                            style={{
+                                fontWeight: 'bold',
+                                fontSize: 18
+                            }}
+                        >
+                            {facility.name}
+                        </Text>
+                        <IsFacilityOpenText
+                            style={{ marginLeft: 5 }}
+                            facility={facility}
+                        />
+                    </View>
+                    <Text>{facility.type}</Text>
                     <Text
                         style={{
-                            marginHorizontal: 20,
-                            fontWeight: 'bold',
-                            fontSize: 18
-                        }}
-                    >
-                        {facility.name}
-                    </Text>
-                    <Text style={{ marginHorizontal: 20 }}>
-                        {facility.type}
-                    </Text>
-                    <Text
-                        style={{
-                            marginLeft: 20,
                             fontWeight: 'bold',
                             marginTop: 10
                         }}
                     >
                         Beschrijving
                     </Text>
-                    <Text style={{ marginHorizontal: 20 }}>
-                        {facility.description}
-                    </Text>
+                    <Text>{facility.description}</Text>
                     <View
                         style={{
-                            marginHorizontal: 20,
                             marginTop: 15,
                             marginBottom: 2
                         }}
@@ -93,7 +89,6 @@ const FacilityDetailBottomSheet = ({
                     </View>
                     <View
                         style={{
-                            marginHorizontal: 20,
                             marginTop: 3,
                             marginBottom: 2
                         }}
@@ -116,6 +111,17 @@ const FacilityDetailBottomSheet = ({
         </BottomSheet>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingHorizontal: 20
+    },
+    titleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
+})
 
 export default FacilityDetailBottomSheet
 
