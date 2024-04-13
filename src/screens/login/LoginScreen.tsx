@@ -12,9 +12,15 @@ function LoginScreen() {
 
     const handleLogin = async () => {
         try {
-            await PhoenixAPI.getInstance().AuthAPI.login(username)
-            dispatch(authSlice.actions.login(username))
+            const response = await PhoenixAPI.getInstance().AuthAPI.login(username)
+            const responseData = response.data
+            
+            dispatch(authSlice.actions.login({
+                id: responseData.id,
+                username: responseData.username,
+            }))
         } catch (error) {
+            console.log("nope")
             ToastManager.showError(
                 'Login Mislukt',
                 'Ongeldige gebruikersnaam. Probeer het opnieuw.'
