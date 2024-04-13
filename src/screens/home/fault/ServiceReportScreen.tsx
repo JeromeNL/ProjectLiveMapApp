@@ -4,19 +4,18 @@ import { useForm } from 'react-hook-form'
 import { ServiceReport, serviceReportSchema } from '../../../model/ServiceReport'
 import FormFieldInput from '../../../components/form/FormFieldInput'
 import ProposedFacility from '../../../model/ProposedFacility'
-import { Text, View, StyleSheet, Button, Alert } from 'react-native'
+import { View, StyleSheet, Button, Alert } from 'react-native'
 import { PhoenixAPI } from '../../../network/PhoenixAPI'
 import { ToastManager } from '../../../managers/ToastManager'
 import { ServiceCategory } from '../../../model/ServiceCategory'
 import { Dropdown } from 'react-native-element-dropdown'
-import { authSlice } from '../../../redux/reducers/authReducer'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../redux/store'
 
 const ServiceReportScreen = ({ route, navigation }: any) => {
     let facilityParam: Partial<ProposedFacility> | undefined =
         route.params?.facility
-    
+
     const {
         control,
         handleSubmit,
@@ -27,11 +26,8 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
     })
 
     const [categories, setCategories] = useState<ServiceCategory[]>([])
-    
 
     useEffect(() => {
-
-        
         const fetchCategories = async () => {
             try {
                 const response = await PhoenixAPI.getInstance().FacilityAPI.getServiceCategories()
@@ -47,19 +43,17 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
         }
 
         fetchCategories()
-        
-        
+
+
     }, [])
 
     const clickHandler = async (data: ServiceReport) => {
-        
+
         let apiResponse = null
-        
+
         try {
-            
-            
             apiResponse = await PhoenixAPI.getInstance().FacilityAPI.postServiceReport(data)
-            
+
             ToastManager.showSuccess('Verstuurd!', 'Bedankt voor de melding')
             navigation.goBack()
         } catch (e) {
@@ -75,9 +69,9 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
             shouldValidate: false
         })
     }
-    
+
     const userId = useSelector((state: RootState) => state.auth.id)
-   
+  
     if (userId && userId > 0) {
         setValue('userId', userId)
     }
@@ -91,14 +85,14 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
                 control={control}
                 errors={errors}
             />
-            
+
             <FormFieldInput
                 label="Beschrijf wat er fout is"
                 property="description"
                 control={control}
                 errors={errors}
             />
-            
+
             <Dropdown
                 data={categories}
                 labelField="name"
@@ -110,10 +104,10 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
                 }}
             />
 
-                <Button
-                    title="Verstuur"
-                    onPress={handleSubmit(clickHandler)}
-                />
+            <Button
+                title="Verstuur"
+                onPress={handleSubmit(clickHandler)}
+            />
         </View>
     )
 }
