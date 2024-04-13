@@ -5,10 +5,7 @@ const OpeningHoursManager = {
         defaultOpeningHours: DefaultOpeningHour[],
         specialOpeningHours: SpecialOpeningHour[]
     ) => {
-        let openingHours: DefaultOpeningHour[] = Object.assign(
-            {},
-            defaultOpeningHours
-        )
+        let openingHours: DefaultOpeningHour[] = [...defaultOpeningHours]
         for (const openingHour of defaultOpeningHours) {
             for (const specialHour of specialOpeningHours) {
                 if (openingHour.weekDay === specialHour.weekDay) {
