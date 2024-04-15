@@ -1,4 +1,5 @@
 import { number, object, string } from 'yup'
+import { BaseFacility } from './base/BaseFacility'
 
 interface ProposedFacility extends BaseFacility {
     facilityId?: number
