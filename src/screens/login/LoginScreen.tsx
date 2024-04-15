@@ -12,8 +12,12 @@ function LoginScreen() {
 
     const handleLogin = async () => {
         try {
-            await PhoenixAPI.getInstance().AuthAPI.login(username)
-            dispatch(authSlice.actions.login(username))
+            const response = await PhoenixAPI.getInstance().AuthAPI.login(username)
+            
+            dispatch(authSlice.actions.login({
+                id: response.data.id,
+                username: response.data.username,
+            }))
         } catch (error) {
             ToastManager.showError(
                 'Login Mislukt',

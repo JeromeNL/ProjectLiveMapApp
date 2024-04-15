@@ -37,9 +37,7 @@ export const HomeStackNavigator = () => {
                 name="ServiceReport"
                 component={ServiceReportScreen}
                 options={({ route }) => ({
-                    title:
-                        'Storingsmelding voor ' +
-                        (route.params?.facility?.name)
+                    title: 'Storingsmelding'
                 })}
             />
         </Stack.Navigator>
