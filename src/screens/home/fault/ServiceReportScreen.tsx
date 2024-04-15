@@ -15,7 +15,7 @@ import { RootState } from '../../../redux/store'
 const ServiceReportScreen = ({ route, navigation }: any) => {
     let facilityParam: Partial<ProposedFacility> | undefined =
         route.params?.facility
-
+    
     const {
         control,
         handleSubmit,
@@ -74,6 +74,10 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
 
     return (
         <View style={styles.container}>
+            
+            <Text style={styles.title}>
+                Faciliteit: {facilityParam?.name}
+            </Text>
 
             <FormFieldInput
                 label="Titel"
@@ -117,6 +121,9 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
 }
 
 const styles = StyleSheet.create({
+    title: {
+        marginBottom: 5  
+    },
     container: {
         margin: 10
     },
