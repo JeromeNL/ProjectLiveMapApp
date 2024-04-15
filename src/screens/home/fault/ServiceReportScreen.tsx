@@ -68,7 +68,7 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
 
     const userId = useSelector((state: RootState) => state.auth.id)
 
-    if (userId && userId > 0) {
+    if (userId) {
         setValue('userId', userId)
     }
 
