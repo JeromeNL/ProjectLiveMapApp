@@ -1,4 +1,3 @@
-import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Colors } from '../configuration/styles/Colors'
 import OpeningHoursManager from '../managers/OpeningHoursManager'
@@ -19,13 +18,13 @@ const OpeningHoursView = ({
     )
 
     const weekDays = [
+        'Zondag',
         'Maandag',
         'Dinsdag',
         'Woensdag',
         'Donderdag',
         'Vrijdag',
-        'Zaterdag',
-        'Zondag'
+        'Zaterdag'
     ]
 
     return (
