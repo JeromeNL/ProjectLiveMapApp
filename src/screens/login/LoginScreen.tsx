@@ -13,11 +13,10 @@ function LoginScreen() {
     const handleLogin = async () => {
         try {
             const response = await PhoenixAPI.getInstance().AuthAPI.login(username)
-            const responseData = response.data
             
             dispatch(authSlice.actions.login({
-                id: responseData.id,
-                username: responseData.username,
+                id: response.data.id,
+                username: response.data.username,
             }))
         } catch (error) {
             ToastManager.showError(
