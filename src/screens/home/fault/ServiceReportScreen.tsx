@@ -49,18 +49,14 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
 
     const clickHandler = async (data: ServiceReport) => {
 
-        let apiResponse = null
-
         try {
-            apiResponse = await PhoenixAPI.getInstance().FacilityAPI.postServiceReport(data)
+            await PhoenixAPI.getInstance().FacilityAPI.postServiceReport(data)
 
             ToastManager.showSuccess('Verstuurd!', 'Bedankt voor de melding')
             navigation.goBack()
         } catch (e) {
             ToastManager.showError('Netwerkfout', 'Melding is niet verstuurd. Probeer het later nog eens.')
             console.error(e)
-        } finally {
-            console.log(apiResponse)
         }
     }
 
@@ -71,7 +67,7 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
     }
 
     const userId = useSelector((state: RootState) => state.auth.id)
-  
+
     if (userId && userId > 0) {
         setValue('userId', userId)
     }
