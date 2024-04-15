@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { DefaultOpeningHour, SpecialOpeningHour } from '../model/OpeningHours'
 
 const OpeningHoursManager = {
@@ -17,20 +18,12 @@ const OpeningHoursManager = {
     },
 
     isOpenNow(openingHours: DefaultOpeningHour) {
-        const now = new Date()
-        const currentDay = now.getDay()
-        const currentHour = now.getHours()
-        const currentMinute = now.getMinutes()
+        const now = moment()
 
-        const openTime = convertTimeToDate(openingHours.openTime)
-        const closeTime = convertTimeToDate(openingHours.closeTime)
-        return (
-            currentDay === openingHours.weekDay &&
-            currentHour >= openTime.getHours() &&
-            currentMinute >= openTime.getMinutes() &&
-            currentHour <= closeTime.getHours() &&
-            currentMinute <= closeTime.getMinutes()
-        )
+        const openingTime = moment(openingHours.openTime, 'HH:mm')
+        const closingTime = moment(openingHours.closeTime, 'HH:mm')
+
+        return now.isBetween(openingTime, closingTime)
     },
 
     getTodaysOpeningHours(openingHours: DefaultOpeningHour[]) {
@@ -40,14 +33,6 @@ const OpeningHoursManager = {
             (openingHour) => openingHour.weekDay === currentDay
         )
     }
-}
-
-function convertTimeToDate(time: string) {
-    const [hours, minutes] = time.split(':')
-    const date = new Date()
-    date.setHours(parseInt(hours))
-    date.setMinutes(parseInt(minutes))
-    return date
 }
 
 export default OpeningHoursManager
