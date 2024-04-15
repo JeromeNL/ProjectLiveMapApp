@@ -32,7 +32,7 @@ const FacilityDetailBottomSheet = ({
         <BottomSheet
             index={-1}
             ref={bottomSheetRef}
-            snapPoints={['80%', '45%']}
+            snapPoints={['80%', '50%']}
             enablePanDownToClose
             onClose={() => {
                 dispatch(bottomSheetSlice.actions.closeBottomSheet())
