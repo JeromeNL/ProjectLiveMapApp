@@ -1,5 +1,6 @@
-import { BaseFacility } from "./base/BaseFacility";
+import { BaseFacility } from './base/BaseFacility'
 
 export interface Facility extends BaseFacility {
     id: number
 }
+

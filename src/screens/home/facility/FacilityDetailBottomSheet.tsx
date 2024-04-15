@@ -54,7 +54,7 @@ const FacilityDetailBottomSheet = ({
                             facility={facility}
                         />
                     </View>
-                    <Text>{facility.type}</Text>
+                    <Text>{facility.category.name}</Text>
                     <Text
                         style={{
                             fontWeight: 'bold',
