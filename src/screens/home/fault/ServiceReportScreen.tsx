@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { ServiceReport, serviceReportSchema } from '../../../model/ServiceReport'
 import FormFieldInput from '../../../components/form/FormFieldInput'
 import ProposedFacility from '../../../model/ProposedFacility'
-import { View, StyleSheet, Button, Alert } from 'react-native'
+import { Text,  View, StyleSheet, Button, Alert } from 'react-native'
 import { PhoenixAPI } from '../../../network/PhoenixAPI'
 import { ToastManager } from '../../../managers/ToastManager'
 import { ServiceCategory } from '../../../model/ServiceCategory'
@@ -89,16 +89,24 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
                 errors={errors}
             />
 
-            <Dropdown
-                data={categories}
-                labelField="name"
-                valueField="id"
-                value={categories[0]}
-                onChange={(item) => {
-                    setValue('serviceReportCategory', item)
-                    setValue('serviceReportCategoryId', item.id)
-                }}
-            />
+            
+            <View style={styles.dropdownInput}>
+                <Text>
+                    Onder welke categorie valt het probleem?
+                </Text>
+
+                <Dropdown
+                    style={styles.dropdownStyle}
+                    data={categories}
+                    labelField="name"
+                    valueField="id"
+                    value={categories[0]}
+                    onChange={(item) => {
+                        setValue('serviceReportCategory', item)
+                        setValue('serviceReportCategoryId', item.id)
+                    }}
+                />
+            </View>
 
             <Button
                 title="Verstuur"
@@ -118,6 +126,13 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
         padding: 5
+    },
+    dropdownInput: {
+        marginBottom: 5,
+        padding: 1
+    },
+    dropdownStyle: {
+        borderWidth: 1,
     }
 })
 
