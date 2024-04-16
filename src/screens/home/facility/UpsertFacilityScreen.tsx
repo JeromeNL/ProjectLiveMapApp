@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
+import { useSelector } from 'react-redux'
 import FormFieldInput from '../../../components/form/FormFieldInput'
 import { ToastManager } from '../../../managers/ToastManager'
 import { Facility } from '../../../model/Facility'
@@ -11,11 +12,18 @@ import ProposedFacility, {
     facilitySchema
 } from '../../../model/ProposedFacility'
 import { PhoenixAPI } from '../../../network/PhoenixAPI'
+import { RootState } from '../../../redux/store'
 
 const UpsertFacilityScreen = ({ route, navigation }: any) => {
     const facility: Facility | undefined = route.params?.facility as Facility
+    facility.specialOpeningHours = []
+    facility.defaultOpeningHours = []
     let facilityParam = facility as Partial<ProposedFacility>
     const isCreating = facilityParam?.facilityId === undefined
+
+    const userId = useSelector((state: RootState) => state.auth.id)
+    // @ts-ignore
+    facility.userId = userId
 
     const {
         control,

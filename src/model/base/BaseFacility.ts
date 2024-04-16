@@ -1,5 +1,4 @@
-import { FacilityCategory } from "../FacilityCategory"
-import { DefaultOpeningHour, SpecialOpeningHour } from "../OpeningHours"
+import { FacilityCategory } from '../FacilityCategory'
 
 export interface BaseFacility {
     name: string
@@ -8,7 +7,5 @@ export interface BaseFacility {
     latitude: number
     categoryId: number
     category: FacilityCategory
-    defaultOpeningHours: DefaultOpeningHour[]
-    specialOpeningHours: SpecialOpeningHour[]
 }
 
