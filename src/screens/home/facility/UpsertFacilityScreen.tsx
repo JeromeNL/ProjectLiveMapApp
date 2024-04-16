@@ -24,6 +24,7 @@ const UpsertFacilityScreen = ({ route, navigation }: any) => {
     const userId = useSelector((state: RootState) => state.auth.id)
     // @ts-ignore
     facility.userId = userId
+    facilityParam.facilityId = facility.id
 
     const {
         control,
@@ -49,6 +50,7 @@ const UpsertFacilityScreen = ({ route, navigation }: any) => {
                 if (facilityParam?.categoryId) {
                 } else {
                     setValue('categoryId', responseCategory[0].id)
+                    setValue('category', responseCategory[0])
                 }
             } catch (e) {
                 ToastManager.showError(
