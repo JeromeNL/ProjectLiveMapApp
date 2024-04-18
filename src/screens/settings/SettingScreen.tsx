@@ -17,6 +17,10 @@ const SettingScreen = ({ navigation }: any) => {
                     title="Notificaties"
                     onPress={() => navigation.push('Notification')}
                 />
+                <Button
+                    title="Meldingen"
+                    onPress={() => navigation.push('ReportsList')}
+                />
             </View>
             <View style={styles.bottomContainer}>
                 <Button title="Log uit" onPress={handleLogout} />
