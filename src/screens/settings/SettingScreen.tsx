@@ -17,6 +17,7 @@ const SettingScreen = ({ navigation }: any) => {
                     title="Notificaties"
                     onPress={() => navigation.push('Notification')}
                 />
+                <View style={styles.spaceBetweenContainer} />
                 <Button
                     title="Meldingen"
                     onPress={() => navigation.push('ReportsList')}
@@ -39,7 +40,10 @@ const styles = StyleSheet.create({
     centeredContainer: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+    },
+    spaceBetweenContainer: {
+        height: 20,
     },
     bottomContainer: {
         marginBottom: 20
