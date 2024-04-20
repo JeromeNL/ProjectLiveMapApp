@@ -9,10 +9,15 @@ export const facilitySchema = object({
     facilityId: number(),
     name: string().required().max(20),
     description: string().required().max(100),
-    type: string().required(),
     longitude: number().required(),
     latitude: number().required(),
-    iconName: string().required()
+    categoryId: number().required(),
+    category: object({
+        id: number().required(),
+        name: string().required(),
+        description: string().required(),
+        iconName: string().required()
+    })
 })
 
 export default ProposedFacility

@@ -13,7 +13,7 @@ interface MapMarkerProps {
 
 const MapMarker = ({ facility, mapRef }: MapMarkerProps) => {
     const dispatch = useDispatch()
-    const Icon = IconManager.getIcon(facility.iconName)
+    const Icon = IconManager.getIcon(facility.category.iconName)
     const id = facility.id.toString() + '-marker'
     return (
         <Marker
