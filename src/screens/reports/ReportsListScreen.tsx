@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, ScrollView, Dimensions } from 'react-native';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { PhoenixAPI } from '../../network/PhoenixAPI';
-import Collapsible from 'react-native-collapsible';
-import SegmentedControl from '@react-native-segmented-control/segmented-control';
-import { IconHelpCircle } from '@tabler/icons-react-native';
-import { Colors } from '../../configuration/styles/Colors';
+import { SegmentedControlComponent } from '../components/SegmentedControlComponent';
+import { ReportList } from './components/ReportList';
 import { ToastManager } from '../../managers/ToastManager';
 
 const ReportsListScreen = () => {
@@ -27,6 +24,7 @@ const ReportsListScreen = () => {
                 })
                 .catch((error) => {
                     console.error('Error fetching service reports:', error);
+                    ToastManager.showError("Fout bij ophalen", "Kan servicemeldingen niet laden");
                 });
 
             PhoenixAPI.getInstance().AuthAPI.getFacilityReports(userId)
@@ -36,6 +34,7 @@ const ReportsListScreen = () => {
                 })
                 .catch((error) => {
                     console.error('Error fetching facility reports:', error);
+                    ToastManager.showError("Fout bij ophalen", "Kan facilitaire meldingen niet laden");
                 });
         }
     }, [userId]);
@@ -58,136 +57,19 @@ const ReportsListScreen = () => {
         }
     };
 
-    const showStatusToast = (message: string) => {
-        ToastManager.showInfo('Status', message);
-    };
-
-    const getStatusIcon = (status: number | undefined) => {
-        switch (status) {
-            case 0:
-                return <IconHelpCircle color={Colors.warning} onPress={() => showStatusToast('Jouw melding is in behandeling')} />;
-            case 1:
-                return <IconHelpCircle color={Colors.success} onPress={() => showStatusToast('Jouw melding is geaccepteerd. Het probleem is opgelost of de faciliteit is aangemaakt')} />;
-            case undefined:
-                return <IconHelpCircle color={Colors.gray} onPress={() => showStatusToast('Er is geen status beschikbaar voor deze melding')} />;
-            default:
-                return <IconHelpCircle color={Colors.error} onPress={() => showStatusToast('Jouw melding is afgekeurd')} />;
-        }
-    };
-
     return (
         <View style={{ flex: 1 }}>
-            <View style={styles.segmentedControlContainer}>
-                <SegmentedControl
-                    values={['Service', 'Faciliteit']}
-                    selectedIndex={selectedIndex}
-                    onChange={(event) => {
-                        setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
-                    }}
-                    style={{ width: windowWidth * 0.4 }}
-                />
-            </View>
-            <ScrollView style={{ flex: 1 }}>
-                <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 50 }}>
-                    {serviceReports.length === 0 && facilityReports.length === 0 && (
-                        <Text>Geen meldingen beschikbaar</Text>
-                    )}
-                    {selectedIndex === 0 ? (
-                        <View>
-                            {serviceReports.map((report, index) => (
-                                <TouchableOpacity key={index} onPress={() => toggleServiceReport(index)}>
-                                    <View style={styles.reportContainer}>
-                                        <View style={styles.titleContainer}>
-                                            <Text style={styles.reportTitle}>{report.title}</Text>
-                                            {getStatusIcon(report.status)}
-                                        </View>
-                                        <Collapsible collapsed={!expandedServiceReports.includes(index)}>
-                                            <Text>
-                                                <Text style={styles.boldText}>Beschrijving:</Text> {report.description}
-                                            </Text>
-                                            <Text>
-                                                <Text style={styles.boldText}>Ingediend op:</Text> {formatDate(report.createdAt)}
-                                            </Text>
-                                        </Collapsible>
-                                    </View>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-                    ) : (
-                        <View>
-                            {facilityReports.map((report, index) => (
-                                <TouchableOpacity key={index} onPress={() => toggleFacilityReport(index)}>
-                                    <View style={styles.reportContainer}>
-                                        <View style={styles.titleContainer}>
-                                            <Text style={styles.reportTitle}>{report.proposedFacility.name}</Text>
-                                            {getStatusIcon(report.status)}
-                                        </View>
-                                        <Collapsible collapsed={!expandedFacilityReports.includes(index)}>
-                                            <Text>
-                                                <Text style={styles.boldText}>Beschrijving:</Text> {report.description}
-                                            </Text>
-                                            <Text>
-                                                <Text style={styles.boldText}>Ingediend op:</Text> {formatDate(report.createdAt)}
-                                            </Text>
-                                        </Collapsible>
-                                    </View>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-                    )}
-                </View>
-            </ScrollView>
+            <SegmentedControlComponent
+                selectedIndex={selectedIndex}
+                onChange={(event) => setSelectedIndex(event.nativeEvent.selectedSegmentIndex)}
+            />
+            <ReportList
+                reports={selectedIndex === 0 ? serviceReports : facilityReports}
+                toggleReport={selectedIndex === 0 ? toggleServiceReport : toggleFacilityReport}
+                expandedReports={selectedIndex === 0 ? expandedServiceReports : expandedFacilityReports}
+            />
         </View>
     );
 };
-
-const formatDate = (dateString: string) => {
-    const optionsDate: Intl.DateTimeFormatOptions = {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-    };
-    const optionsTime: Intl.DateTimeFormatOptions = {
-        hour: '2-digit',
-        minute: '2-digit',
-    };
-    const date = new Date(dateString);
-    const formattedDate = date.toLocaleDateString('nl-NL', optionsDate);
-    const formattedTime = date.toLocaleTimeString('nl-NL', optionsTime);
-    return `${formattedDate} ${formattedTime}`;
-};
-
-const windowWidth = Dimensions.get('window').width;
-
-const styles = StyleSheet.create({
-    segmentedControlContainer: {
-        position: 'absolute',
-        top: 10,
-        left: (windowWidth - windowWidth * 0.4) / 2,
-        zIndex: 1,
-        elevation: 5
-    },
-    reportContainer: {
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: Colors.gray,
-        padding: 10,
-        marginVertical: 5,
-        width: windowWidth * 0.9,
-    },
-    boldText: {
-        fontWeight: 'bold',
-    },
-    reportTitle: {
-        fontSize: 18,
-        marginBottom: 10,
-        flex: 1,
-    },
-    titleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-});
 
 export default ReportsListScreen;
