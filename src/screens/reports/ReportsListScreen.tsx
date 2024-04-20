@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
-import { Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { PhoenixAPI } from '../../network/PhoenixAPI';
 import Collapsible from 'react-native-collapsible';
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
-import { IconHelpCircleFilled } from '@tabler/icons-react-native';
+import { IconHelpCircle } from '@tabler/icons-react-native';
 import { Colors } from '../../configuration/styles/Colors';
+import { ToastManager } from '../../managers/ToastManager';
 
 const ReportsListScreen = () => {
     const [serviceReports, setServiceReports] = useState<any[]>([]);
@@ -57,16 +58,20 @@ const ReportsListScreen = () => {
         }
     };
 
+    const showStatusToast = (message: string) => {
+        ToastManager.showInfo('Status', message);
+    };
+
     const getStatusIcon = (status: number | undefined) => {
         switch (status) {
             case 0:
-                return <IconHelpCircleFilled color= {Colors.warning} />;
+                return <IconHelpCircle color={Colors.warning} onPress={() => showStatusToast('Jouw melding is in behandeling')} />;
             case 1:
-                return <IconHelpCircleFilled color= {Colors.success} />;
+                return <IconHelpCircle color={Colors.success} onPress={() => showStatusToast('Jouw melding is geaccepteerd. Het probleem is opgelost of de faciliteit is aangemaakt')} />;
             case undefined:
-                return <IconHelpCircleFilled color= {Colors.error} />;
+                return <IconHelpCircle color={Colors.gray} onPress={() => showStatusToast('Er is geen status beschikbaar voor deze melding')} />;
             default:
-                return <IconHelpCircleFilled color= {Colors.error} />;
+                return <IconHelpCircle color={Colors.error} onPress={() => showStatusToast('Jouw melding is afgekeurd')} />;
         }
     };
 
@@ -165,7 +170,7 @@ const styles = StyleSheet.create({
     reportContainer: {
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: 'gray',
+        borderColor: Colors.gray,
         padding: 10,
         marginVertical: 5,
         width: windowWidth * 0.9,
