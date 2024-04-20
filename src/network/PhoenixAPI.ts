@@ -2,9 +2,11 @@ import axios from 'axios'
 import { Platform } from 'react-native'
 import { FacilityAPI } from './libs/FacilityAPI'
 import { AuthAPI } from './libs/AuthAPI'
+import { ServiceReportAPI } from './libs/ServiceReportAPI'
 
 export class PhoenixAPI {
     public FacilityAPI!: FacilityAPI
+    public ServiceReportAPI!: ServiceReportAPI
     public AuthAPI!: AuthAPI
 
     private static instance: PhoenixAPI
@@ -26,5 +28,6 @@ export class PhoenixAPI {
         })
         this.AuthAPI = new AuthAPI(axiosClient)
         this.FacilityAPI = new FacilityAPI(axiosClient)
+        this.ServiceReportAPI = new ServiceReportAPI(axiosClient)
     }
 }
