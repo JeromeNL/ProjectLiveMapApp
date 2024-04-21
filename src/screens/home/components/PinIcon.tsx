@@ -3,15 +3,20 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Path, Svg } from 'react-native-svg'
 import { Colors } from '../../../configuration/styles/Colors'
+import IconManager from '../../../managers/IconManager'
 
 interface PinIconProps {
     hex: string
     Icon: Icon
+    hasServiceReport: boolean
 }
 
-export const PinIcon = ({ hex, Icon }: PinIconProps) => {
+export const PinIcon = ({ hex, Icon, hasServiceReport }: PinIconProps) => {
     const darkenedColor = darkenColor(hex, -0.1)
+    const ServiceReportIcon = IconManager.getIcon('exclamation-mark')
+
     return (
+
         <View style={styles.container}>
             <View>
                 <Svg width="27" height="35" viewBox="0 0 27 35" fill="none">
@@ -38,6 +43,18 @@ export const PinIcon = ({ hex, Icon }: PinIconProps) => {
                     width={15}
                     style={{ marginTop: 1 }}
                 />
+
+                {hasServiceReport && (
+                    <ServiceReportIcon
+                        color={Colors.error}
+                        width={200}
+                        style={{
+                            position: 'relative',
+                            top: -11, left: 11,
+                            transform: [{ rotate: '7deg' }]
+                        }}
+                    />
+                )}
             </View>
         </View>
     )
