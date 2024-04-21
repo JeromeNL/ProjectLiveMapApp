@@ -28,16 +28,14 @@ const ServiceReportList = ({ serviceReports }: ServiceReportListProps) => {
                     .sort((a, b) => moment(b.createdAt).diff(moment(a.createdAt)))
                     .slice(0, showAll ? serviceReports.length : defaultShowCount)
                     .map(report =>
-                        <View>
-                            <Text>
-                                {report.title}
-                            </Text>
-                        </View>
+                        <Text key={report.id}>
+                            {report.title}
+                        </Text>
                     )}
 
             {}
             <Text style={styles.showMoreText} onPress={() => setShowAll(!showAll)}>
-                {showAll ? "Toon minder" : "Toon meer"}
+                {showAll ? 'Toon minder' : 'Toon meer'}
             </Text>
 
         </View>

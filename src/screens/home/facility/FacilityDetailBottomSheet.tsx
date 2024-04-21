@@ -105,7 +105,9 @@ const FacilityDetailBottomSheet = ({
                             }}
                         />
                     </View>
-                    <ServiceReportList serviceReports={facility.serviceReports} />
+                    {facility.serviceReports.length > 0 && (
+                        <ServiceReportList serviceReports={facility.serviceReports} />
+                    )}
                     <View
                         style={{
                             marginTop: 3,
