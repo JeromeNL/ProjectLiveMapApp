@@ -32,8 +32,6 @@ const ServiceReportList = ({ serviceReports }: ServiceReportListProps) => {
                             {report.title}
                         </Text>
                     )}
-
-            {}
             <Text style={styles.showMoreText} onPress={() => setShowAll(!showAll)}>
                 {showAll ? 'Toon minder' : 'Toon meer'}
             </Text>
