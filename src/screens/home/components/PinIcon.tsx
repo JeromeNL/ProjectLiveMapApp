@@ -47,10 +47,11 @@ export const PinIcon = ({ hex, Icon, hasServiceReport }: PinIconProps) => {
                 {hasServiceReport && (
                     <ServiceReportIcon
                         color={Colors.error}
-                        width={200}
+                        width={30}
+                        height={30}
                         style={{
                             position: 'relative',
-                            top: -11, left: 11,
+                            top: -18, left: 10,
                             transform: [{ rotate: '7deg' }]
                         }}
                     />
