@@ -5,7 +5,7 @@ export interface ServiceReport {
     title: string,
     facilityId: number,
     description: string,
-    serviceReportCategory: ServiceCategory,
+    serviceReportCategory?: ServiceCategory,
     serviceReportCategoryId: number, 
     userId: number, 
 }

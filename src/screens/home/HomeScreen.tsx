@@ -12,6 +12,7 @@ import { PhoenixAPI } from '../../network/PhoenixAPI'
 import FloatingMapAction from './components/FloatingMapAction'
 import MapMarker from './components/MapMarker'
 import FacilityDetailBottomSheet from './facility/FacilityDetailBottomSheet'
+import { FacilityAPI } from '../../network/libs/FacilityAPI'
 
 const HomeScreen = ({ navigation }: any) => {
     const [locationState, setLocationState] = useState<LocationObject | null>(
