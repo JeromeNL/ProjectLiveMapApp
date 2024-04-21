@@ -8,6 +8,7 @@ import OpeningHoursManager from '../../../managers/OpeningHoursManager'
 import ProposedFacility from '../../../model/ProposedFacility'
 import { bottomSheetSlice } from '../../../redux/reducers/bottomSheetReducer'
 import { RootState } from '../../../redux/store'
+import ServiceReportList from '../../../components/ServiceReportList'
 
 interface FacilityDetailBottomSheetProps {
     navigation: any
@@ -104,6 +105,7 @@ const FacilityDetailBottomSheet = ({
                             }}
                         />
                     </View>
+                    <ServiceReportList serviceReports={facility.serviceReports} />
                     <View
                         style={{
                             marginTop: 3,

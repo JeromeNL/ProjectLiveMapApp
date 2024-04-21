@@ -1,5 +1,6 @@
 import { number, object, string } from 'yup'
 import { ServiceCategory } from './ServiceCategory'
+import { Moment } from 'moment'
 
 export interface ServiceReport {
     title: string,
@@ -7,7 +8,8 @@ export interface ServiceReport {
     description: string,
     serviceReportCategory?: ServiceCategory,
     serviceReportCategoryId: number, 
-    userId: number, 
+    userId: number,
+    createdAt?: string
 }
 
 
