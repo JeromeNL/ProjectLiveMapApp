@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import { ServiceReport } from '../model/ServiceReport'
 import moment from 'moment'
+import React from 'react'
 
 interface ServiceReportListProps {
     serviceReports: ServiceReport[]
@@ -8,9 +9,9 @@ interface ServiceReportListProps {
 
 const ServiceReportList = ({ serviceReports }: ServiceReportListProps) => {
 
-    const dateSortedServiceReports = [...serviceReports]
-        .sort((a, b) => moment(b.createdAt).diff(moment(a.createdAt)))
-    
+    const defaultShowCount = 5
+
+    const [showAll, setShowAll] = React.useState(false)
 
     return (
         <View>
@@ -23,7 +24,9 @@ const ServiceReportList = ({ serviceReports }: ServiceReportListProps) => {
                 Let op, bezoekers hebben de volgende storingen gemeld:
             </Text>
             {serviceReports.length > 0 &&
-                dateSortedServiceReports
+                [...serviceReports]
+                    .sort((a, b) => moment(b.createdAt).diff(moment(a.createdAt)))
+                    .slice(0, showAll ? serviceReports.length : defaultShowCount)
                     .map(report =>
                         <View>
                             <Text>
@@ -31,6 +34,12 @@ const ServiceReportList = ({ serviceReports }: ServiceReportListProps) => {
                             </Text>
                         </View>
                     )}
+
+            {}
+            <Text style={styles.showMoreText} onPress={() => setShowAll(!showAll)}>
+                {showAll ? "Toon minder" : "Toon meer"}
+            </Text>
+
         </View>
     )
 }
@@ -42,6 +51,11 @@ const styles = StyleSheet.create({
     },
     timeContainer: {
         flexDirection: 'row'
+    },
+    showMoreText: {
+        textDecorationLine: 'underline',
+        marginTop: 5,
+        marginBottom: 20
     }
 })
 
