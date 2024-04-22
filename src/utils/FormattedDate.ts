@@ -1,4 +1,4 @@
-export const formatDate = (dateString: string) => {
+export const FormattedDate = (dateString: string) => {
     const optionsDate: Intl.DateTimeFormatOptions = {
         day: '2-digit',
         month: '2-digit',

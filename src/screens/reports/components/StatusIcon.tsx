@@ -3,7 +3,11 @@ import { IconHelpCircle } from '@tabler/icons-react-native';
 import { Colors } from '../../../configuration/styles/Colors';
 import { ToastManager } from '../../../managers/ToastManager';
 
-export const StatusIcon = (status: number | undefined) => {
+interface StatusIconProps {
+    status: number | undefined;
+}
+
+export const StatusIcon: React.FC<StatusIconProps> = ({ status }) => {
     const showStatusToast = (message: string) => {
         ToastManager.showInfo('Status', message);
     };

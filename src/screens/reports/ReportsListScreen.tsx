@@ -6,10 +6,11 @@ import { PhoenixAPI } from '../../network/PhoenixAPI';
 import { SegmentedControlComponent } from '../components/SegmentedControlComponent';
 import { ReportList } from './components/ReportList';
 import { ToastManager } from '../../managers/ToastManager';
+import { Report } from '../../model/Report';
 
 const ReportsListScreen = () => {
-    const [serviceReports, setServiceReports] = useState<any[]>([]);
-    const [facilityReports, setFacilityReports] = useState<any[]>([]);
+    const [serviceReports, setServiceReports] = useState<Report[]>([]);
+    const [facilityReports, setFacilityReports] = useState<Report[]>([]);
     const [expandedServiceReports, setExpandedServiceReports] = useState<number[]>([]);
     const [expandedFacilityReports, setExpandedFacilityReports] = useState<number[]>([]);
     const [selectedIndex, setSelectedIndex] = useState<number>(0); // 0 for service, 1 for facility
@@ -19,7 +20,7 @@ const ReportsListScreen = () => {
         if (userId) {
             PhoenixAPI.getInstance().ReportAPI.getServiceReports(userId)
                 .then((response) => {
-                    const sortedServiceReports = response.data.sort((a: { createdAt: string | number | Date; }, b: { createdAt: string | number | Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                    const sortedServiceReports = response.data.sort((a: Report, b: Report) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                     setServiceReports(sortedServiceReports);
                 })
                 .catch((error) => {
@@ -29,7 +30,7 @@ const ReportsListScreen = () => {
 
             PhoenixAPI.getInstance().ReportAPI.getFacilityReports(userId)
                 .then((response) => {
-                    const sortedFacilityReports = response.data.sort((a: { createdAt: string | number | Date; }, b: { createdAt: string | number | Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+                    const sortedFacilityReports = response.data.sort((a: Report, b: Report) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                     setFacilityReports(sortedFacilityReports);
                 })
                 .catch((error) => {
@@ -37,7 +38,7 @@ const ReportsListScreen = () => {
                     ToastManager.showError("Fout bij ophalen", "Kan facilitaire meldingen niet laden");
                 });
         }
-    }, []);
+    }, [userId]);
 
     const toggleServiceReport = (index: number) => {
         const isExpanded = expandedServiceReports.includes(index);
