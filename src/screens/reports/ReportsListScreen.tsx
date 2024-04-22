@@ -17,7 +17,7 @@ const ReportsListScreen = () => {
 
     useEffect(() => {
         if (userId) {
-            PhoenixAPI.getInstance().AuthAPI.getServiceReports(userId)
+            PhoenixAPI.getInstance().ReportAPI.getServiceReports(userId)
                 .then((response) => {
                     const sortedServiceReports = response.data.sort((a: { createdAt: string | number | Date; }, b: { createdAt: string | number | Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                     setServiceReports(sortedServiceReports);
@@ -27,7 +27,7 @@ const ReportsListScreen = () => {
                     ToastManager.showError("Fout bij ophalen", "Kan servicemeldingen niet laden");
                 });
 
-            PhoenixAPI.getInstance().AuthAPI.getFacilityReports(userId)
+            PhoenixAPI.getInstance().ReportAPI.getFacilityReports(userId)
                 .then((response) => {
                     const sortedFacilityReports = response.data.sort((a: { createdAt: string | number | Date; }, b: { createdAt: string | number | Date; }) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
                     setFacilityReports(sortedFacilityReports);
@@ -37,7 +37,7 @@ const ReportsListScreen = () => {
                     ToastManager.showError("Fout bij ophalen", "Kan facilitaire meldingen niet laden");
                 });
         }
-    }, [userId]);
+    }, []);
 
     const toggleServiceReport = (index: number) => {
         const isExpanded = expandedServiceReports.includes(index);
