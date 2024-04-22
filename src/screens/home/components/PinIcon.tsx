@@ -8,10 +8,10 @@ import IconManager from '../../../managers/IconManager'
 interface PinIconProps {
     hex: string
     Icon: Icon
-    hasServiceReport: boolean
+    showExclamationMark: boolean
 }
 
-export const PinIcon = ({ hex, Icon, hasServiceReport }: PinIconProps) => {
+export const PinIcon = ({ hex, Icon, showExclamationMark }: PinIconProps) => {
     const darkenedColor = darkenColor(hex, -0.1)
     const ServiceReportIcon = IconManager.getIcon('exclamation-mark')
 
@@ -44,7 +44,7 @@ export const PinIcon = ({ hex, Icon, hasServiceReport }: PinIconProps) => {
                     style={{ marginTop: 1 }}
                 />
 
-                {hasServiceReport && (
+                {showExclamationMark && (
                     <ServiceReportIcon
                         color={Colors.error}
                         width={30}

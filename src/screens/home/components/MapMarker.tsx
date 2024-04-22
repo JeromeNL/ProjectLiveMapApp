@@ -45,7 +45,7 @@ const MapMarker = ({ facility, mapRef, hasServiceReports }: MapMarkerProps) => {
             }}
             anchor={{ x: 0.5, y: 1 }}
         >
-            <PinIcon hex={'#FFAB33'} Icon={Icon} hasServiceReport={hasServiceReports} />
+            <PinIcon hex={'#FFAB33'} Icon={Icon} showExclamationMark={hasServiceReports} />
             <Callout tooltip={true} />
         </Marker>
     )
