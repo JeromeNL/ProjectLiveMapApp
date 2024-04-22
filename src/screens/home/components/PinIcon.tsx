@@ -49,11 +49,7 @@ export const PinIcon = ({ hex, Icon, showExclamationMark }: PinIconProps) => {
                         color={Colors.error}
                         width={30}
                         height={30}
-                        style={{
-                            position: 'relative',
-                            top: -18, left: 10,
-                            transform: [{ rotate: '7deg' }]
-                        }}
+                        style={(styles.exclamationMark)}
                     />
                 )}
             </View>
@@ -90,6 +86,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    exclamationMark: {
+        position: 'relative',
+        top: -18, left: 10,
+        transform: [{ rotate: '7deg' }]
     }
 })
 
