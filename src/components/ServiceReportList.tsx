@@ -15,12 +15,7 @@ const ServiceReportList = ({ serviceReports }: ServiceReportListProps) => {
 
     return (
         <View>
-            <Text
-                style={{
-                    fontWeight: 'bold',
-                    marginTop: 10
-                }}
-            >
+            <Text style={(styles.listHeader)}>
                 Let op, bezoekers hebben de volgende storingen gemeld:
             </Text>
             {serviceReports.length > 0 &&
@@ -52,6 +47,10 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         marginTop: 5,
         marginBottom: 20
+    },
+    listHeader: {
+        fontWeight: 'bold',
+        marginTop: 10
     }
 })
 
