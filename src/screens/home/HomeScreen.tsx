@@ -68,7 +68,6 @@ const HomeScreen = ({ navigation }: any) => {
                         key={facility.id}
                         facility={facility}
                         mapRef={mapRef}
-                        hasServiceReports={facility.serviceReports.length != 0}
                     />
                 ))}
             </MapView>

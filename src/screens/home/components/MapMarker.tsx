@@ -5,16 +5,13 @@ import IconManager from '../../../managers/IconManager'
 import { Facility } from '../../../model/Facility'
 import { bottomSheetSlice } from '../../../redux/reducers/bottomSheetReducer'
 import { PinIcon } from './PinIcon'
-import { View } from 'react-native'
-import { Colors } from '../../../configuration/styles/Colors'
 
 interface MapMarkerProps {
     facility: Facility
     mapRef: React.RefObject<MapView>
-    hasServiceReports: boolean
 }
 
-const MapMarker = ({ facility, mapRef, hasServiceReports }: MapMarkerProps) => {
+const MapMarker = ({ facility, mapRef }: MapMarkerProps) => {
     const dispatch = useDispatch()
     const Icon = IconManager.getIcon(facility.category.iconName)
     const id = facility.id.toString() + '-marker'
@@ -45,7 +42,10 @@ const MapMarker = ({ facility, mapRef, hasServiceReports }: MapMarkerProps) => {
             }}
             anchor={{ x: 0.5, y: 1 }}
         >
-            <PinIcon hex={'#FFAB33'} Icon={Icon} showExclamationMark={hasServiceReports} />
+            <PinIcon hex={'#FFAB33'} 
+                     Icon={Icon} 
+                     showExclamationMark={facility.serviceReports.length != 0} 
+            />
             <Callout tooltip={true} />
         </Marker>
     )
