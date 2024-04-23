@@ -1,6 +1,6 @@
-import { GenericAPI } from './abstract/GenericAPI'
+import { ResortRelatedAPI } from "./abstract/ResortRelatedAPI";
 
-export class ReportAPI extends GenericAPI {
+export class ReportAPI extends ResortRelatedAPI {
     getServiceReports(userId: number) {
         return this.axiosInstance.get(`/users/${userId}/service-reports`)
     }

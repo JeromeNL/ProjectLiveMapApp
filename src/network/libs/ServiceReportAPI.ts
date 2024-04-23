@@ -1,8 +1,8 @@
-import { GenericAPI } from './abstract/GenericAPI'
 import { ServiceReport } from '../../model/ServiceReport'
 import { ServiceCategory } from '../../model/ServiceCategory'
+import { ResortRelatedAPI } from "./abstract/ResortRelatedAPI";
 
-export class ServiceReportAPI extends GenericAPI {
+export class ServiceReportAPI extends ResortRelatedAPI {
 
     getServiceReports() {
         return this.axiosInstance.get<ServiceReport[]>(
