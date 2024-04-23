@@ -3,12 +3,14 @@ import { LocationObject } from 'expo-location'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import MapView, { UrlTile } from 'react-native-maps'
+import { useSelector } from 'react-redux'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
 import { Colors } from '../../configuration/styles/Colors'
 import { LocationManager } from '../../managers/LocationManager'
 import { Facility } from '../../model/Facility'
 import ProposedFacility from '../../model/ProposedFacility'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
+import { RootState } from '../../redux/store'
 import FloatingMapAction from './components/FloatingMapAction'
 import MapMarker from './components/MapMarker'
 import FacilityDetailBottomSheet from './facility/FacilityDetailBottomSheet'
@@ -18,10 +20,11 @@ const HomeScreen = ({ navigation }: any) => {
         null
     )
     const mapRef = React.useRef<MapView>(null)
-    const [region, _] = useState(MapConfiguration.region.initial)
+    const selectedResort = useSelector(
+        (state: RootState) => state.selectedResort.selectedResort
+    )
 
     const [facilities, setFacilities] = useState<Facility[]>([])
-
     useEffect(() => {
         PhoenixAPI.getInstance()
             .FacilityAPI.getFacilities()
@@ -38,30 +41,35 @@ const HomeScreen = ({ navigation }: any) => {
         }
 
         handle()
-    }, [])
+    }, [selectedResort])
 
     useEffect(() => {
-        if (!mapRef.current) {
+        if (!mapRef.current || !selectedResort) {
             return
         }
-        const bounds = MapConfiguration.region.bounds
-        mapRef.current.setMapBoundaries(bounds.northeast, bounds.southwest)
-    }, [])
+        const northEast = {
+            latitude: selectedResort.northEastLatitude,
+            longitude: selectedResort.northEastLongitude
+        }
+        const southWest = {
+            latitude: selectedResort.southWestLatitude,
+            longitude: selectedResort.southWestLongitude
+        }
+        mapRef.current.setMapBoundaries(northEast, southWest)
+    }, [selectedResort])
 
     return (
         <>
             <MapView
                 ref={mapRef}
                 provider="google"
-                mapType='none'
+                mapType="none"
                 style={{ flex: 1 }}
-                region={region}
                 showsUserLocation
                 minZoomLevel={15.7}
                 maxZoomLevel={20}
             >
-                <UrlTile
-                    urlTemplate={MapConfiguration.tile.urlTemplate}/>
+                <UrlTile urlTemplate={MapConfiguration.tile.urlTemplate} />
                 {facilities.map((facility) => (
                     <MapMarker
                         key={facility.id}
@@ -91,7 +99,7 @@ const HomeScreen = ({ navigation }: any) => {
                     />
                 </View>
             )}
-            <FacilityDetailBottomSheet navigation={navigation}/>
+            <FacilityDetailBottomSheet navigation={navigation} />
         </>
     )
 }

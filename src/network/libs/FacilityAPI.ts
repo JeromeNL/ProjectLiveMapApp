@@ -7,8 +7,6 @@ import { ResortRelatedAPI } from './abstract/ResortRelatedAPI'
 
 export class FacilityAPI extends ResortRelatedAPI {
     upsertFacility(facility: ProposedFacility) {
-        console.log(this.axiosInstance.defaults.baseURL + '/facilities/upsert')
-        console.log(facility)
         return this.axiosInstance.post(`/facilities/upsert`, facility)
     }
 

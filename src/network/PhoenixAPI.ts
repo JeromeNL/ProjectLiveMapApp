@@ -10,10 +10,6 @@ export class PhoenixAPI {
 
     private static instance: PhoenixAPI
 
-    constructor() {
-        this.initializeAPIs()
-    }
-
     public static getInstance() {
         if (!PhoenixAPI.instance) {
             PhoenixAPI.instance = new PhoenixAPI()
@@ -21,12 +17,12 @@ export class PhoenixAPI {
         return PhoenixAPI.instance
     }
 
-    initializeAPIs() {
+    initializeAPIs(resortId: string) {
         const axiosClient = axios.create({
             baseURL: process.env.EXPO_PUBLIC_API_URL
         })
         this.AuthAPI = new AuthAPI(axiosClient)
-        this.FacilityAPI = new FacilityAPI(axiosClient)
+        this.FacilityAPI = new FacilityAPI(axiosClient, resortId)
         this.ResortAPI = new ResortAPI(axiosClient)
     }
 }
