@@ -20,12 +20,13 @@ const ResortDropdown = () => {
             .ResortAPI.getResorts()
             .then((res) => {
                 setResorts(res.data)
+                if (!selectedResort) {
+                    handleDropdownChange(res.data[0])
+                }
             })
     }, [])
 
-    const handleDropdownChange = (value: Resort) => {
-        const resort = resorts.find((r) => r.id === value.id)
-        if (!resort) return
+    const handleDropdownChange = (resort: Resort) => {
         dispatch(selectedResortSlice.actions.setSelectedResort(resort))
         PhoenixAPI.getInstance().initializeAPIs(resort.id.toString())
     }
