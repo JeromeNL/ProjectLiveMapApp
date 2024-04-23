@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import NotificationScreen from '../screens/notifications/NotificationScreen'
 import SettingScreen from '../screens/settings/SettingScreen'
+import ReportsListScreen from '../screens/reports/ReportsListScreen'
 
 const Stack = createStackNavigator()
 
@@ -19,6 +20,13 @@ export const SettingStackNavigator = () => {
                 component={NotificationScreen}
                 options={{
                     title: 'Notificaties'
+                }}
+            />
+            <Stack.Screen
+                name="ReportsList"
+                component={ReportsListScreen}
+                options={{
+                    title: 'Meldingen'
                 }}
             />
         </Stack.Navigator>
