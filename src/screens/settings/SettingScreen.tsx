@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { authSlice } from '../../redux/reducers/authReducer'
+import ResortDropdown from './components/ResortDropdown'
 
 const SettingScreen = ({ navigation }: any) => {
     const dispatch = useDispatch()
@@ -13,6 +14,7 @@ const SettingScreen = ({ navigation }: any) => {
     return (
         <View style={styles.container}>
             <View style={styles.centeredContainer}>
+                <ResortDropdown />
                 <Button
                     title="Notificaties"
                     onPress={() => navigation.push('Notification')}
