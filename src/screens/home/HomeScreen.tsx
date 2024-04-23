@@ -2,7 +2,7 @@ import { IconPlus } from '@tabler/icons-react-native'
 import { LocationObject } from 'expo-location'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import MapView, { UrlTile } from 'react-native-maps'
+import MapView, { Region, UrlTile } from 'react-native-maps'
 import { useSelector } from 'react-redux'
 import { MapConfiguration } from '../../configuration/MapConfiguration'
 import { Colors } from '../../configuration/styles/Colors'
@@ -58,13 +58,31 @@ const HomeScreen = ({ navigation }: any) => {
         mapRef.current.setMapBoundaries(northEast, southWest)
     }, [selectedResort])
 
+    let region: Region | undefined = undefined
+    if (selectedResort) {
+        region = {
+            latitude:
+                (selectedResort.northEastLatitude +
+                    selectedResort.southWestLatitude) /
+                2,
+            longitude:
+                (selectedResort.northEastLongitude +
+                    selectedResort.southWestLongitude) /
+                2,
+            latitudeDelta: 0.011296856635078093,
+            longitudeDelta: 0.018044660523925
+        }
+    }
+
     return (
         <>
             <MapView
+                key={selectedResort?.id}
                 ref={mapRef}
                 provider="google"
                 mapType="none"
                 style={{ flex: 1 }}
+                region={region}
                 showsUserLocation
                 minZoomLevel={15.7}
                 maxZoomLevel={20}

@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useDispatch } from 'react-redux'
+import ResortDropdown from '../../components/ResortDropdown'
 import { ToastManager } from '../../managers/ToastManager'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 import { authSlice } from '../../redux/reducers/authReducer'
@@ -12,12 +13,16 @@ function LoginScreen() {
 
     const handleLogin = async () => {
         try {
-            const response = await PhoenixAPI.getInstance().AuthAPI.login(username)
-            
-            dispatch(authSlice.actions.login({
-                id: response.data.id,
-                username: response.data.username,
-            }))
+            const response = await PhoenixAPI.getInstance().AuthAPI.login(
+                username
+            )
+
+            dispatch(
+                authSlice.actions.login({
+                    id: response.data.id,
+                    username: response.data.username
+                })
+            )
         } catch (error) {
             ToastManager.showError(
                 'Login Mislukt',
@@ -35,6 +40,7 @@ function LoginScreen() {
                 value={username}
                 onChangeText={setUsername}
             />
+            <ResortDropdown />
             <Button title="Login" onPress={handleLogin} />
         </View>
     )

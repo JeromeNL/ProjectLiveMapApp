@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button, StyleSheet, View } from 'react-native'
 import { useDispatch } from 'react-redux'
+import ResortDropdown from '../../components/ResortDropdown'
 import { authSlice } from '../../redux/reducers/authReducer'
-import ResortDropdown from './components/ResortDropdown'
 
 const SettingScreen = ({ navigation }: any) => {
     const dispatch = useDispatch()
