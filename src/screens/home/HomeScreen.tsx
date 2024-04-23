@@ -60,6 +60,7 @@ const HomeScreen = ({ navigation }: any) => {
                 showsUserLocation
                 minZoomLevel={15.7}
                 maxZoomLevel={20}
+                showsMyLocationButton={false}
             >
                 <UrlTile
                     urlTemplate={MapConfiguration.tile.urlTemplate}/>
