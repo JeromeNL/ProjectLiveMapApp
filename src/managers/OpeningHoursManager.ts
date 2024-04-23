@@ -32,6 +32,12 @@ const OpeningHoursManager = {
         return openingHours.find(
             (openingHour) => openingHour.weekDay === currentDay
         )
+    },
+
+    isAlwaysOpen(openingHours: DefaultOpeningHour[]) {
+        return openingHours.every((openingHour) => {
+            return openingHour.openTime === '00:00' && openingHour.closeTime === '23:59'
+        })
     }
 }
 

@@ -4,6 +4,7 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import IsFacilityOpenText from '../../../components/IsFacilityOpenText'
 import OpeningHoursView from '../../../components/OpeningHoursView'
+import OpeningHoursManager from '../../../managers/OpeningHoursManager'
 import ProposedFacility from '../../../model/ProposedFacility'
 import { bottomSheetSlice } from '../../../redux/reducers/bottomSheetReducer'
 import { RootState } from '../../../redux/store'
@@ -21,6 +22,16 @@ const FacilityDetailBottomSheet = ({
     const bottomSheetRef = React.useRef<BottomSheet>(null)
 
     const dispatch = useDispatch()
+
+    let isAlwaysOpen = false
+    if (facility) {
+        const openingHours =
+            OpeningHoursManager.mergeDefaultAndSpecialOpeningHours(
+                facility.defaultOpeningHours,
+                facility.specialOpeningHours
+            )
+        isAlwaysOpen = OpeningHoursManager.isAlwaysOpen(openingHours)
+    }
 
     useEffect(() => {
         if (facility) {
@@ -70,10 +81,16 @@ const FacilityDetailBottomSheet = ({
                             marginBottom: 2
                         }}
                     >
-                        <OpeningHoursView
-                            defaultOpeningHour={facility.defaultOpeningHours}
-                            specialOpeningHour={facility.specialOpeningHours}
-                        />
+                        {!isAlwaysOpen && (
+                            <OpeningHoursView
+                                defaultOpeningHour={
+                                    facility.defaultOpeningHours
+                                }
+                                specialOpeningHour={
+                                    facility.specialOpeningHours
+                                }
+                            />
+                        )}
                         <Button
                             title="Faciliteitsgegevens wijzigen"
                             onPress={() => {
