@@ -2,16 +2,19 @@ import { number, object, string } from 'yup'
 import { ServiceCategory } from './ServiceCategory'
 
 export interface ServiceReport {
+    id?: number,
     title: string,
     facilityId: number,
     description: string,
     serviceReportCategory: ServiceCategory,
     serviceReportCategoryId: number, 
-    userId: number, 
+    userId: number,
+    createdAt?: string
 }
 
 
 export const serviceReportSchema = object({
+    id: number().optional(),
     title: string().required().max(300),
     facilityId: number().required(),
     description: string().required().max(300),
