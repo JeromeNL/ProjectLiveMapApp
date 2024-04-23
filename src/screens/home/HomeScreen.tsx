@@ -48,12 +48,12 @@ const HomeScreen = ({ navigation }: any) => {
             return
         }
         const northEast = {
-            latitude: selectedResort.northEastLatitude,
-            longitude: selectedResort.northEastLongitude
+            latitude: selectedResort.northEast.lat,
+            longitude: selectedResort.northEast.lng
         }
         const southWest = {
-            latitude: selectedResort.southWestLatitude,
-            longitude: selectedResort.southWestLongitude
+            latitude: selectedResort.southWest.lat,
+            longitude: selectedResort.southWest.lng
         }
         mapRef.current.setMapBoundaries(northEast, southWest)
     }, [selectedResort])
@@ -62,12 +62,10 @@ const HomeScreen = ({ navigation }: any) => {
     if (selectedResort) {
         region = {
             latitude:
-                (selectedResort.northEastLatitude +
-                    selectedResort.southWestLatitude) /
+                (selectedResort.northEast.lat + selectedResort.southWest.lat) /
                 2,
             longitude:
-                (selectedResort.northEastLongitude +
-                    selectedResort.southWestLongitude) /
+                (selectedResort.northEast.lng + selectedResort.southWest.lng) /
                 2,
             latitudeDelta: 0.011296856635078093,
             longitudeDelta: 0.018044660523925
