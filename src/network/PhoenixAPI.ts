@@ -1,10 +1,12 @@
 import axios from 'axios'
-import { AuthAPI } from './libs/AuthAPI'
 import { FacilityAPI } from './libs/FacilityAPI'
+import { ReportAPI } from './libs/ReportAPI'
+import { AuthAPI } from './libs/AuthAPI'
 import { ResortAPI } from './libs/ResortAPI'
 
 export class PhoenixAPI {
     public FacilityAPI!: FacilityAPI
+    public ReportAPI!: ReportAPI
     public AuthAPI!: AuthAPI
     public ResortAPI!: ResortAPI
 
@@ -27,6 +29,7 @@ export class PhoenixAPI {
         })
         this.AuthAPI = new AuthAPI(axiosClient)
         this.ResortAPI = new ResortAPI(axiosClient)
+        this.ReportAPI = new ReportAPI(axiosClient)
         if (resortId) {
             this.FacilityAPI = new FacilityAPI(axiosClient, resortId)
         }
