@@ -3,10 +3,12 @@ import { FacilityCategory } from '../../model/FacilityCategory'
 import ProposedFacility from '../../model/ProposedFacility'
 import { ServiceCategory } from '../../model/ServiceCategory'
 import { ServiceReport } from '../../model/ServiceReport'
-import { GenericAPI } from './abstract/GenericAPI'
+import { ResortRelatedAPI } from './abstract/ResortRelatedAPI'
 
-export class FacilityAPI extends GenericAPI {
+export class FacilityAPI extends ResortRelatedAPI {
     upsertFacility(facility: ProposedFacility) {
+        console.log(this.axiosInstance.defaults.baseURL + '/facilities/upsert')
+        console.log(facility)
         return this.axiosInstance.post(`/facilities/upsert`, facility)
     }
 

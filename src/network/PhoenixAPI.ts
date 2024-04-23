@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { Platform } from 'react-native'
-import { FacilityAPI } from './libs/FacilityAPI'
 import { AuthAPI } from './libs/AuthAPI'
+import { FacilityAPI } from './libs/FacilityAPI'
 
 export class PhoenixAPI {
     public FacilityAPI!: FacilityAPI
