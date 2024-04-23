@@ -8,6 +8,7 @@ import OpeningHoursManager from '../../../managers/OpeningHoursManager'
 import ProposedFacility from '../../../model/ProposedFacility'
 import { bottomSheetSlice } from '../../../redux/reducers/bottomSheetReducer'
 import { RootState } from '../../../redux/store'
+import ServiceReportList from '../../../components/ServiceReportList'
 
 interface FacilityDetailBottomSheetProps {
     navigation: any
@@ -43,7 +44,7 @@ const FacilityDetailBottomSheet = ({
         <BottomSheet
             index={-1}
             ref={bottomSheetRef}
-            snapPoints={['80%', '50%']}
+            snapPoints={['95%', '70%', '50%']}
             enablePanDownToClose
             onClose={() => {
                 dispatch(bottomSheetSlice.actions.closeBottomSheet())
@@ -104,6 +105,9 @@ const FacilityDetailBottomSheet = ({
                             }}
                         />
                     </View>
+                    {facility.serviceReports.length > 0 && (
+                        <ServiceReportList serviceReports={facility.serviceReports} />
+                    )}
                     <View
                         style={{
                             marginTop: 3,

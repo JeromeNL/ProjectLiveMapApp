@@ -30,7 +30,7 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await PhoenixAPI.getInstance().FacilityAPI.getServiceCategories()
+                const response = await PhoenixAPI.getInstance().ServiceReportAPI.getServiceCategories()
                 const responseCategory = response.data
 
                 setCategories(responseCategory)
@@ -50,7 +50,7 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
     const clickHandler = async (data: ServiceReport) => {
 
         try {
-            await PhoenixAPI.getInstance().FacilityAPI.postServiceReport(data)
+            await PhoenixAPI.getInstance().ServiceReportAPI.postServiceReport(data)
 
             ToastManager.showSuccess('Verstuurd!', 'Bedankt voor de melding')
             navigation.goBack()
