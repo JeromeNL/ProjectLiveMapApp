@@ -13,28 +13,24 @@ const ReportsListScreen = () => {
     const [facilityReports, setFacilityReports] = useState<Report[]>([]);
     const [expandedServiceReports, setExpandedServiceReports] = useState<number[]>([]);
     const [expandedFacilityReports, setExpandedFacilityReports] = useState<number[]>([]);
-    const [selectedIndex, setSelectedIndex] = useState<number>(0); // 0 for service, 1 for facility
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const userId = useSelector((state: RootState) => state.auth.id);
 
     useEffect(() => {
         if (userId) {
             PhoenixAPI.getInstance().ReportAPI.getServiceReports(userId)
-                .then((response) => {
-                    const sortedServiceReports = response.data.sort((a: Report, b: Report) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-                    setServiceReports(sortedServiceReports);
+                .then(response => {
+                    setServiceReports(response.data);
                 })
-                .catch((error) => {
-                    console.error('Error fetching service reports:', error);
+                .catch(error => {
                     ToastManager.showError("Fout bij ophalen", "Kan servicemeldingen niet laden");
                 });
 
             PhoenixAPI.getInstance().ReportAPI.getFacilityReports(userId)
-                .then((response) => {
-                    const sortedFacilityReports = response.data.sort((a: Report, b: Report) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-                    setFacilityReports(sortedFacilityReports);
+                .then(response => {
+                    setFacilityReports(response.data);
                 })
-                .catch((error) => {
-                    console.error('Error fetching facility reports:', error);
+                .catch(error => {
                     ToastManager.showError("Fout bij ophalen", "Kan facilitaire meldingen niet laden");
                 });
         }
@@ -43,7 +39,7 @@ const ReportsListScreen = () => {
     const toggleServiceReport = (index: number) => {
         const isExpanded = expandedServiceReports.includes(index);
         if (isExpanded) {
-            setExpandedServiceReports(expandedServiceReports.filter((i) => i !== index));
+            setExpandedServiceReports(expandedServiceReports.filter(i => i !== index));
         } else {
             setExpandedServiceReports([...expandedServiceReports, index]);
         }
@@ -52,7 +48,7 @@ const ReportsListScreen = () => {
     const toggleFacilityReport = (index: number) => {
         const isExpanded = expandedFacilityReports.includes(index);
         if (isExpanded) {
-            setExpandedFacilityReports(expandedFacilityReports.filter((i) => i !== index));
+            setExpandedFacilityReports(expandedFacilityReports.filter(i => i !== index));
         } else {
             setExpandedFacilityReports([...expandedFacilityReports, index]);
         }
@@ -61,8 +57,10 @@ const ReportsListScreen = () => {
     return (
         <View style={{ flex: 1 }}>
             <SegmentedControlComponent
+                values={['Service', 'Faciliteit']}
                 selectedIndex={selectedIndex}
                 onChange={(event) => setSelectedIndex(event.nativeEvent.selectedSegmentIndex)}
+                widthPercent={0.4}
             />
             <ReportList
                 reports={selectedIndex === 0 ? serviceReports : facilityReports}

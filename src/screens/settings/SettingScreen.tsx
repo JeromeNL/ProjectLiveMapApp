@@ -22,6 +22,11 @@ const SettingScreen = ({ navigation }: any) => {
                     title="Meldingen"
                     onPress={() => navigation.push('ReportsList')}
                 />
+                <View style={styles.spaceBetweenContainer} />
+                <Button
+                    title="Transacties"
+                    onPress={() => navigation.push('Transaction')}
+                />
             </View>
             <View style={styles.bottomContainer}>
                 <Button title="Log uit" onPress={handleLogout} />
