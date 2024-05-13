@@ -31,7 +31,6 @@ export class PhoenixAPI {
         })
         this.AuthAPI = new AuthAPI(axiosClient)
         this.ResortAPI = new ResortAPI(axiosClient)
-        this.ResortAPI = new ResortAPI(axiosClient)
         this.ReportAPI = new ReportAPI(axiosClient)
         if (resortId) {
             this.FacilityAPI = new FacilityAPI(axiosClient, resortId)
