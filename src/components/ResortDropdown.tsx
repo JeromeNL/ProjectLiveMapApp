@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, type StyleProp, type ViewStyle } from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown'
 import { useDispatch, useSelector } from 'react-redux'
 import { Colors } from '../configuration/styles/Colors'
-import { Resort } from '../model/Resort'
+import type { Resort } from '../model/Resort'
 import { PhoenixAPI } from '../network/PhoenixAPI'
 import { selectedResortSlice } from '../redux/reducers/selectedResortReducer'
-import { RootState } from '../redux/store'
+import type { RootState } from '../redux/store'
 
-const ResortDropdown = () => {
+interface ResortDropdownProps {
+    style?: StyleProp<ViewStyle>
+}
+
+const ResortDropdown = ({ style }: ResortDropdownProps) => {
     const [resorts, setResorts] = React.useState<Resort[]>([])
     const dispatch = useDispatch()
     const selectedResort = useSelector(
@@ -24,7 +28,7 @@ const ResortDropdown = () => {
                     handleDropdownChange(res.data[0])
                 }
             })
-    }, [])
+    }, [selectedResort])
 
     const handleDropdownChange = (resort: Resort) => {
         dispatch(selectedResortSlice.actions.setSelectedResort(resort))
@@ -33,7 +37,7 @@ const ResortDropdown = () => {
 
     return (
         <Dropdown
-            style={styles.dropdownStyle}
+            style={[styles.dropdownStyle, style]}
             data={resorts}
             labelField={'name'}
             valueField={'id'}

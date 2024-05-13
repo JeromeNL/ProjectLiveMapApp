@@ -40,7 +40,7 @@ function LoginScreen() {
                 value={username}
                 onChangeText={setUsername}
             />
-            <ResortDropdown />
+            <ResortDropdown style={styles.dropdown} />
             <Button title="Login" onPress={handleLogin} />
         </View>
     )
@@ -62,6 +62,9 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         borderWidth: 1,
         borderRadius: 8
+    },
+    dropdown: {
+        marginBottom: 10
     }
 })
 
