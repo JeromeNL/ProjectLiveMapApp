@@ -1,8 +1,13 @@
+import { IconUserCircle } from '@tabler/icons-react-native'
 import React from 'react'
-import { Button, StyleSheet, View } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import Divider from '../../components/Divider'
 import ResortDropdown from '../../components/ResortDropdown'
+import { Colors } from '../../configuration/styles/Colors'
 import { authSlice } from '../../redux/reducers/authReducer'
+import { RootState } from '../../redux/store'
+import MenuButton from './components/MenuButton'
 
 const SettingScreen = ({ navigation }: any) => {
     const dispatch = useDispatch()
@@ -11,22 +16,36 @@ const SettingScreen = ({ navigation }: any) => {
         dispatch(authSlice.actions.logout())
     }
 
+    const username = useSelector((state: RootState) => state.auth.username)
+
     return (
         <View style={styles.container}>
             <View style={styles.centeredContainer}>
+                <IconUserCircle
+                    size={100}
+                    color={Colors.gray}
+                    strokeWidth={1.2}
+                />
+                <Text style={styles.title}>{username}</Text>
                 <ResortDropdown />
-                <Button
-                    title="Notificaties"
-                    onPress={() => navigation.push('Notification')}
-                />
-                <View style={styles.spaceBetweenContainer} />
-                <Button
-                    title="Meldingen"
-                    onPress={() => navigation.push('ReportsList')}
-                />
+                <Divider />
+                <View style={styles.menuContainer}>
+                    <MenuButton
+                        title="Notificaties"
+                        onPress={() => navigation.push('Notification')}
+                    />
+                    <MenuButton
+                        title="Meldingen"
+                        onPress={() => navigation.push('ReportsList')}
+                    />
+                </View>
             </View>
             <View style={styles.bottomContainer}>
-                <Button title="Log uit" onPress={handleLogout} />
+                <Button
+                    color={Colors.error}
+                    title="Log uit"
+                    onPress={handleLogout}
+                />
             </View>
         </View>
     )
@@ -41,14 +60,22 @@ const styles = StyleSheet.create({
     },
     centeredContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    spaceBetweenContainer: {
-        height: 20,
+        width: '100%',
+        alignItems: 'center'
     },
     bottomContainer: {
+        width: '100%',
+        paddingHorizontal: 20,
         marginBottom: 20
+    },
+    title: {
+        fontSize: 24,
+        marginBottom: 16,
+        color: Colors.darkGray
+    },
+    menuContainer: {
+        width: '60%',
+        alignSelf: 'center'
     }
 })
 
