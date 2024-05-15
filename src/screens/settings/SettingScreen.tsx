@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { Button, StyleSheet, View, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { authSlice } from '../../redux/reducers/authReducer'
-import { RootState } from '../../redux/store'
-import { PhoenixAPI } from '../../network/PhoenixAPI'
 import { Colors } from '../../configuration/styles/Colors'
 import { ToastManager } from '../../managers/ToastManager'
+import { PhoenixAPI } from '../../network/PhoenixAPI'
+import { authSlice } from '../../redux/reducers/authReducer'
+import type { RootState } from '../../redux/store'
 
 const SettingScreen = ({ navigation }: any) => {
     const dispatch = useDispatch()
@@ -13,18 +13,19 @@ const SettingScreen = ({ navigation }: any) => {
     const [points, setPoints] = useState(0)
 
     useEffect(() => {
-        if (userId != null) {
-            PhoenixAPI.getInstance().PointsAPI.getTotalPoints(userId)
-                .then((response) => {
-                    setPoints(response.data)
-                })
-                .catch((error) => {
-                    console.error('Failed to fetch points:', error)
-                    ToastManager.showError(
-                        'Fout bij ophalen', 'Kan aantal punten niet laden'
-                    )
-                })
-        }
+        if (userId === null) return
+        PhoenixAPI.getInstance()
+            .PointsAPI.getTotalPoints(userId)
+            .then((response) => {
+                setPoints(response.data)
+            })
+            .catch((error) => {
+                console.error('Failed to fetch points:', error)
+                ToastManager.showError(
+                    'Fout bij ophalen',
+                    'Kan aantal punten niet laden'
+                )
+            })
     }, [userId])
 
     const handleLogout = () => {
@@ -63,10 +64,10 @@ const styles = StyleSheet.create({
     centeredContainer: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     spaceBetweenContainer: {
-        height: 20,
+        height: 20
     },
     bottomContainer: {
         marginBottom: 20
