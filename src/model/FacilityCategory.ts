@@ -3,5 +3,6 @@ export interface FacilityCategory {
     name: string
     description: string
     iconName: string
+    hexCode: string
 }
 
