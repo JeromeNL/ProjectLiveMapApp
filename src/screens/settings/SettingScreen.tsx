@@ -6,6 +6,7 @@ import { ToastManager } from '../../managers/ToastManager'
 import { PhoenixAPI } from '../../network/PhoenixAPI'
 import { authSlice } from '../../redux/reducers/authReducer'
 import type { RootState } from '../../redux/store'
+import ResortDropdown from '../../components/ResortDropdown'
 
 const SettingScreen = ({ navigation }: any) => {
     const dispatch = useDispatch()
@@ -37,6 +38,7 @@ const SettingScreen = ({ navigation }: any) => {
             <View style={styles.centeredContainer}>
                 <Text style={styles.pointsDisplay}>{points}</Text>
                 <Text style={styles.pointsLabel}>Punten</Text>
+                <ResortDropdown />
                 <Button
                     title="Notificaties"
                     onPress={() => navigation.push('Notification')}
