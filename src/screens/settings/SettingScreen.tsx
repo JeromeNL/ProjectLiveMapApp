@@ -1,17 +1,27 @@
+import { IconUserCircle } from '@tabler/icons-react-native'
 import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { Colors } from '../../configuration/styles/Colors'
-import { ToastManager } from '../../managers/ToastManager'
-import { PhoenixAPI } from '../../network/PhoenixAPI'
-import { authSlice } from '../../redux/reducers/authReducer'
-import type { RootState } from '../../redux/store'
+import Divider from '../../components/Divider'
 import ResortDropdown from '../../components/ResortDropdown'
+import { Colors } from '../../configuration/styles/Colors'
+import { authSlice } from '../../redux/reducers/authReducer'
+import { RootState } from '../../redux/store'
+import MenuButton from './components/MenuButton'
+import { PhoenixAPI } from '../../network/PhoenixAPI'
+import { ToastManager } from '../../managers/ToastManager'
 
 const SettingScreen = ({ navigation }: any) => {
     const dispatch = useDispatch()
+
+    const handleLogout = () => {
+        dispatch(authSlice.actions.logout())
+    }
+
     const userId = useSelector((state: RootState) => state.auth.id)
     const [points, setPoints] = useState(0)
+
+    const username = useSelector((state: RootState) => state.auth.username)
 
     useEffect(() => {
         if (userId === null) return
@@ -29,28 +39,36 @@ const SettingScreen = ({ navigation }: any) => {
             })
     }, [userId])
 
-    const handleLogout = () => {
-        dispatch(authSlice.actions.logout())
-    }
-
     return (
         <View style={styles.container}>
             <View style={styles.centeredContainer}>
+                <IconUserCircle
+                    size={100}
+                    color={Colors.gray}
+                    strokeWidth={1.2}
+                />
+                <Text style={styles.title}>{username}</Text>
                 <Text style={styles.pointsDisplay}>{points}</Text>
                 <Text style={styles.pointsLabel}>Punten</Text>
                 <ResortDropdown />
-                <Button
-                    title="Notificaties"
-                    onPress={() => navigation.push('Notification')}
-                />
-                <View style={styles.spaceBetweenContainer} />
-                <Button
-                    title="Meldingen"
-                    onPress={() => navigation.push('ReportsList')}
-                />
+                <Divider />
+                <View style={styles.menuContainer}>
+                    <MenuButton
+                        title="Notificaties"
+                        onPress={() => navigation.push('Notification')}
+                    />
+                    <MenuButton
+                        title="Meldingen"
+                        onPress={() => navigation.push('ReportsList')}
+                    />
+                </View>
             </View>
             <View style={styles.bottomContainer}>
-                <Button title="Log uit" onPress={handleLogout} />
+                <Button
+                    color={Colors.error}
+                    title="Log uit"
+                    onPress={handleLogout}
+                />
             </View>
         </View>
     )
@@ -65,14 +83,22 @@ const styles = StyleSheet.create({
     },
     centeredContainer: {
         flex: 1,
-        justifyContent: 'center',
+        width: '100%',
         alignItems: 'center'
     },
-    spaceBetweenContainer: {
-        height: 20
-    },
     bottomContainer: {
+        width: '100%',
+        paddingHorizontal: 20,
         marginBottom: 20
+    },
+    title: {
+        fontSize: 24,
+        marginBottom: 16,
+        color: Colors.darkGray
+    },
+    menuContainer: {
+        width: '60%',
+        alignSelf: 'center'
     },
     pointsDisplay: {
         fontSize: 60,

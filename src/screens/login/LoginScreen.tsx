@@ -13,14 +13,13 @@ function LoginScreen() {
 
     const handleLogin = async () => {
         try {
-            const response = await PhoenixAPI.getInstance().AuthAPI.login(
-                username
-            )
+            const response =
+                await PhoenixAPI.getInstance().AuthAPI.login(username)
 
             dispatch(
                 authSlice.actions.login({
                     id: response.data.id,
-                    username: response.data.username
+                    username: response.data.name
                 })
             )
         } catch (error) {
