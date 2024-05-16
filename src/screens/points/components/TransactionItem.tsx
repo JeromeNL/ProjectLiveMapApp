@@ -1,17 +1,13 @@
+import moment from 'moment'
 import React from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import Collapsible from 'react-native-collapsible'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Colors } from '../../../configuration/styles/Colors'
+import type { PointsTransaction } from '../../../model/PointsTransaction'
 
 interface TransactionItemProps {
-    transaction: {
-        id: string
-        description: string
-        amount: number
-        date: string
-        facilityName: string
-    }
+    transaction: PointsTransaction
 }
 
 export const TransactionItem: React.FC<TransactionItemProps> = ({
@@ -23,13 +19,23 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
 
     const [isExpanded, setIsExpanded] = React.useState(false)
 
+    const title = transaction.facilityReport
+        ? 'Faciliteit'
+        : transaction.serviceReport?.title
+
+    const description = transaction.facilityReport
+        ? transaction.facilityReport.description
+        : transaction.serviceReport?.description
+
+    const date = transaction.facilityReport
+        ? transaction.facilityReport.createdAt
+        : transaction.serviceReport?.createdAt
+
     return (
         <TouchableOpacity onPress={() => setIsExpanded(!isExpanded)}>
             <View style={styles.transactionContainer}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.transactionTitle}>
-                        {transaction.description}
-                    </Text>
+                    <Text style={styles.transactionTitle}>{description}</Text>
                     <Text style={{ color: getAmountColor(transaction.amount) }}>
                         {transaction.amount > 0
                             ? `+${transaction.amount}`
@@ -39,11 +45,10 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
                 <Collapsible collapsed={!isExpanded}>
                     <Text>
                         <Text style={styles.boldText}>Datum:</Text>{' '}
-                        {transaction.date}
+                        {moment(date).format('DD-MM-YYYY HH:mm')}
                     </Text>
                     <Text>
-                        <Text style={styles.boldText}>Faciliteit:</Text>{' '}
-                        {transaction.facilityName}
+                        <Text style={styles.boldText}>Faciliteit:</Text> {title}
                     </Text>
                 </Collapsible>
             </View>
