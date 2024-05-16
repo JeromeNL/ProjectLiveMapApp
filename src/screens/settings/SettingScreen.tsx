@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import Divider from '../../components/Divider'
 import ResortDropdown from '../../components/ResortDropdown'
 import { Colors } from '../../configuration/styles/Colors'
-import { authSlice } from '../../redux/reducers/authReducer'
-import { RootState } from '../../redux/store'
-import MenuButton from './components/MenuButton'
-import { PhoenixAPI } from '../../network/PhoenixAPI'
 import { ToastManager } from '../../managers/ToastManager'
+import { PhoenixAPI } from '../../network/PhoenixAPI'
+import { authSlice } from '../../redux/reducers/authReducer'
+import type { RootState } from '../../redux/store'
+import MenuButton from './components/MenuButton'
 
 const SettingScreen = ({ navigation }: any) => {
     const dispatch = useDispatch()
@@ -19,14 +19,17 @@ const SettingScreen = ({ navigation }: any) => {
     }
 
     const userId = useSelector((state: RootState) => state.auth.id)
+    const username = useSelector((state: RootState) => state.auth.username)
+    const resortId = useSelector(
+        (state: RootState) => state.selectedResort.selectedResort
+    )
+
     const [points, setPoints] = useState(0)
 
-    const username = useSelector((state: RootState) => state.auth.username)
-
     useEffect(() => {
-        if (userId === null) return
+        if (userId === null || resortId === null) return
         PhoenixAPI.getInstance()
-            .PointsAPI.getTotalPoints(userId)
+            .PointsAPI.getTotalPoints(userId, resortId.id)
             .then((response) => {
                 setPoints(response.data)
             })
@@ -37,7 +40,7 @@ const SettingScreen = ({ navigation }: any) => {
                     'Kan aantal punten niet laden'
                 )
             })
-    }, [userId])
+    }, [userId, resortId])
 
     return (
         <View style={styles.container}>
@@ -101,15 +104,15 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     pointsDisplay: {
-        fontSize: 60,
+        fontSize: 45,
         textAlign: 'center',
         fontWeight: 'bold'
     },
     pointsLabel: {
-        fontSize: 20,
+        fontSize: 18,
         textDecorationLine: 'underline',
         color: Colors.darkGray,
-        marginBottom: 60
+        marginBottom: 20
     }
 })
 
