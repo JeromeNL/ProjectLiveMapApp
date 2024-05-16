@@ -20,7 +20,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
     const [isExpanded, setIsExpanded] = React.useState(false)
 
     const title = transaction.facilityReport
-        ? 'Faciliteit'
+        ? 'Nieuw Faciliteit'
         : transaction.serviceReport?.title
 
     const description = transaction.facilityReport
@@ -35,7 +35,7 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
         <TouchableOpacity onPress={() => setIsExpanded(!isExpanded)}>
             <View style={styles.transactionContainer}>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.transactionTitle}>{description}</Text>
+                    <Text style={styles.transactionTitle}>{title}</Text>
                     <Text style={{ color: getAmountColor(transaction.amount) }}>
                         {transaction.amount > 0
                             ? `+${transaction.amount}`
@@ -48,7 +48,8 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
                         {moment(date).format('DD-MM-YYYY HH:mm')}
                     </Text>
                     <Text>
-                        <Text style={styles.boldText}>Faciliteit:</Text> {title}
+                        <Text style={styles.boldText}>Omschrijving:</Text>{' '}
+                        {description}
                     </Text>
                 </Collapsible>
             </View>
