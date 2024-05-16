@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        marginBottom: 16,
+        marginBottom: 5,
         color: Colors.darkGray
     },
     menuContainer: {
