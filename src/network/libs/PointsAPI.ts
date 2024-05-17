@@ -10,20 +10,9 @@ export class PointsAPI extends GenericAPI {
 		});
 	}
 
-	getAwardedPoints(userId: number, resortId: number) {
+	getTransactions(userId: number, resortId: number) {
 		return this.axiosInstance.get<PointsTransaction[]>(
-			`/users/${userId}/points/awarded`,
-			{
-				params: {
-					resortId: resortId,
-				},
-			},
-		);
-	}
-
-	getDeductedPoints(userId: number, resortId: number) {
-		return this.axiosInstance.get<PointsTransaction[]>(
-			`/users/${userId}/points/deducted`,
+			`/users/${userId}/points/transactions`,
 			{
 				params: {
 					resortId: resortId,

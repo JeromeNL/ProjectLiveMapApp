@@ -13,25 +13,16 @@ const TransactionsListScreen = () => {
     const resort = useSelector(
         (state: RootState) => state.selectedResort.selectedResort
     )
-    const [awardedTransactions, setAwardedTransactions] =
-        useState<PointsTransaction[]>()
-    const [deductedTransactions, setDeductedTransactions] =
-        useState<PointsTransaction[]>()
+    const [transactions, setTransactions] = useState<PointsTransaction[]>()
 
     useEffect(() => {
         if (userId === null || resort === null) return
         const resortId = resort.id
 
         PhoenixAPI.getInstance()
-            .PointsAPI.getAwardedPoints(userId, resortId)
+            .PointsAPI.getTransactions(userId, resortId)
             .then((response) => {
-                setAwardedTransactions(response.data)
-            })
-
-        PhoenixAPI.getInstance()
-            .PointsAPI.getDeductedPoints(userId, resortId)
-            .then((response) => {
-                setDeductedTransactions(response.data)
+                setTransactions(response.data)
             })
     }, [resort, userId])
 
@@ -45,13 +36,10 @@ const TransactionsListScreen = () => {
                 }
                 widthPercent={0.7}
             />
-            {awardedTransactions && deductedTransactions && (
+            {transactions && (
                 <TransactionList
                     index={selectedIndex}
-                    transactions={[
-                        ...awardedTransactions,
-                        ...deductedTransactions
-                    ]}
+                    transactions={transactions}
                 />
             )}
         </View>
