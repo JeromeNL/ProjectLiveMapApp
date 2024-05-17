@@ -19,9 +19,12 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
 
     const [isExpanded, setIsExpanded] = React.useState(false)
 
-    const title = transaction.facilityReport
-        ? 'Nieuw Faciliteit'
-        : transaction.serviceReport?.title
+    const title =
+        transaction.voucher?.description ??
+        transaction.serviceReport?.title ??
+        'Nieuw Faciliteit'
+
+    const redeemed = transaction.voucher?.redeemed
 
     const description = transaction.facilityReport
         ? transaction.facilityReport.description
@@ -47,10 +50,18 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
                         <Text style={styles.boldText}>Datum:</Text>{' '}
                         {moment(date).format('DD-MM-YYYY HH:mm')}
                     </Text>
-                    <Text>
-                        <Text style={styles.boldText}>Omschrijving:</Text>{' '}
-                        {description}
-                    </Text>
+                    {description && (
+                        <Text>
+                            <Text style={styles.boldText}>Omschrijving:</Text>{' '}
+                            {description}
+                        </Text>
+                    )}
+                    {redeemed !== undefined && (
+                        <Text>
+                            <Text style={styles.boldText}>Verzilverd:</Text>{' '}
+                            {redeemed ? 'Ja' : 'Nee'}
+                        </Text>
+                    )}
                 </Collapsible>
             </View>
         </TouchableOpacity>
