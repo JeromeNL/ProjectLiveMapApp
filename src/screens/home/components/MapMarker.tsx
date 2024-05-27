@@ -45,9 +45,8 @@ const MapMarker = ({ facility, mapRef }: MapMarkerProps) => {
             <PinIcon
                 hex={facility.category.hexCode}
                 Icon={Icon}
-                showExclamationMark={facility.serviceReports.length != 0}
+                showExclamationMark={facility.serviceReports.length !== 0}
             />
-            <Callout tooltip={true} />
         </Marker>
     )
 }

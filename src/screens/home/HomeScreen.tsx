@@ -86,6 +86,7 @@ const HomeScreen = ({ navigation }: any) => {
                 minZoomLevel={15.7}
                 maxZoomLevel={20}
                 showsMyLocationButton={false}
+                toolbarEnabled={false}
             >
                 <UrlTile urlTemplate={MapConfiguration.tile.urlTemplate} />
                 {facilities.map((facility) => (
