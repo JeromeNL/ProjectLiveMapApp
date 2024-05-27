@@ -1,12 +1,14 @@
 import { IconUserCircle } from '@tabler/icons-react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import Divider from '../../components/Divider'
 import ResortDropdown from '../../components/ResortDropdown'
 import { Colors } from '../../configuration/styles/Colors'
+import { ToastManager } from '../../managers/ToastManager'
+import { PhoenixAPI } from '../../network/PhoenixAPI'
 import { authSlice } from '../../redux/reducers/authReducer'
-import { RootState } from '../../redux/store'
+import type { RootState } from '../../redux/store'
 import MenuButton from './components/MenuButton'
 
 const SettingScreen = ({ navigation }: any) => {
@@ -16,7 +18,29 @@ const SettingScreen = ({ navigation }: any) => {
         dispatch(authSlice.actions.logout())
     }
 
+    const userId = useSelector((state: RootState) => state.auth.id)
     const username = useSelector((state: RootState) => state.auth.username)
+    const resortId = useSelector(
+        (state: RootState) => state.selectedResort.selectedResort
+    )
+
+    const [points, setPoints] = useState(0)
+
+    useEffect(() => {
+        if (userId === null || resortId === null) return
+        PhoenixAPI.getInstance()
+            .PointsAPI.getTotalPoints(userId, resortId.id)
+            .then((response) => {
+                setPoints(response.data)
+            })
+            .catch((error) => {
+                console.error('Failed to fetch points:', error)
+                ToastManager.showError(
+                    'Fout bij ophalen',
+                    'Kan aantal punten niet laden'
+                )
+            })
+    }, [userId, resortId])
 
     return (
         <View style={styles.container}>
@@ -27,6 +51,8 @@ const SettingScreen = ({ navigation }: any) => {
                     strokeWidth={1.2}
                 />
                 <Text style={styles.title}>{username}</Text>
+                <Text style={styles.pointsDisplay}>{points}</Text>
+                <Text style={styles.pointsLabel}>Punten</Text>
                 <ResortDropdown />
                 <Divider />
                 <View style={styles.menuContainer}>
@@ -37,6 +63,10 @@ const SettingScreen = ({ navigation }: any) => {
                     <MenuButton
                         title="Meldingen"
                         onPress={() => navigation.push('ReportsList')}
+                    />
+                    <MenuButton
+                        title="Transacties"
+                        onPress={() => navigation.push('Transaction')}
                     />
                 </View>
             </View>
@@ -70,12 +100,23 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        marginBottom: 16,
+        marginBottom: 5,
         color: Colors.darkGray
     },
     menuContainer: {
         width: '60%',
         alignSelf: 'center'
+    },
+    pointsDisplay: {
+        fontSize: 45,
+        textAlign: 'center',
+        fontWeight: 'bold'
+    },
+    pointsLabel: {
+        fontSize: 18,
+        textDecorationLine: 'underline',
+        color: Colors.darkGray,
+        marginBottom: 20
     }
 })
 
