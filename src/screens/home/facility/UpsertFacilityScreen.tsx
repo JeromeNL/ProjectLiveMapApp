@@ -137,7 +137,8 @@ const styles = StyleSheet.create({
         padding: 1
     },
     dropdownStyle: {
-        borderWidth: 1
+        borderWidth: 1,
+        paddingLeft: 5
     }
 })
 

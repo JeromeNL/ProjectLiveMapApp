@@ -57,10 +57,6 @@ const SettingScreen = ({ navigation }: any) => {
                 <Divider />
                 <View style={styles.menuContainer}>
                     <MenuButton
-                        title="Notificaties"
-                        onPress={() => navigation.push('Notification')}
-                    />
-                    <MenuButton
                         title="Meldingen"
                         onPress={() => navigation.push('ReportsList')}
                     />

@@ -19,7 +19,7 @@ export const BottomTabNavigator = () => {
                 name="HomeStack"
                 component={HomeStackNavigator}
                 options={{
-                    title: 'Thuis',
+                    title: 'Kaart',
                     tabBarIcon: ({ color }) => <IconHome color={color} />
                 }}
             />

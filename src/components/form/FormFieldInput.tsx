@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        padding: 3
+        padding: 3,
+        paddingLeft: 8,
     },
     validationError: {
         color: Colors.error

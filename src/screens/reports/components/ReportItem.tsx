@@ -22,10 +22,11 @@ export const ReportItem: React.FC<ReportItemProps> = ({ report, isExpanded }) =>
             </View>
             <Collapsible collapsed={!isExpanded}>
                 <Text>
-                    <Text style={styles.boldText}>Beschrijving:</Text> {report.description}
+                    {report.description}
                 </Text>
+                <Text></Text>
                 <Text>
-                    <Text style={styles.boldText}>Ingediend op:</Text> {FormattedDate(report.createdAt)}
+                    {FormattedDate(report.createdAt)}
                 </Text>
             </Collapsible>
         </View>
