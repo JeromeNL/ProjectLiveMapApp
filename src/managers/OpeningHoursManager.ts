@@ -14,7 +14,16 @@ const OpeningHoursManager = {
                 }
             }
         }
-        return openingHours
+        return openingHours.map((hour) => {
+            if (hour.openTime === '00:00' && hour.closeTime === '00:00') {
+                return {
+                    ...hour,
+                    openTime: 'Gesloten',
+                    closeTime: 'Gesloten'
+                }
+            }
+            return hour
+        })
     },
 
     isOpenNow(openingHours: DefaultOpeningHour) {
@@ -36,10 +45,12 @@ const OpeningHoursManager = {
 
     isAlwaysOpen(openingHours: DefaultOpeningHour[]) {
         return openingHours.every((openingHour) => {
-            return openingHour.openTime === '00:00' && openingHour.closeTime === '23:59'
+            return (
+                openingHour.openTime === '00:00' &&
+                openingHour.closeTime === '23:59'
+            )
         })
     }
 }
 
 export default OpeningHoursManager
-
