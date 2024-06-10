@@ -61,7 +61,7 @@ const SettingScreen = ({ navigation }: any) => {
                         onPress={() => navigation.push('ReportsList')}
                     />
                     <MenuButton
-                        title="Transacties"
+                        title="Spaarpunten"
                         onPress={() => navigation.push('Transaction')}
                     />
                 </View>
