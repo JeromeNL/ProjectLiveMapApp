@@ -40,13 +40,19 @@ const OpeningHoursView = ({
                             {weekDays[openingHour.weekDay]}
                         </Text>
                         <View style={styles.timeContainer}>
-                            <Text style={textStyle}>
-                                {openingHour.openTime}
-                            </Text>
-                            <Text style={textStyle}> - </Text>
-                            <Text style={textStyle}>
-                                {openingHour.closeTime}
-                            </Text>
+                            {openingHour.openTime === 'Gesloten' ? (
+                                <Text style={textStyle}>Gesloten</Text>
+                            ) : (
+                                <>
+                                    <Text style={textStyle}>
+                                        {openingHour.openTime}
+                                    </Text>
+                                    <Text style={textStyle}> - </Text>
+                                    <Text style={textStyle}>
+                                        {openingHour.closeTime}
+                                    </Text>
+                                </>
+                            )}
                         </View>
                     </View>
                 )
@@ -72,4 +78,3 @@ const styles = StyleSheet.create({
 })
 
 export default OpeningHoursView
-
