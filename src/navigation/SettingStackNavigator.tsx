@@ -27,7 +27,7 @@ export const SettingStackNavigator = () => {
                 name="Transaction"
                 component={TransactionsListScreen}
                 options={{
-                    title: 'Transacties'
+                    title: 'Spaarpunten'
                 }}
             />
         </Stack.Navigator>
