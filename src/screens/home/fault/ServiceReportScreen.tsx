@@ -1,10 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ServiceReport, serviceReportSchema } from '../../../model/ServiceReport'
+import {
+    ServiceReport,
+    serviceReportSchema
+} from '../../../model/ServiceReport'
 import FormFieldInput from '../../../components/form/FormFieldInput'
 import ProposedFacility from '../../../model/ProposedFacility'
-import { Text,  View, StyleSheet, Button, Alert } from 'react-native'
+import { Text, View, StyleSheet, Button, Alert } from 'react-native'
 import { PhoenixAPI } from '../../../network/PhoenixAPI'
 import { ToastManager } from '../../../managers/ToastManager'
 import { ServiceCategory } from '../../../model/ServiceCategory'
@@ -15,7 +18,7 @@ import { RootState } from '../../../redux/store'
 const ServiceReportScreen = ({ route, navigation }: any) => {
     let facilityParam: Partial<ProposedFacility> | undefined =
         route.params?.facility
-    
+
     const {
         control,
         handleSubmit,
@@ -30,7 +33,8 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await PhoenixAPI.getInstance().ServiceReportAPI.getServiceCategories()
+                const response =
+                    await PhoenixAPI.getInstance().ServiceReportAPI.getServiceCategories()
                 const responseCategory = response.data
 
                 setCategories(responseCategory)
@@ -38,24 +42,29 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
                 setValue('serviceReportCategory', responseCategory[0])
                 setValue('serviceReportCategoryId', responseCategory[0].id)
             } catch (e) {
-                ToastManager.showError('Netwerkfout', 'Netwerk fout! Kan geen storing melding aanmaken.')
+                ToastManager.showError(
+                    'Netwerkfout',
+                    'Netwerk fout! Kan geen storing melding aanmaken.'
+                )
             }
         }
 
         fetchCategories()
-
-
     }, [])
 
     const clickHandler = async (data: ServiceReport) => {
-
         try {
-            await PhoenixAPI.getInstance().ServiceReportAPI.postServiceReport(data)
+            await PhoenixAPI.getInstance().ServiceReportAPI.postServiceReport(
+                data
+            )
 
             ToastManager.showSuccess('Verstuurd!', 'Bedankt voor de melding')
             navigation.goBack()
         } catch (e) {
-            ToastManager.showError('Netwerkfout', 'Melding is niet verstuurd. Probeer het later nog eens.')
+            ToastManager.showError(
+                'Netwerkfout',
+                'Melding is niet verstuurd. Probeer het later nog eens.'
+            )
             console.error(e)
         }
     }
@@ -74,10 +83,7 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
 
     return (
         <View style={styles.container}>
-            
-            <Text style={styles.title}>
-                Faciliteit: {facilityParam?.name}
-            </Text>
+            <Text style={styles.title}>Faciliteit: {facilityParam?.name}</Text>
 
             <FormFieldInput
                 label="Titel"
@@ -93,11 +99,8 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
                 errors={errors}
             />
 
-            
             <View style={styles.dropdownInput}>
-                <Text>
-                    Onder welke categorie valt het probleem?
-                </Text>
+                <Text>Onder welke categorie valt het probleem?</Text>
 
                 <Dropdown
                     style={styles.dropdownStyle}
@@ -112,17 +115,14 @@ const ServiceReportScreen = ({ route, navigation }: any) => {
                 />
             </View>
 
-            <Button
-                title="Verstuur"
-                onPress={handleSubmit(clickHandler)}
-            />
+            <Button title="Verstuur" onPress={handleSubmit(clickHandler)} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     title: {
-        marginBottom: 5  
+        marginBottom: 5
     },
     container: {
         margin: 10
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     },
     dropdownInput: {
         marginBottom: 5,
-        padding: 1,
+        padding: 1
     },
     dropdownStyle: {
         borderWidth: 1,
@@ -145,4 +145,3 @@ const styles = StyleSheet.create({
 })
 
 export default ServiceReportScreen
-

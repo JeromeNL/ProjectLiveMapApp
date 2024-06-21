@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 interface AuthState {
     isAuthenticated: boolean
     username: string | null
-    id: number | null
+    id: string | null
 }
 
 const initialState: AuthState = {
@@ -23,7 +23,7 @@ export const authSlice = createSlice({
         },
         logout(state) {
             state.isAuthenticated = false
-            state.id = -1
+            state.id = null
             state.username = ''
         }
     }
